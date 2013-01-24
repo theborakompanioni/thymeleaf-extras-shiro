@@ -1,4 +1,4 @@
-See [http://shiro.apache.org/tags](http://shiro.apache.org/tags) for the origin
+See [http://shiro.apache.org/tags](http://shiro.apache.org/tags)
 
 ## The `guest` tag
     <shiro:guest>
