@@ -26,11 +26,11 @@ public class LacksRoleAttrProcessor extends HasRoleAttrProcessor {
         return new LacksRoleAttrProcessor();
     }
 
-    public LacksRoleAttrProcessor() {
+    protected LacksRoleAttrProcessor() {
         super(ATTRIBUTE_NAME);
     }
 
-    public LacksRoleAttrProcessor(final String attrName) {
+    protected LacksRoleAttrProcessor(final String attrName) {
         super(attrName);
     }
 

@@ -26,11 +26,11 @@ public class NotAuthenticatedAttrProcessor extends AuthenticatedAttrProcessor {
         return new NotAuthenticatedAttrProcessor();
     }
 
-    public NotAuthenticatedAttrProcessor() {
+    protected NotAuthenticatedAttrProcessor() {
         super(ATTRIBUTE_NAME);
     }
 
-    public NotAuthenticatedAttrProcessor(final String attrName) {
+    protected NotAuthenticatedAttrProcessor(final String attrName) {
         super(attrName);
     }
 

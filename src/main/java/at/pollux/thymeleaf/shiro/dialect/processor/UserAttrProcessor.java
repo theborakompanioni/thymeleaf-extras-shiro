@@ -29,11 +29,11 @@ public class UserAttrProcessor extends AbstractConditionalVisibilityAttrProcesso
         return new UserAttrProcessor();
     }
 
-    public UserAttrProcessor() {
+    protected UserAttrProcessor() {
         super(ATTRIBUTE_NAME);
     }
 
-    public UserAttrProcessor(final String attrName) {
+    protected UserAttrProcessor(final String attrName) {
         super(attrName);
     }
 

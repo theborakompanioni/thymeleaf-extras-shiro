@@ -32,11 +32,11 @@ public class HasPermissionAttrProcessor extends AbstractConditionalVisibilityAtt
         return new HasPermissionAttrProcessor();
     }
 
-    public HasPermissionAttrProcessor() {
+    protected HasPermissionAttrProcessor() {
         super(ATTRIBUTE_NAME);
     }
 
-    public HasPermissionAttrProcessor(final String attrName) {
+    protected HasPermissionAttrProcessor(final String attrName) {
         super(attrName);
     }
 

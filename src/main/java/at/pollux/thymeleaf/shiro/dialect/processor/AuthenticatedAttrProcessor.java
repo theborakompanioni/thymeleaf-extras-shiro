@@ -29,11 +29,11 @@ public class AuthenticatedAttrProcessor extends AbstractConditionalVisibilityAtt
         return new AuthenticatedAttrProcessor();
     }
 
-    public AuthenticatedAttrProcessor() {
+    protected AuthenticatedAttrProcessor() {
         super(ATTRIBUTE_NAME);
     }
 
-    public AuthenticatedAttrProcessor(final String attrName) {
+    protected AuthenticatedAttrProcessor(final String attrName) {
         super(attrName);
     }
 

@@ -27,11 +27,11 @@ public class LacksPermissionAttrProcessor extends HasPermissionAttrProcessor {
         return new LacksPermissionAttrProcessor();
     }
 
-    public LacksPermissionAttrProcessor() {
+    protected LacksPermissionAttrProcessor() {
         super(ATTRIBUTE_NAME);
     }
 
-    public LacksPermissionAttrProcessor(final String attrName) {
+    protected LacksPermissionAttrProcessor(final String attrName) {
         super(attrName);
     }
 

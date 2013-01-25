@@ -36,18 +36,18 @@ import at.pollux.thymeleaf.shiro.dialect.processor.UserAttrProcessor;
 
 public class ShiroDialect extends AbstractDialect {
     private static final String          PREFIX     = "shiro";
-    private static final Set<IProcessor> PROCESSORS = new HashSet<IProcessor>();
+    private static final Set<IProcessor> processors = new HashSet<IProcessor>();
     static {
-        PROCESSORS.add(PrincipalAttrProcessor.create());
-        PROCESSORS.add(AuthenticatedAttrProcessor.create());
-        PROCESSORS.add(NotAuthenticatedAttrProcessor.create());
-        PROCESSORS.add(HasRoleAttrProcessor.create());
-        PROCESSORS.add(LacksRoleAttrProcessor.create());
-        PROCESSORS.add(HasAnyRolesAttrProcessor.create());
-        PROCESSORS.add(HasPermissionAttrProcessor.create());
-        PROCESSORS.add(LacksPermissionAttrProcessor.create());
-        PROCESSORS.add(GuestAttrProcessor.create());
-        PROCESSORS.add(UserAttrProcessor.create());
+        processors.add(PrincipalAttrProcessor.create());
+        processors.add(AuthenticatedAttrProcessor.create());
+        processors.add(NotAuthenticatedAttrProcessor.create());
+        processors.add(HasRoleAttrProcessor.create());
+        processors.add(LacksRoleAttrProcessor.create());
+        processors.add(HasAnyRolesAttrProcessor.create());
+        processors.add(HasPermissionAttrProcessor.create());
+        processors.add(LacksPermissionAttrProcessor.create());
+        processors.add(GuestAttrProcessor.create());
+        processors.add(UserAttrProcessor.create());
     }
 
     public ShiroDialect() {
@@ -64,6 +64,6 @@ public class ShiroDialect extends AbstractDialect {
 
     @Override
     public Set<IProcessor> getProcessors() {
-        return Collections.unmodifiableSet(PROCESSORS);
+        return Collections.unmodifiableSet(processors);
     }
 }

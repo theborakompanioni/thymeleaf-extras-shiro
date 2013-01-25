@@ -26,11 +26,11 @@ public class GuestAttrProcessor extends UserAttrProcessor {
         return new GuestAttrProcessor();
     }
 
-    public GuestAttrProcessor() {
+    protected GuestAttrProcessor() {
         super(ATTRIBUTE_NAME);
     }
 
-    public GuestAttrProcessor(final String attrName) {
+    protected GuestAttrProcessor(final String attrName) {
         super(attrName);
     }
 

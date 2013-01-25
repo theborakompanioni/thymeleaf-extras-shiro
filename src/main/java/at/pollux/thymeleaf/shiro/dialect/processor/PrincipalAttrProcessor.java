@@ -29,10 +29,11 @@ public class PrincipalAttrProcessor extends AbstractTextChildModifierAttrProcess
         return new PrincipalAttrProcessor();
     }
 
-    public PrincipalAttrProcessor() {
+    protected PrincipalAttrProcessor() {
         super(ATTRIBUTE_NAME);
     }
 
+    @Override
     public int getPrecedence() {
         return PRECEDENCE;
     }

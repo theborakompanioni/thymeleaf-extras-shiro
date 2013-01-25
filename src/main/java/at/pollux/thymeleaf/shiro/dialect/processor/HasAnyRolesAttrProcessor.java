@@ -34,11 +34,11 @@ public class HasAnyRolesAttrProcessor extends AbstractConditionalVisibilityAttrP
         return new HasAnyRolesAttrProcessor();
     }
 
-    public HasAnyRolesAttrProcessor() {
+    protected HasAnyRolesAttrProcessor() {
         super(ATTRIBUTE_NAME);
     }
 
-    public HasAnyRolesAttrProcessor(final String attrName) {
+    protected HasAnyRolesAttrProcessor(final String attrName) {
         super(attrName);
     }
 
@@ -56,7 +56,7 @@ public class HasAnyRolesAttrProcessor extends AbstractConditionalVisibilityAttrP
         Validate.notEmpty(attributeName, "value of '" + attributeName + "' must not be empty");
 
         final String[] splittedRoles = StringUtils.split(rawRoles, ROLES_DELIMITER);
-        for (String rawRole : splittedRoles) {
+        for (final String rawRole : splittedRoles) {
             final String role = StringUtils.trim(rawRole);
             Validate.notEmpty(role, "value of '" + attributeName + "' (" + rawRoles + ") seems to be malformed");
             if (SecurityUtils.getSubject().hasRole(role)) { return true; }

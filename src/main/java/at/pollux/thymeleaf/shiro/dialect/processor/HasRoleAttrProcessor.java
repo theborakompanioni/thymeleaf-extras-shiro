@@ -32,11 +32,11 @@ public class HasRoleAttrProcessor extends AbstractConditionalVisibilityAttrProce
         return new HasRoleAttrProcessor();
     }
 
-    public HasRoleAttrProcessor() {
+    protected HasRoleAttrProcessor() {
         super(ATTRIBUTE_NAME);
     }
 
-    public HasRoleAttrProcessor(final String attrName) {
+    protected HasRoleAttrProcessor(final String attrName) {
         super(attrName);
     }
 
