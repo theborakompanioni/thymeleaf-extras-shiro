@@ -23,16 +23,17 @@ import java.util.Set;
 import org.thymeleaf.dialect.AbstractDialect;
 import org.thymeleaf.processor.IProcessor;
 
-import at.pollux.thymeleaf.shiro.dialect.processor.AuthenticatedAttrProcessor;
-import at.pollux.thymeleaf.shiro.dialect.processor.GuestAttrProcessor;
-import at.pollux.thymeleaf.shiro.dialect.processor.HasAnyRolesAttrProcessor;
-import at.pollux.thymeleaf.shiro.dialect.processor.HasPermissionAttrProcessor;
-import at.pollux.thymeleaf.shiro.dialect.processor.HasRoleAttrProcessor;
-import at.pollux.thymeleaf.shiro.dialect.processor.LacksPermissionAttrProcessor;
-import at.pollux.thymeleaf.shiro.dialect.processor.LacksRoleAttrProcessor;
-import at.pollux.thymeleaf.shiro.dialect.processor.NotAuthenticatedAttrProcessor;
-import at.pollux.thymeleaf.shiro.dialect.processor.PrincipalAttrProcessor;
-import at.pollux.thymeleaf.shiro.dialect.processor.UserAttrProcessor;
+import at.pollux.thymeleaf.shiro.processor.attribute.AuthenticatedAttrProcessor;
+import at.pollux.thymeleaf.shiro.processor.attribute.GuestAttrProcessor;
+import at.pollux.thymeleaf.shiro.processor.attribute.HasAnyRolesAttrProcessor;
+import at.pollux.thymeleaf.shiro.processor.attribute.HasPermissionAttrProcessor;
+import at.pollux.thymeleaf.shiro.processor.attribute.HasRoleAttrProcessor;
+import at.pollux.thymeleaf.shiro.processor.attribute.LacksPermissionAttrProcessor;
+import at.pollux.thymeleaf.shiro.processor.attribute.LacksRoleAttrProcessor;
+import at.pollux.thymeleaf.shiro.processor.attribute.NotAuthenticatedAttrProcessor;
+import at.pollux.thymeleaf.shiro.processor.attribute.PrincipalAttrProcessor;
+import at.pollux.thymeleaf.shiro.processor.attribute.UserAttrProcessor;
+import at.pollux.thymeleaf.shiro.processor.element.GuestElementProcessor;
 
 public class ShiroDialect extends AbstractDialect {
     private static final String          PREFIX     = "shiro";
@@ -46,7 +47,10 @@ public class ShiroDialect extends AbstractDialect {
         processors.add(HasAnyRolesAttrProcessor.create());
         processors.add(HasPermissionAttrProcessor.create());
         processors.add(LacksPermissionAttrProcessor.create());
+
         processors.add(GuestAttrProcessor.create());
+        processors.add(GuestElementProcessor.create());
+
         processors.add(UserAttrProcessor.create());
     }
 

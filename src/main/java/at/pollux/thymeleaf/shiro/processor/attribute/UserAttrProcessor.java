@@ -13,29 +13,25 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ****************************************************************************/
-package at.pollux.thymeleaf.shiro.dialect.processor;
+package at.pollux.thymeleaf.shiro.processor.attribute;
 
+import org.apache.shiro.SecurityUtils;
 import org.thymeleaf.Arguments;
 import org.thymeleaf.dom.Element;
-import org.thymeleaf.processor.IProcessor;
 
-public class NotAuthenticatedAttrProcessor extends AuthenticatedAttrProcessor {
-    private static final String ATTRIBUTE_NAME = "notAuthenticated";
+public class UserAttrProcessor extends AuthenticatedAttrProcessor {
+    private static final String ATTRIBUTE_NAME = "user";
 
-    public static IProcessor create() {
-        return new NotAuthenticatedAttrProcessor();
+    public static UserAttrProcessor create() {
+        return new UserAttrProcessor();
     }
 
-    protected NotAuthenticatedAttrProcessor() {
+    protected UserAttrProcessor() {
         super(ATTRIBUTE_NAME);
     }
 
-    protected NotAuthenticatedAttrProcessor(final String attrName) {
-        super(attrName);
-    }
-
     @Override
-    protected boolean isVisible(final Arguments arguments, final Element element, final String attributeName) {
-        return !super.isVisible(arguments, element, attributeName);
+    public boolean isVisible(final Arguments arguments, final Element element, final String attributeName) {
+        return super.isVisible(arguments, element, attributeName) || SecurityUtils.getSubject().isRemembered();
     }
 }

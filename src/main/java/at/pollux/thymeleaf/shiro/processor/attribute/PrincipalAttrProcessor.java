@@ -13,30 +13,32 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ****************************************************************************/
-package at.pollux.thymeleaf.shiro.dialect.processor;
+package at.pollux.thymeleaf.shiro.processor.attribute;
 
+import org.apache.shiro.SecurityUtils;
 import org.thymeleaf.Arguments;
 import org.thymeleaf.dom.Element;
-import org.thymeleaf.processor.IProcessor;
+import org.thymeleaf.processor.attr.AbstractTextChildModifierAttrProcessor;
 
-public class LacksPermissionAttrProcessor extends HasPermissionAttrProcessor {
+public class PrincipalAttrProcessor extends AbstractTextChildModifierAttrProcessor {
+    private static final String ATTRIBUTE_NAME = "principal";
+    private static final int    PRECEDENCE     = 300;
 
-    private static final String ATTRIBUTE_NAME = "lacksPermission";
-
-    public static IProcessor create() {
-        return new LacksPermissionAttrProcessor();
+    public static final PrincipalAttrProcessor create() {
+        return new PrincipalAttrProcessor();
     }
 
-    protected LacksPermissionAttrProcessor() {
+    protected PrincipalAttrProcessor() {
         super(ATTRIBUTE_NAME);
     }
 
-    protected LacksPermissionAttrProcessor(final String attrName) {
-        super(attrName);
+    @Override
+    public int getPrecedence() {
+        return PRECEDENCE;
     }
 
     @Override
-    protected boolean isVisible(final Arguments arguments, final Element element, final String attributeName) {
-        return !super.isVisible(arguments, element, attributeName);
+    protected String getText(final Arguments arguments, final Element element, final String attributeName) {
+        return SecurityUtils.getSubject().getPrincipal() + "";
     }
 }

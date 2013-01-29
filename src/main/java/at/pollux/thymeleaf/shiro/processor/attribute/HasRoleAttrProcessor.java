@@ -13,30 +13,31 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ****************************************************************************/
-package at.pollux.thymeleaf.shiro.dialect.processor;
+package at.pollux.thymeleaf.shiro.processor.attribute;
 
 import org.apache.shiro.SecurityUtils;
 import org.thymeleaf.Arguments;
 import org.thymeleaf.dom.Element;
-import org.thymeleaf.processor.IProcessor;
 import org.thymeleaf.processor.attr.AbstractConditionalVisibilityAttrProcessor;
 import org.thymeleaf.util.StringUtils;
 import org.thymeleaf.util.Validate;
 
-public class HasPermissionAttrProcessor extends AbstractConditionalVisibilityAttrProcessor {
+import at.pollux.thymeleaf.shiro.processor.IConditionalVisibilityAttrProcessor;
 
-    private static final String ATTRIBUTE_NAME = "hasPermission";
+public class HasRoleAttrProcessor extends AbstractConditionalVisibilityAttrProcessor implements IConditionalVisibilityAttrProcessor {
+
+    private static final String ATTRIBUTE_NAME = "hasRole";
     private static final int    PRECEDENCE     = 300;
 
-    public static IProcessor create() {
-        return new HasPermissionAttrProcessor();
+    public static HasRoleAttrProcessor create() {
+        return new HasRoleAttrProcessor();
     }
 
-    protected HasPermissionAttrProcessor() {
+    protected HasRoleAttrProcessor() {
         super(ATTRIBUTE_NAME);
     }
 
-    protected HasPermissionAttrProcessor(final String attrName) {
+    protected HasRoleAttrProcessor(final String attrName) {
         super(attrName);
     }
 
@@ -46,13 +47,13 @@ public class HasPermissionAttrProcessor extends AbstractConditionalVisibilityAtt
     }
 
     @Override
-    protected boolean isVisible(final Arguments arguments, final Element element, final String attributeName) {
+    public boolean isVisible(final Arguments arguments, final Element element, final String attributeName) {
         Validate.notNull(element, "element must not be null");
         Validate.notEmpty(attributeName, "attributeName must not be empty");
 
-        final String permission = StringUtils.trim(element.getAttributeValue(attributeName));
-        Validate.notEmpty(permission, "value of '" + attributeName + "' must not be empty");
+        final String role = StringUtils.trim(element.getAttributeValue(attributeName));
+        Validate.notEmpty(role, "value of '" + attributeName + "' must not be empty");
 
-        return SecurityUtils.getSubject().isPermitted(permission);
+        return SecurityUtils.getSubject().hasRole(role);
     }
 }

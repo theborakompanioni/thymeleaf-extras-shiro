@@ -13,29 +13,20 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ****************************************************************************/
-package at.pollux.thymeleaf.shiro.dialect.processor;
+package at.pollux.thymeleaf.shiro.processor.attribute;
 
-import org.thymeleaf.Arguments;
-import org.thymeleaf.dom.Element;
-import org.thymeleaf.processor.IProcessor;
+import at.pollux.thymeleaf.shiro.processor.InvertVisibilityAttrProcessor;
 
-public class LacksRoleAttrProcessor extends HasRoleAttrProcessor {
-    private static final String ATTRIBUTE_NAME = "lacksRole";
+public class LacksPermissionAttrProcessor extends InvertVisibilityAttrProcessor<HasPermissionAttrProcessor> {
 
-    public static IProcessor create() {
-        return new LacksRoleAttrProcessor();
+    private static final String ATTRIBUTE_NAME = "lacksPermission";
+
+    public static LacksPermissionAttrProcessor create() {
+        return new LacksPermissionAttrProcessor();
     }
 
-    protected LacksRoleAttrProcessor() {
-        super(ATTRIBUTE_NAME);
+    protected LacksPermissionAttrProcessor() {
+        super(ATTRIBUTE_NAME, HasPermissionAttrProcessor.create());
     }
 
-    protected LacksRoleAttrProcessor(final String attrName) {
-        super(attrName);
-    }
-
-    @Override
-    protected boolean isVisible(final Arguments arguments, final Element element, final String attributeName) {
-        return !super.isVisible(arguments, element, attributeName);
-    }
 }

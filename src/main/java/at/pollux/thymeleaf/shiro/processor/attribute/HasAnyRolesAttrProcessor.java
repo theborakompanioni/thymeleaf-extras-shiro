@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ****************************************************************************/
-package at.pollux.thymeleaf.shiro.dialect.processor;
+package at.pollux.thymeleaf.shiro.processor.attribute;
 
 import org.apache.shiro.SecurityUtils;
 import org.thymeleaf.Arguments;
