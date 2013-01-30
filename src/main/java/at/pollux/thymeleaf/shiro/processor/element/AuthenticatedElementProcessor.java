@@ -10,6 +10,7 @@ import at.pollux.thymeleaf.shiro.processor.IConditionalVisibilityElementProcesso
 public class AuthenticatedElementProcessor extends AbstractConditionalVisibilityElementProcessor implements IConditionalVisibilityElementProcessor {
 
     private static final String ATTRIBUTE_NAME = "authenticated";
+    private static final int    PRECEDENCE     = 1000;
 
     public static AuthenticatedElementProcessor create() {
         return new AuthenticatedElementProcessor();
@@ -25,7 +26,7 @@ public class AuthenticatedElementProcessor extends AbstractConditionalVisibility
 
     @Override
     public int getPrecedence() {
-        return 1000;
+        return PRECEDENCE;
     }
 
     @Override

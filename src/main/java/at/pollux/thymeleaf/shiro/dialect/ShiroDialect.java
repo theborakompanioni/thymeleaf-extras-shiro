@@ -33,25 +33,37 @@ import at.pollux.thymeleaf.shiro.processor.attribute.LacksRoleAttrProcessor;
 import at.pollux.thymeleaf.shiro.processor.attribute.NotAuthenticatedAttrProcessor;
 import at.pollux.thymeleaf.shiro.processor.attribute.PrincipalAttrProcessor;
 import at.pollux.thymeleaf.shiro.processor.attribute.UserAttrProcessor;
+import at.pollux.thymeleaf.shiro.processor.element.AuthenticatedElementProcessor;
 import at.pollux.thymeleaf.shiro.processor.element.GuestElementProcessor;
+import at.pollux.thymeleaf.shiro.processor.element.HasPermissionElementProcessor;
+import at.pollux.thymeleaf.shiro.processor.element.NotAuthenticatedElementProcessor;
+import at.pollux.thymeleaf.shiro.processor.element.UserElementProcessor;
 
 public class ShiroDialect extends AbstractDialect {
     private static final String          PREFIX     = "shiro";
     private static final Set<IProcessor> processors = new HashSet<IProcessor>();
     static {
         processors.add(PrincipalAttrProcessor.create());
-        processors.add(AuthenticatedAttrProcessor.create());
-        processors.add(NotAuthenticatedAttrProcessor.create());
         processors.add(HasRoleAttrProcessor.create());
         processors.add(LacksRoleAttrProcessor.create());
         processors.add(HasAnyRolesAttrProcessor.create());
+
         processors.add(HasPermissionAttrProcessor.create());
+        processors.add(HasPermissionElementProcessor.create());
+
         processors.add(LacksPermissionAttrProcessor.create());
+
+        processors.add(AuthenticatedAttrProcessor.create());
+        processors.add(AuthenticatedElementProcessor.create());
+
+        processors.add(NotAuthenticatedAttrProcessor.create());
+        processors.add(NotAuthenticatedElementProcessor.create());
 
         processors.add(GuestAttrProcessor.create());
         processors.add(GuestElementProcessor.create());
 
         processors.add(UserAttrProcessor.create());
+        processors.add(UserElementProcessor.create());
     }
 
     public ShiroDialect() {
