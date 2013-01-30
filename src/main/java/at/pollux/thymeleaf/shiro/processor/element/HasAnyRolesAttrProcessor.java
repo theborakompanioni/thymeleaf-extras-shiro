@@ -13,17 +13,19 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ****************************************************************************/
-package at.pollux.thymeleaf.shiro.processor.attribute;
+package at.pollux.thymeleaf.shiro.processor.element;
 
 import org.apache.shiro.SecurityUtils;
 import org.thymeleaf.Arguments;
 import org.thymeleaf.dom.Element;
 import org.thymeleaf.processor.IProcessor;
-import org.thymeleaf.processor.attr.AbstractConditionalVisibilityAttrProcessor;
+import org.thymeleaf.processor.element.AbstractConditionalVisibilityElementProcessor;
 import org.thymeleaf.util.StringUtils;
 import org.thymeleaf.util.Validate;
 
-public class HasAnyRolesAttrProcessor extends AbstractConditionalVisibilityAttrProcessor {
+import at.pollux.thymeleaf.shiro.processor.IConditionalVisibilityElementProcessor;
+
+public class HasAnyRolesAttrProcessor extends AbstractConditionalVisibilityElementProcessor implements IConditionalVisibilityElementProcessor {
 
     private static final String ATTRIBUTE_NAME  = "hasAnyRoles";
     private static final int    PRECEDENCE      = 300;
@@ -48,22 +50,26 @@ public class HasAnyRolesAttrProcessor extends AbstractConditionalVisibilityAttrP
     }
 
     @Override
-    protected boolean isVisible(final Arguments arguments, final Element element, final String attributeName) {
+    public boolean isVisible(final Arguments arguments, final Element element) {
         Validate.notNull(element, "element must not be null");
-        Validate.notEmpty(attributeName, "attributeName must not be empty");
 
-        final String rawRoles = StringUtils.trim(element.getAttributeValue(attributeName));
-        Validate.notEmpty(rawRoles, "value of '" + attributeName + "' must not be empty");
+        final String rawRoles = StringUtils.trim(element.getAttributeValue("name"));
+        Validate.notEmpty(rawRoles, "value of 'name' must not be empty");
 
         final String[] splittedRoles = StringUtils.split(rawRoles, ROLES_DELIMITER);
         for (final String rawRole : splittedRoles) {
             final String role = StringUtils.trim(rawRole);
-            Validate.notEmpty(role, "value of '" + attributeName + "' (" + rawRoles + ") seems to be malformed");
+            Validate.notEmpty(role, "value of 'name' (" + rawRoles + ") seems to be malformed");
             if (SecurityUtils.getSubject().hasRole(role)) {
                 return true;
             }
         }
 
         return false;
+    }
+
+    @Override
+    public boolean removeHostElementIfVisible(final Arguments arguments, final Element element) {
+        return true;
     }
 }
