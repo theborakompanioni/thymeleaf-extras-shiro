@@ -25,7 +25,7 @@ import org.thymeleaf.util.Validate;
 
 import at.pollux.thymeleaf.shiro.processor.IConditionalVisibilityElementProcessor;
 
-public class HasAnyRolesAttrProcessor extends AbstractConditionalVisibilityElementProcessor implements IConditionalVisibilityElementProcessor {
+public class HasAnyRolesElementProcessor extends AbstractConditionalVisibilityElementProcessor implements IConditionalVisibilityElementProcessor {
 
     private static final String ATTRIBUTE_NAME  = "hasAnyRoles";
     private static final int    PRECEDENCE      = 300;
@@ -33,14 +33,14 @@ public class HasAnyRolesAttrProcessor extends AbstractConditionalVisibilityEleme
     private static final String ROLES_DELIMITER = ",";
 
     public static IProcessor create() {
-        return new HasAnyRolesAttrProcessor();
+        return new HasAnyRolesElementProcessor();
     }
 
-    protected HasAnyRolesAttrProcessor() {
+    protected HasAnyRolesElementProcessor() {
         super(ATTRIBUTE_NAME);
     }
 
-    protected HasAnyRolesAttrProcessor(final String attrName) {
+    protected HasAnyRolesElementProcessor(final String attrName) {
         super(attrName);
     }
 

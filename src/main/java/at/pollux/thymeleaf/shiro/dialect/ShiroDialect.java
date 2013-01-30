@@ -13,7 +13,6 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ****************************************************************************/
-
 package at.pollux.thymeleaf.shiro.dialect;
 
 import java.util.Collections;
@@ -35,6 +34,7 @@ import at.pollux.thymeleaf.shiro.processor.attribute.PrincipalAttrProcessor;
 import at.pollux.thymeleaf.shiro.processor.attribute.UserAttrProcessor;
 import at.pollux.thymeleaf.shiro.processor.element.AuthenticatedElementProcessor;
 import at.pollux.thymeleaf.shiro.processor.element.GuestElementProcessor;
+import at.pollux.thymeleaf.shiro.processor.element.HasAnyRolesElementProcessor;
 import at.pollux.thymeleaf.shiro.processor.element.HasPermissionElementProcessor;
 import at.pollux.thymeleaf.shiro.processor.element.HasRoleElementProcessor;
 import at.pollux.thymeleaf.shiro.processor.element.LacksPermissionElementProcessor;
@@ -47,7 +47,9 @@ public class ShiroDialect extends AbstractDialect {
     private static final Set<IProcessor> processors = new HashSet<IProcessor>();
     static {
         processors.add(PrincipalAttrProcessor.create());
+
         processors.add(HasAnyRolesAttrProcessor.create());
+        processors.add(HasAnyRolesElementProcessor.create());
 
         processors.add(HasRoleAttrProcessor.create());
         processors.add(HasRoleElementProcessor.create());
