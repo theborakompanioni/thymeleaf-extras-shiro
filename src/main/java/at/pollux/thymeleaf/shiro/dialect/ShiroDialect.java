@@ -36,6 +36,7 @@ import at.pollux.thymeleaf.shiro.processor.attribute.UserAttrProcessor;
 import at.pollux.thymeleaf.shiro.processor.element.AuthenticatedElementProcessor;
 import at.pollux.thymeleaf.shiro.processor.element.GuestElementProcessor;
 import at.pollux.thymeleaf.shiro.processor.element.HasPermissionElementProcessor;
+import at.pollux.thymeleaf.shiro.processor.element.LacksPermissionElementProcessor;
 import at.pollux.thymeleaf.shiro.processor.element.NotAuthenticatedElementProcessor;
 import at.pollux.thymeleaf.shiro.processor.element.UserElementProcessor;
 
@@ -52,6 +53,7 @@ public class ShiroDialect extends AbstractDialect {
         processors.add(HasPermissionElementProcessor.create());
 
         processors.add(LacksPermissionAttrProcessor.create());
+        processors.add(LacksPermissionElementProcessor.create());
 
         processors.add(AuthenticatedAttrProcessor.create());
         processors.add(AuthenticatedElementProcessor.create());
