@@ -15,19 +15,40 @@
  ****************************************************************************/
 package at.pollux.thymeleaf.shiro.processor.attribute;
 
-import org.thymeleaf.processor.IProcessor;
+import org.thymeleaf.Arguments;
+import org.thymeleaf.dom.Element;
+import org.thymeleaf.processor.attr.AbstractConditionalVisibilityAttrProcessor;
+import org.thymeleaf.util.StringUtils;
+import org.thymeleaf.util.Validate;
 
-import at.pollux.thymeleaf.shiro.processor.InvertVisibilityAttrProcessor;
+import at.pollux.thymeleaf.shiro.dialect.ShiroFacade;
 
-public class LacksRoleAttrProcessor extends InvertVisibilityAttrProcessor<HasRoleAttrProcessor> {
+public class LacksRoleAttrProcessor extends AbstractConditionalVisibilityAttrProcessor {
 
-    private static final String ATTRIBUTE_NAME = "lacksRole";
-
-    public static IProcessor create() {
+    public static LacksRoleAttrProcessor create() {
         return new LacksRoleAttrProcessor();
     }
 
+    private static final String ATTRIBUTE_NAME = "lacksRole";
+    private static final int    PRECEDENCE     = 300;
+
     protected LacksRoleAttrProcessor() {
-        super(ATTRIBUTE_NAME, HasRoleAttrProcessor.create());
+        super(ATTRIBUTE_NAME);
+    }
+
+    @Override
+    public int getPrecedence() {
+        return PRECEDENCE;
+    }
+
+    @Override
+    public boolean isVisible(final Arguments arguments, final Element element, final String attributeName) {
+        Validate.notNull(element, "element must not be null");
+        Validate.notEmpty(attributeName, "attributeName must not be empty");
+
+        final String role = StringUtils.trim(element.getAttributeValue(attributeName));
+        Validate.notEmpty(role, "value of '" + attributeName + "' must not be empty");
+
+        return ShiroFacade.lacksRole(role);
     }
 }

@@ -15,23 +15,32 @@
  ****************************************************************************/
 package at.pollux.thymeleaf.shiro.processor.attribute;
 
-import org.apache.shiro.SecurityUtils;
 import org.thymeleaf.Arguments;
 import org.thymeleaf.dom.Element;
+import org.thymeleaf.processor.attr.AbstractConditionalVisibilityAttrProcessor;
 
-public class UserAttrProcessor extends AuthenticatedAttrProcessor {
-    private static final String ATTRIBUTE_NAME = "user";
+import at.pollux.thymeleaf.shiro.dialect.ShiroFacade;
+
+public class UserAttrProcessor extends AbstractConditionalVisibilityAttrProcessor {
 
     public static UserAttrProcessor create() {
         return new UserAttrProcessor();
     }
+
+    private static final String ATTRIBUTE_NAME = "user";
+    private static final int    PRECEDENCE     = 300;
 
     protected UserAttrProcessor() {
         super(ATTRIBUTE_NAME);
     }
 
     @Override
+    public int getPrecedence() {
+        return PRECEDENCE;
+    }
+
+    @Override
     public boolean isVisible(final Arguments arguments, final Element element, final String attributeName) {
-        return super.isVisible(arguments, element, attributeName) || SecurityUtils.getSubject().isRemembered();
+        return ShiroFacade.isUser();
     }
 }

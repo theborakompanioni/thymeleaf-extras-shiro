@@ -15,16 +15,32 @@
  ****************************************************************************/
 package at.pollux.thymeleaf.shiro.processor.attribute;
 
-import at.pollux.thymeleaf.shiro.processor.InvertVisibilityAttrProcessor;
+import org.thymeleaf.Arguments;
+import org.thymeleaf.dom.Element;
+import org.thymeleaf.processor.attr.AbstractConditionalVisibilityAttrProcessor;
 
-public class NotAuthenticatedAttrProcessor extends InvertVisibilityAttrProcessor<AuthenticatedAttrProcessor> {
-    private static final String ATTRIBUTE_NAME = "notAuthenticated";
+import at.pollux.thymeleaf.shiro.dialect.ShiroFacade;
+
+public class NotAuthenticatedAttrProcessor extends AbstractConditionalVisibilityAttrProcessor {
 
     public static NotAuthenticatedAttrProcessor create() {
         return new NotAuthenticatedAttrProcessor();
     }
 
+    private static final String ATTRIBUTE_NAME = "notAuthenticated";
+    private static final int    PRECEDENCE     = 300;
+
     protected NotAuthenticatedAttrProcessor() {
-        super(ATTRIBUTE_NAME, AuthenticatedAttrProcessor.create());
+        super(ATTRIBUTE_NAME);
+    }
+
+    @Override
+    public int getPrecedence() {
+        return PRECEDENCE;
+    }
+
+    @Override
+    protected boolean isVisible(final Arguments arguments, final Element element, final String attributeName) {
+        return ShiroFacade.isNotAuthenticated();
     }
 }

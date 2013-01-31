@@ -15,35 +15,35 @@
  ****************************************************************************/
 package at.pollux.thymeleaf.shiro.processor.element;
 
-import org.apache.shiro.SecurityUtils;
 import org.thymeleaf.Arguments;
 import org.thymeleaf.dom.Element;
 import org.thymeleaf.processor.element.AbstractConditionalVisibilityElementProcessor;
 import org.thymeleaf.util.StringUtils;
 import org.thymeleaf.util.Validate;
 
-import at.pollux.thymeleaf.shiro.processor.IConditionalVisibilityElementProcessor;
+import at.pollux.thymeleaf.shiro.dialect.ShiroFacade;
 
-public class HasPermissionElementProcessor extends AbstractConditionalVisibilityElementProcessor implements IConditionalVisibilityElementProcessor {
-
-    private static final String ATTRIBUTE_NAME = "hasPermission";
-    private static final int    PRECEDENCE     = 300;
+public class HasPermissionElementProcessor extends AbstractConditionalVisibilityElementProcessor {
 
     public static HasPermissionElementProcessor create() {
         return new HasPermissionElementProcessor();
     }
 
-    protected HasPermissionElementProcessor() {
-        super(ATTRIBUTE_NAME);
-    }
+    private static final String ELEMENT_NAME = "hasPermission";
+    private static final int    PRECEDENCE   = 300;
 
-    protected HasPermissionElementProcessor(final String attrName) {
-        super(attrName);
+    protected HasPermissionElementProcessor() {
+        super(ELEMENT_NAME);
     }
 
     @Override
     public int getPrecedence() {
         return PRECEDENCE;
+    }
+
+    @Override
+    public boolean removeHostElementIfVisible(final Arguments arguments, final Element element) {
+        return true;
     }
 
     @Override
@@ -53,12 +53,6 @@ public class HasPermissionElementProcessor extends AbstractConditionalVisibility
         final String permission = StringUtils.trim(element.getAttributeValue("name"));
         Validate.notEmpty(permission, "value of 'name' must not be empty");
 
-        return SecurityUtils.getSubject().isPermitted(permission);
+        return ShiroFacade.hasPermission(permission);
     }
-
-    @Override
-    public boolean removeHostElementIfVisible(final Arguments arguments, final Element element) {
-        return true;
-    }
-
 }

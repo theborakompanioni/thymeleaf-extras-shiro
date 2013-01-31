@@ -15,17 +15,44 @@
  ****************************************************************************/
 package at.pollux.thymeleaf.shiro.processor.element;
 
-import at.pollux.thymeleaf.shiro.processor.InvertVisibilityElementProcessor;
+import org.thymeleaf.Arguments;
+import org.thymeleaf.dom.Element;
+import org.thymeleaf.processor.element.AbstractConditionalVisibilityElementProcessor;
+import org.thymeleaf.util.StringUtils;
+import org.thymeleaf.util.Validate;
 
-public class LacksPermissionElementProcessor extends InvertVisibilityElementProcessor<HasPermissionElementProcessor> {
-    private static final String ATTRIBUTE_NAME = "lacksPermission";
+import at.pollux.thymeleaf.shiro.dialect.ShiroFacade;
+
+public class LacksPermissionElementProcessor extends AbstractConditionalVisibilityElementProcessor {
 
     public static LacksPermissionElementProcessor create() {
         return new LacksPermissionElementProcessor();
     }
 
+    private static final String ELEMENT_NAME = "lacksPermission";
+    private static final int    PRECEDENCE   = 300;
+
     protected LacksPermissionElementProcessor() {
-        super(ATTRIBUTE_NAME, HasPermissionElementProcessor.create());
+        super(ELEMENT_NAME);
     }
 
+    @Override
+    public int getPrecedence() {
+        return PRECEDENCE;
+    }
+
+    @Override
+    public boolean removeHostElementIfVisible(final Arguments arguments, final Element element) {
+        return true;
+    }
+
+    @Override
+    public boolean isVisible(final Arguments arguments, final Element element) {
+        Validate.notNull(element, "element must not be null");
+
+        final String permission = StringUtils.trim(element.getAttributeValue("name"));
+        Validate.notEmpty(permission, "value of 'name' must not be empty");
+
+        return ShiroFacade.lacksPermission(permission);
+    }
 }

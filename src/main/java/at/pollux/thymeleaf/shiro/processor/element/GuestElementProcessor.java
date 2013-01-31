@@ -15,17 +15,37 @@
  ****************************************************************************/
 package at.pollux.thymeleaf.shiro.processor.element;
 
-import at.pollux.thymeleaf.shiro.processor.InvertVisibilityElementProcessor;
+import org.thymeleaf.Arguments;
+import org.thymeleaf.dom.Element;
+import org.thymeleaf.processor.element.AbstractConditionalVisibilityElementProcessor;
 
-public class GuestElementProcessor extends InvertVisibilityElementProcessor<UserElementProcessor> {
+import at.pollux.thymeleaf.shiro.dialect.ShiroFacade;
 
-    private static final String ELEMENT_NAME = "guest";
+public class GuestElementProcessor extends AbstractConditionalVisibilityElementProcessor {
 
     public static GuestElementProcessor create() {
         return new GuestElementProcessor();
     }
 
+    private static final String ELEMENT_NAME = "guest";
+    private static final int    PRECEDENCE   = 300;
+
     protected GuestElementProcessor() {
-        super(ELEMENT_NAME, UserElementProcessor.create());
+        super(ELEMENT_NAME);
+    }
+
+    @Override
+    public int getPrecedence() {
+        return PRECEDENCE;
+    }
+
+    @Override
+    public boolean removeHostElementIfVisible(final Arguments arguments, final Element element) {
+        return true;
+    }
+
+    @Override
+    public boolean isVisible(final Arguments arguments, final Element element) {
+        return ShiroFacade.isGuest();
     }
 }

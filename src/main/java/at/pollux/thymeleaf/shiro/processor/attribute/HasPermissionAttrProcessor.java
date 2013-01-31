@@ -15,30 +15,25 @@
  ****************************************************************************/
 package at.pollux.thymeleaf.shiro.processor.attribute;
 
-import org.apache.shiro.SecurityUtils;
 import org.thymeleaf.Arguments;
 import org.thymeleaf.dom.Element;
 import org.thymeleaf.processor.attr.AbstractConditionalVisibilityAttrProcessor;
 import org.thymeleaf.util.StringUtils;
 import org.thymeleaf.util.Validate;
 
-import at.pollux.thymeleaf.shiro.processor.IConditionalVisibilityAttrProcessor;
+import at.pollux.thymeleaf.shiro.dialect.ShiroFacade;
 
-public class HasPermissionAttrProcessor extends AbstractConditionalVisibilityAttrProcessor implements IConditionalVisibilityAttrProcessor {
-
-    private static final String ATTRIBUTE_NAME = "hasPermission";
-    private static final int    PRECEDENCE     = 300;
+public class HasPermissionAttrProcessor extends AbstractConditionalVisibilityAttrProcessor {
 
     public static HasPermissionAttrProcessor create() {
         return new HasPermissionAttrProcessor();
     }
 
+    private static final String ATTRIBUTE_NAME = "hasPermission";
+    private static final int    PRECEDENCE     = 300;
+
     protected HasPermissionAttrProcessor() {
         super(ATTRIBUTE_NAME);
-    }
-
-    protected HasPermissionAttrProcessor(final String attrName) {
-        super(attrName);
     }
 
     @Override
@@ -54,6 +49,6 @@ public class HasPermissionAttrProcessor extends AbstractConditionalVisibilityAtt
         final String permission = StringUtils.trim(element.getAttributeValue(attributeName));
         Validate.notEmpty(permission, "value of '" + attributeName + "' must not be empty");
 
-        return SecurityUtils.getSubject().isPermitted(permission);
+        return ShiroFacade.hasPermission(permission);
     }
 }

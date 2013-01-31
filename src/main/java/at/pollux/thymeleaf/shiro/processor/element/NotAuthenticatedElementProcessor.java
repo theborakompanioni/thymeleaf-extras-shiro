@@ -15,17 +15,37 @@
  ****************************************************************************/
 package at.pollux.thymeleaf.shiro.processor.element;
 
-import at.pollux.thymeleaf.shiro.processor.InvertVisibilityElementProcessor;
+import org.thymeleaf.Arguments;
+import org.thymeleaf.dom.Element;
+import org.thymeleaf.processor.element.AbstractConditionalVisibilityElementProcessor;
 
-public class NotAuthenticatedElementProcessor extends InvertVisibilityElementProcessor<AuthenticatedElementProcessor> {
-    private static final String ATTRIBUTE_NAME = "notAuthenticated";
+import at.pollux.thymeleaf.shiro.dialect.ShiroFacade;
+
+public class NotAuthenticatedElementProcessor extends AbstractConditionalVisibilityElementProcessor {
 
     public static NotAuthenticatedElementProcessor create() {
         return new NotAuthenticatedElementProcessor();
     }
 
+    private static final String ELEMENT_NAME = "notAuthenticated";
+    private static final int    PRECEDENCE   = 300;
+
     protected NotAuthenticatedElementProcessor() {
-        super(ATTRIBUTE_NAME, AuthenticatedElementProcessor.create());
+        super(ELEMENT_NAME);
     }
 
+    @Override
+    public int getPrecedence() {
+        return PRECEDENCE;
+    }
+
+    @Override
+    public boolean removeHostElementIfVisible(final Arguments arguments, final Element element) {
+        return true;
+    }
+
+    @Override
+    public boolean isVisible(final Arguments arguments, final Element element) {
+        return ShiroFacade.isNotAuthenticated();
+    }
 }

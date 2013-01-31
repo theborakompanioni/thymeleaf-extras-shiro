@@ -15,24 +15,37 @@
  ****************************************************************************/
 package at.pollux.thymeleaf.shiro.processor.element;
 
-import org.apache.shiro.SecurityUtils;
 import org.thymeleaf.Arguments;
 import org.thymeleaf.dom.Element;
+import org.thymeleaf.processor.element.AbstractConditionalVisibilityElementProcessor;
 
-public class UserElementProcessor extends AuthenticatedElementProcessor {
+import at.pollux.thymeleaf.shiro.dialect.ShiroFacade;
 
-    private static final String ELEMENT_NAME = "user";
+public class UserElementProcessor extends AbstractConditionalVisibilityElementProcessor {
 
     public static UserElementProcessor create() {
         return new UserElementProcessor();
     }
+
+    private static final String ELEMENT_NAME = "user";
+    private static final int    PRECEDENCE   = 300;
 
     protected UserElementProcessor() {
         super(ELEMENT_NAME);
     }
 
     @Override
+    public int getPrecedence() {
+        return PRECEDENCE;
+    }
+
+    @Override
+    public boolean removeHostElementIfVisible(final Arguments arguments, final Element element) {
+        return true;
+    }
+
+    @Override
     public boolean isVisible(final Arguments arguments, final Element element) {
-        return super.isVisible(arguments, element) || SecurityUtils.getSubject().isRemembered();
+        return ShiroFacade.isUser();
     }
 }

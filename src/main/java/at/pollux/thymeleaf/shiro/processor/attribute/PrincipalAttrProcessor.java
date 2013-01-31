@@ -15,18 +15,20 @@
  ****************************************************************************/
 package at.pollux.thymeleaf.shiro.processor.attribute;
 
-import org.apache.shiro.SecurityUtils;
 import org.thymeleaf.Arguments;
 import org.thymeleaf.dom.Element;
 import org.thymeleaf.processor.attr.AbstractTextChildModifierAttrProcessor;
 
+import at.pollux.thymeleaf.shiro.dialect.ShiroFacade;
+
 public class PrincipalAttrProcessor extends AbstractTextChildModifierAttrProcessor {
-    private static final String ATTRIBUTE_NAME = "principal";
-    private static final int    PRECEDENCE     = 300;
 
     public static final PrincipalAttrProcessor create() {
         return new PrincipalAttrProcessor();
     }
+
+    private static final String ATTRIBUTE_NAME = "principal";
+    private static final int    PRECEDENCE     = 300;
 
     protected PrincipalAttrProcessor() {
         super(ATTRIBUTE_NAME);
@@ -39,6 +41,9 @@ public class PrincipalAttrProcessor extends AbstractTextChildModifierAttrProcess
 
     @Override
     protected String getText(final Arguments arguments, final Element element, final String attributeName) {
-        return SecurityUtils.getSubject().getPrincipal() + "";
+        final String type = element.getAttributeValue("type");
+        final String property = element.getAttributeValue("property");
+
+        return ShiroFacade.getPrincipalText(type, property);
     }
 }

@@ -15,35 +15,35 @@
  ****************************************************************************/
 package at.pollux.thymeleaf.shiro.processor.element;
 
-import org.apache.shiro.SecurityUtils;
 import org.thymeleaf.Arguments;
 import org.thymeleaf.dom.Element;
 import org.thymeleaf.processor.element.AbstractConditionalVisibilityElementProcessor;
 import org.thymeleaf.util.StringUtils;
 import org.thymeleaf.util.Validate;
 
-import at.pollux.thymeleaf.shiro.processor.IConditionalVisibilityElementProcessor;
+import at.pollux.thymeleaf.shiro.dialect.ShiroFacade;
 
-public class HasRoleElementProcessor extends AbstractConditionalVisibilityElementProcessor implements IConditionalVisibilityElementProcessor {
-
-    private static final String ATTRIBUTE_NAME = "hasRole";
-    private static final int    PRECEDENCE     = 300;
+public class HasRoleElementProcessor extends AbstractConditionalVisibilityElementProcessor {
 
     public static HasRoleElementProcessor create() {
         return new HasRoleElementProcessor();
     }
 
-    protected HasRoleElementProcessor() {
-        super(ATTRIBUTE_NAME);
-    }
+    private static final String ELEMENT_NAME = "hasRole";
+    private static final int    PRECEDENCE   = 300;
 
-    protected HasRoleElementProcessor(final String attrName) {
-        super(attrName);
+    protected HasRoleElementProcessor() {
+        super(ELEMENT_NAME);
     }
 
     @Override
     public int getPrecedence() {
         return PRECEDENCE;
+    }
+
+    @Override
+    public boolean removeHostElementIfVisible(final Arguments arguments, final Element element) {
+        return true;
     }
 
     @Override
@@ -53,11 +53,6 @@ public class HasRoleElementProcessor extends AbstractConditionalVisibilityElemen
         final String role = StringUtils.trim(element.getAttributeValue("name"));
         Validate.notEmpty(role, "value of 'name' must not be empty");
 
-        return SecurityUtils.getSubject().hasRole(role);
-    }
-
-    @Override
-    public boolean removeHostElementIfVisible(final Arguments arguments, final Element element) {
-        return true;
+        return ShiroFacade.hasRole(role);
     }
 }

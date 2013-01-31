@@ -15,38 +15,37 @@
  ****************************************************************************/
 package at.pollux.thymeleaf.shiro.processor.element;
 
-import org.apache.shiro.SecurityUtils;
 import org.thymeleaf.Arguments;
 import org.thymeleaf.dom.Element;
-import org.thymeleaf.processor.IProcessor;
 import org.thymeleaf.processor.element.AbstractConditionalVisibilityElementProcessor;
 import org.thymeleaf.util.StringUtils;
 import org.thymeleaf.util.Validate;
 
-import at.pollux.thymeleaf.shiro.processor.IConditionalVisibilityElementProcessor;
+import at.pollux.thymeleaf.shiro.dialect.ShiroFacade;
 
-public class HasAnyRolesElementProcessor extends AbstractConditionalVisibilityElementProcessor implements IConditionalVisibilityElementProcessor {
+public class HasAnyRolesElementProcessor extends AbstractConditionalVisibilityElementProcessor {
 
-    private static final String ATTRIBUTE_NAME  = "hasAnyRoles";
+    public static HasAnyRolesElementProcessor create() {
+        return new HasAnyRolesElementProcessor();
+    }
+
+    private static final String ELEMENT_NAME    = "hasAnyRoles";
     private static final int    PRECEDENCE      = 300;
 
     private static final String ROLES_DELIMITER = ",";
 
-    public static IProcessor create() {
-        return new HasAnyRolesElementProcessor();
-    }
-
     protected HasAnyRolesElementProcessor() {
-        super(ATTRIBUTE_NAME);
-    }
-
-    protected HasAnyRolesElementProcessor(final String attrName) {
-        super(attrName);
+        super(ELEMENT_NAME);
     }
 
     @Override
     public int getPrecedence() {
         return PRECEDENCE;
+    }
+
+    @Override
+    public boolean removeHostElementIfVisible(final Arguments arguments, final Element element) {
+        return true;
     }
 
     @Override
@@ -56,20 +55,6 @@ public class HasAnyRolesElementProcessor extends AbstractConditionalVisibilityEl
         final String rawRoles = StringUtils.trim(element.getAttributeValue("name"));
         Validate.notEmpty(rawRoles, "value of 'name' must not be empty");
 
-        final String[] splittedRoles = StringUtils.split(rawRoles, ROLES_DELIMITER);
-        for (final String rawRole : splittedRoles) {
-            final String role = StringUtils.trim(rawRole);
-            Validate.notEmpty(role, "value of 'name' (" + rawRoles + ") seems to be malformed");
-            if (SecurityUtils.getSubject().hasRole(role)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    @Override
-    public boolean removeHostElementIfVisible(final Arguments arguments, final Element element) {
-        return true;
+        return ShiroFacade.hasAnyRoles(StringUtils.split(rawRoles, ROLES_DELIMITER));
     }
 }

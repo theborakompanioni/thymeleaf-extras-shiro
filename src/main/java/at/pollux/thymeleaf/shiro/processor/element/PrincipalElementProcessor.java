@@ -13,28 +13,37 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ****************************************************************************/
-package at.pollux.thymeleaf.shiro.processor;
+package at.pollux.thymeleaf.shiro.processor.element;
 
 import org.thymeleaf.Arguments;
 import org.thymeleaf.dom.Element;
-import org.thymeleaf.processor.attr.AbstractConditionalVisibilityAttrProcessor;
+import org.thymeleaf.processor.element.AbstractTextChildModifierElementProcessor;
 
-public abstract class InvertVisibilityAttrProcessor<T extends IConditionalVisibilityAttrProcessor> extends AbstractConditionalVisibilityAttrProcessor implements IConditionalVisibilityAttrProcessor {
+import at.pollux.thymeleaf.shiro.dialect.ShiroFacade;
 
-    private final T delegate;
+public class PrincipalElementProcessor extends AbstractTextChildModifierElementProcessor {
 
-    public InvertVisibilityAttrProcessor(final String attributeName, final T delegate) {
-        super(attributeName);
-        this.delegate = delegate;
+    public static final PrincipalElementProcessor create() {
+        return new PrincipalElementProcessor();
+    }
+
+    private static final String ELEMENT_NAME = "principal";
+    private static final int    PRECEDENCE   = 300;
+
+    protected PrincipalElementProcessor() {
+        super(ELEMENT_NAME);
     }
 
     @Override
     public int getPrecedence() {
-        return delegate.getPrecedence();
+        return PRECEDENCE;
     }
 
     @Override
-    public boolean isVisible(final Arguments arguments, final Element element, final String attributeName) {
-        return !delegate.isVisible(arguments, element, attributeName);
+    protected String getText(final Arguments arguments, final Element element) {
+        final String type = element.getAttributeValue("type");
+        final String property = element.getAttributeValue("property");
+
+        return ShiroFacade.getPrincipalText(type, property);
     }
 }

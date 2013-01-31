@@ -15,28 +15,23 @@
  ****************************************************************************/
 package at.pollux.thymeleaf.shiro.processor.element;
 
-import org.apache.shiro.SecurityUtils;
 import org.thymeleaf.Arguments;
 import org.thymeleaf.dom.Element;
 import org.thymeleaf.processor.element.AbstractConditionalVisibilityElementProcessor;
 
-import at.pollux.thymeleaf.shiro.processor.IConditionalVisibilityElementProcessor;
+import at.pollux.thymeleaf.shiro.dialect.ShiroFacade;
 
-public class AuthenticatedElementProcessor extends AbstractConditionalVisibilityElementProcessor implements IConditionalVisibilityElementProcessor {
-
-    private static final String ATTRIBUTE_NAME = "authenticated";
-    private static final int    PRECEDENCE     = 1000;
+public class AuthenticatedElementProcessor extends AbstractConditionalVisibilityElementProcessor {
 
     public static AuthenticatedElementProcessor create() {
         return new AuthenticatedElementProcessor();
     }
 
-    protected AuthenticatedElementProcessor() {
-        super(ATTRIBUTE_NAME);
-    }
+    private static final String ELEMENT_NAME = "authenticated";
+    private static final int    PRECEDENCE   = 300;
 
-    protected AuthenticatedElementProcessor(final String elementName) {
-        super(elementName);
+    protected AuthenticatedElementProcessor() {
+        super(ELEMENT_NAME);
     }
 
     @Override
@@ -45,12 +40,12 @@ public class AuthenticatedElementProcessor extends AbstractConditionalVisibility
     }
 
     @Override
-    public boolean isVisible(final Arguments arguments, final Element element) {
-        return SecurityUtils.getSubject().isAuthenticated();
+    public boolean removeHostElementIfVisible(final Arguments arguments, final Element element) {
+        return true;
     }
 
     @Override
-    public boolean removeHostElementIfVisible(final Arguments arguments, final Element element) {
-        return true;
+    public boolean isVisible(final Arguments arguments, final Element element) {
+        return ShiroFacade.isAuthenticated();
     }
 }
