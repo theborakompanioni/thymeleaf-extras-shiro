@@ -3,108 +3,98 @@ See [http://shiro.apache.org/tags](http://shiro.apache.org/tags) and
 
 ## The `guest` tag
     <shiro:guest>
-        Hi there! Please <a href="login.jsp">Login</a> or <a href="signup.jsp">Signup</a> today!
+        <p>Please <a href="login.html">Login</a></p>
     </shiro:guest>
 
-turns into:
+preferred approach:
 
-    <div shiro:guest="">
-        Hi there! Please <a href="login.jsp">Login</a> or <a href="signup.jsp">Signup</a> today!
-    </div>
+    <p shiro:guest="">Please <a href="login.html">Login</a></p>
 
 ## The `user` tag
     <shiro:user>
-        Welcome back John!  Not John? Click <a href="login.jsp">here<a> to login.
+        <div>Welcome back John!  Not John? Click <a href="login.html">here<a> to login.</div>
     </shiro:user>
 
-turns to:
+preferred approach:
 
     <div shiro:user="">
-        Welcome back John!  Not John? Click <a href="login.jsp">here<a> to login.
+        Welcome back John!  Not John? Click <a href="login.html">here<a> to login.
     </div>
 
 ## The `authenticated` tag
     <shiro:authenticated>
-        <a href="updateAccount.jsp">Update your contact information</a>.
+        <a href="updateAccount.html">Update your contact information</a>.
     </shiro:authenticated>
 
-turns to:
+preferred approach:
 
-    <div shiro:authenticated="">
-        <a href="updateAccount.jsp">Update your contact information</a>.
-    </div>
+    <a shiro:authenticated="" href="updateAccount.html">Update your contact information</a>
 
 ## The `notAuthenticated` tag
     <shiro:notAuthenticated>
-        Please <a href="login.jsp">login</a> in order to update your credit card information.
+        <p>Please <a href="login.html">login</a> in order to update your credit card information.</p>
     </shiro:notAuthenticated>
 
-turns to:
+preferred approach:
 
-    <div shiro:notAuthenticated="">
-        Please <a href="login.jsp">login</a> in order to update your credit card information.
-    </div>
+    <p shiro:notAuthenticated="">
+        Please <a href="login.html">login</a> in order to update your credit card information.
+    </p>
 
 ## The `principal` tag
-    <div>Hello, <shiro:principal/>, how are you today?</div>
+    <p>Hello, <shiro:principal/>, how are you today?</p>
 
-turns to:
+preferred approach:
 
-    <div>Hello, <span shiro:principal="" />, how are you today?</div>
+    <p>Hello, <span shiro:principal="" />, how are you today?</p>
 
-**Typed principal and principal property is not supported yet**
+**Typed principal and principal property are also supported**
 
 ## The `hasRole` tag
     <shiro:hasRole name="administrator">
-        <a href="admin.jsp">Administer the system</a>
+        <a href="admin.html">Administer the system</a>
     </shiro:hasRole>
 
-turns to:
+preferred approach:
 
-    <div shiro:hasRole="administrator">
-        <a href="admin.jsp">Administer the system</a>
-    </div>
+    <a shiro:hasRole="administrator" href="admin.html">Administer the system</a>
 
 ## The `lacksRole` tag
     <shiro:lacksRole name="administrator">
-        Sorry, you are not allowed to administer the system.
+        <p>Sorry, you are not allowed to administer the system.</p>
     </shiro:lacksRole>
 
-turns to:
+preferred approach:
 
-    <div shiro:lacksRole="administrator">
+    <p shiro:lacksRole="administrator">
         Sorry, you are not allowed to administer the system.
-    </div>
+    </p>
 
 ## The `hasAnyRoles` tag
     <shiro:hasAnyRoles name="developer, project manager, administrator">
-        You are either a developer, project manager, or administrator.
+        <div class="message">You are either a developer, project manager, or administrator.</div>
     </shiro:lacksRole>
 
-turns to:
+preferred approach:
 
-    <div shiro:hasAnyRoles="developer, project manager, administrator">
+    <div shiro:hasAnyRoles="developer, project manager, administrator" class="message">
         You are either a developer, project manager, or administrator.
     </div>
 
 ## The `hasPermission` tag
     <shiro:hasPermission name="user:create">
-        <a href="createUser.jsp">Create a new User</a>
+        <a href="createUser.html">Create a new User</a>
     </shiro:hasPermission>
 
-turns to:
+preferred approach:
 
-    <div shiro:hasPermission="user:create">
-        <a href="createUser.jsp">Create a new User</a>
-    </div>
+    <a shiro:hasPermission="user:create" href="createUser.html">Create a new User</a>
 
 ## The `lacksPermission` tag
     <shiro:lacksPermission name="user:delete">
-        Sorry, you are not allowed to delete user accounts.
+        <p>Sorry, you are not allowed to delete user accounts.</p>
     </shiro:hasPermission>
 
-turns to:
+preferred approach:
 
-    <div shiro:lacksPermission="user:delete">
-        Sorry, you are not allowed to delete user accounts.
-    </div>
+    <p shiro:lacksPermission="user:delete">Sorry, you are not allowed to delete user accounts.</p>
