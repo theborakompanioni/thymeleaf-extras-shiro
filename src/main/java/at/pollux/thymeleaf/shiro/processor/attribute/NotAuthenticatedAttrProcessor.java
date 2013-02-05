@@ -28,7 +28,7 @@ public class NotAuthenticatedAttrProcessor extends AbstractConditionalVisibility
     }
 
     private static final String ATTRIBUTE_NAME = "notAuthenticated";
-    private static final int    PRECEDENCE     = 300;
+    private static final int PRECEDENCE = 300;
 
     protected NotAuthenticatedAttrProcessor() {
         super(ATTRIBUTE_NAME);

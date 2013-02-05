@@ -28,7 +28,7 @@ public class AuthenticatedElementProcessor extends AbstractConditionalVisibility
     }
 
     private static final String ELEMENT_NAME = "authenticated";
-    private static final int    PRECEDENCE   = 300;
+    private static final int PRECEDENCE = 300;
 
     protected AuthenticatedElementProcessor() {
         super(ELEMENT_NAME);

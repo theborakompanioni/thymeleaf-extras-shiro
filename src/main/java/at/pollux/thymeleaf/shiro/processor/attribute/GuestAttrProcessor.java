@@ -28,7 +28,7 @@ public class GuestAttrProcessor extends AbstractConditionalVisibilityAttrProcess
     }
 
     private static final String ATTRIBUTE_NAME = "guest";
-    private static final int    PRECEDENCE     = 300;
+    private static final int PRECEDENCE = 300;
 
     protected GuestAttrProcessor() {
         super(ATTRIBUTE_NAME);

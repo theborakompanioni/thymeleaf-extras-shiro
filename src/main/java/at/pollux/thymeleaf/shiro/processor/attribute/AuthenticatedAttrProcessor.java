@@ -28,7 +28,7 @@ public class AuthenticatedAttrProcessor extends AbstractConditionalVisibilityAtt
     }
 
     private static final String ATTRIBUTE_NAME = "authenticated";
-    private static final int    PRECEDENCE     = 300;
+    private static final int PRECEDENCE = 300;
 
     protected AuthenticatedAttrProcessor() {
         super(ATTRIBUTE_NAME);

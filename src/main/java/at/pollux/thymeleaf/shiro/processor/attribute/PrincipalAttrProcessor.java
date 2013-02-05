@@ -28,7 +28,7 @@ public class PrincipalAttrProcessor extends AbstractTextChildModifierAttrProcess
     }
 
     private static final String ATTRIBUTE_NAME = "principal";
-    private static final int    PRECEDENCE     = 300;
+    private static final int PRECEDENCE = 300;
 
     protected PrincipalAttrProcessor() {
         super(ATTRIBUTE_NAME);

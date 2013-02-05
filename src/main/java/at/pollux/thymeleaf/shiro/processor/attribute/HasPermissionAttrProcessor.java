@@ -30,7 +30,7 @@ public class HasPermissionAttrProcessor extends AbstractConditionalVisibilityAtt
     }
 
     private static final String ATTRIBUTE_NAME = "hasPermission";
-    private static final int    PRECEDENCE     = 300;
+    private static final int PRECEDENCE = 300;
 
     protected HasPermissionAttrProcessor() {
         super(ATTRIBUTE_NAME);

@@ -28,7 +28,7 @@ public class UserAttrProcessor extends AbstractConditionalVisibilityAttrProcesso
     }
 
     private static final String ATTRIBUTE_NAME = "user";
-    private static final int    PRECEDENCE     = 300;
+    private static final int PRECEDENCE = 300;
 
     protected UserAttrProcessor() {
         super(ATTRIBUTE_NAME);

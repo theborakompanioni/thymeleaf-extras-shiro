@@ -28,7 +28,7 @@ public class PrincipalElementProcessor extends AbstractTextChildModifierElementP
     }
 
     private static final String ELEMENT_NAME = "principal";
-    private static final int    PRECEDENCE   = 300;
+    private static final int PRECEDENCE = 300;
 
     protected PrincipalElementProcessor() {
         super(ELEMENT_NAME);

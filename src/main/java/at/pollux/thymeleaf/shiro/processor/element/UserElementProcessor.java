@@ -28,7 +28,7 @@ public class UserElementProcessor extends AbstractConditionalVisibilityElementPr
     }
 
     private static final String ELEMENT_NAME = "user";
-    private static final int    PRECEDENCE   = 300;
+    private static final int PRECEDENCE = 300;
 
     protected UserElementProcessor() {
         super(ELEMENT_NAME);

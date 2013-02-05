@@ -30,7 +30,7 @@ public class LacksPermissionAttrProcessor extends AbstractConditionalVisibilityA
     }
 
     private static final String ATTRIBUTE_NAME = "lacksPermission";
-    private static final int    PRECEDENCE     = 300;
+    private static final int PRECEDENCE = 300;
 
     protected LacksPermissionAttrProcessor() {
         super(ATTRIBUTE_NAME);

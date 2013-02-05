@@ -30,7 +30,7 @@ public class LacksRoleAttrProcessor extends AbstractConditionalVisibilityAttrPro
     }
 
     private static final String ATTRIBUTE_NAME = "lacksRole";
-    private static final int    PRECEDENCE     = 300;
+    private static final int PRECEDENCE = 300;
 
     protected LacksRoleAttrProcessor() {
         super(ATTRIBUTE_NAME);

@@ -30,7 +30,7 @@ public class HasRoleAttrProcessor extends AbstractConditionalVisibilityAttrProce
     }
 
     private static final String ATTRIBUTE_NAME = "hasRole";
-    private static final int    PRECEDENCE     = 300;
+    private static final int PRECEDENCE = 300;
 
     protected HasRoleAttrProcessor() {
         super(ATTRIBUTE_NAME);

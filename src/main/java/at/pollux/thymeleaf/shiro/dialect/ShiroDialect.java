@@ -44,7 +44,7 @@ import at.pollux.thymeleaf.shiro.processor.element.PrincipalElementProcessor;
 import at.pollux.thymeleaf.shiro.processor.element.UserElementProcessor;
 
 public class ShiroDialect extends AbstractDialect {
-    private static final String          PREFIX     = "shiro";
+    private static final String PREFIX = "shiro";
     private static final Set<IProcessor> processors = new HashSet<IProcessor>();
     static {
         processors.add(PrincipalAttrProcessor.create());

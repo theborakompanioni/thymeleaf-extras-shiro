@@ -30,7 +30,7 @@ public class HasPermissionElementProcessor extends AbstractConditionalVisibility
     }
 
     private static final String ELEMENT_NAME = "hasPermission";
-    private static final int    PRECEDENCE   = 300;
+    private static final int PRECEDENCE = 300;
 
     protected HasPermissionElementProcessor() {
         super(ELEMENT_NAME);
