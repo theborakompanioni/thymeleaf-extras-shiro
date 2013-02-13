@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Shiro Tags Usage With Thymeleaf</title>
+</head>
+<body>
+
+	<h3>shiro:guest</h3>
+	<shiro:guest>
+	    <p>Hi there!  Please <a href="login.html">Login</a> or <a href="signup.html">Signup</a> today!</p>
+	</shiro:guest>
+	<p shiro:guest="">
+	    Hi there!  Please <a href="login.html">Login</a> or <a href="signup.html">Signup</a> today!
+	</p>
+	
+	<h3>shiro:user</h3>
+	<shiro:user>
+	    <div>Welcome back John!  Not John? Click <a href="login.html">here</a> to login.</div>
+	</shiro:user>
+	<div shiro:user="">
+	    Welcome back John!  Not John? Click <a href="login.html">here</a> to login.
+	</div>
+	
+	<h3>shiro:authenticated</h3>
+	<shiro:authenticated>
+	    <a href="updateAccount.html">Update your contact information</a>.
+	</shiro:authenticated>
+	<div shiro:authenticated="">
+	    <a href="updateAccount.html">Update your contact information</a>.
+	</div>
+	
+	<h3>shiro:notAuthenticated</h3>
+	<shiro:notAuthenticated>
+	    Please <a href="login.html">login</a> in order to update your credit card information.
+	</shiro:notAuthenticated>
+	<p shiro:notAuthenticated="">
+	    Please <a href="login.html">login</a> in order to update your credit card information.
+	</p>
+	
+	<h3>shiro:principal</h3>
+	<p>Hello, <shiro:principal/>, how are you today?</p>
+	<p>User ID: <shiro:principal type="java.lang.Integer"/></p>
+	
+	<p>Hello, <span shiro:principal="" />, how are you today?</p>
+	<p>User ID: <span shiro:principal="" type="java.lang.Integer"/></p>
+	
+	
+	<h3>shiro:hasRole</h3>
+	<shiro:hasRole name="administrator">
+	    <a href="admin.html">Administer the system</a>
+	</shiro:hasRole>
+	<div shiro:hasRole="administrator">
+	    <a href="admin.html">Administer the system</a>
+	</div>
+	
+	<h3>shiro:lacksRole</h3>
+	<shiro:lacksRole name="administrator">
+	    Sorry, you are not allowed to administer the system.
+	</shiro:lacksRole>
+	<div shiro:lacksRole="administrator">
+	    Sorry, you are not allowed to administer the system.
+	</div>
+	
+	<h3>shiro:lacksRole</h3>
+	<shiro:hasAnyRoles name="developer, project manager, administrator">
+	    <p>You are either a developer, project manager, or administrator.</p>
+	</shiro:hasAnyRoles>
+	<p shiro:hasAnyRoles="developer, project manager, administrator">
+	    You are either a developer, project manager, or administrator.
+	</p>
+	
+	<h3>shiro:hasPermission</h3>
+	<shiro:hasPermission name="user:create">
+	    <a href="createUser.html">Create a new User</a>
+	</shiro:hasPermission>
+	<a shiro:hasPermission="user:create" href="createUser.html">Create a new User</a>
+	
+	<h3>shiro:lacksPermission</h3>
+	<shiro:lacksPermission name="user:delete">
+	    Sorry, you are not allowed to delete user accounts.
+	</shiro:lacksPermission>
+	<span shiro:lacksPermission="user:delete">
+	    Sorry, you are not allowed to delete user accounts.
+	</span>
+
+</body>
+</html>
