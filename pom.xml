@@ -22,7 +22,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.theborakompanioni</groupId>
     <artifactId>thymeleaf-extras-shiro</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.2</version>
     <packaging>jar</packaging>
     <name>thymeleaf-extras-shiro</name>
     <description>Shiro taglib integration for Thymeleaf</description>
