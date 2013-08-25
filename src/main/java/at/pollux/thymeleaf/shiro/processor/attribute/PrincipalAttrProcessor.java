@@ -43,7 +43,12 @@ public class PrincipalAttrProcessor extends AbstractTextChildModifierAttrProcess
     protected String getText(final Arguments arguments, final Element element, final String attributeName) {
         final String type = element.getAttributeValue("type");
         final String property = element.getAttributeValue("property");
-
+	if (element.hasAttribute("type")) {
+	    element.removeAttribute("type");
+	}
+	if (element.hasAttribute("property")) {
+	    element.removeAttribute("property");
+	}
         return ShiroFacade.getPrincipalText(type, property);
     }
 }
