@@ -29,7 +29,7 @@ public class HasAnyRolesElementProcessor extends AbstractConditionalVisibilityEl
         return new HasAnyRolesElementProcessor();
     }
 
-    private static final String ELEMENT_NAME = "hasAnyRoles";
+    private static final String ELEMENT_NAME = "hasanyroles";
     private static final int PRECEDENCE = 300;
 
     private static final String ROLES_DELIMITER = ",";

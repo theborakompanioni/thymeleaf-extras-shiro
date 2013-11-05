@@ -29,7 +29,7 @@ public class LacksPermissionElementProcessor extends AbstractConditionalVisibili
         return new LacksPermissionElementProcessor();
     }
 
-    private static final String ELEMENT_NAME = "lacksPermission";
+    private static final String ELEMENT_NAME = "lackspermission";
     private static final int PRECEDENCE = 300;
 
     protected LacksPermissionElementProcessor() {

@@ -27,7 +27,7 @@ public class NotAuthenticatedElementProcessor extends AbstractConditionalVisibil
         return new NotAuthenticatedElementProcessor();
     }
 
-    private static final String ELEMENT_NAME = "notAuthenticated";
+    private static final String ELEMENT_NAME = "notauthenticated";
     private static final int PRECEDENCE = 300;
 
     protected NotAuthenticatedElementProcessor() {

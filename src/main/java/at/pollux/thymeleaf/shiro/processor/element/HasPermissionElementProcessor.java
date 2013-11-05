@@ -29,7 +29,7 @@ public class HasPermissionElementProcessor extends AbstractConditionalVisibility
         return new HasPermissionElementProcessor();
     }
 
-    private static final String ELEMENT_NAME = "hasPermission";
+    private static final String ELEMENT_NAME = "haspermission";
     private static final int PRECEDENCE = 300;
 
     protected HasPermissionElementProcessor() {

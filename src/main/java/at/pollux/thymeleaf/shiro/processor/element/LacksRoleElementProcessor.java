@@ -29,7 +29,7 @@ public class LacksRoleElementProcessor extends AbstractConditionalVisibilityElem
         return new LacksRoleElementProcessor();
     }
 
-    private static final String ELEMENT_NAME = "lacksRole";
+    private static final String ELEMENT_NAME = "lacksrole";
     private static final int PRECEDENCE = 300;
 
     protected LacksRoleElementProcessor() {
