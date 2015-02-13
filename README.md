@@ -1,103 +1,114 @@
-Shiro Tags Usage With Thymeleaf
+thymeleaf-extras-shiro
 ---
-See [http://shiro.apache.org/tags](http://shiro.apache.org/tags) and
-[http://shiro.apache.org/web.html#Web-JSP%252FGSPTagLibrary](http://shiro.apache.org/web.html)
-* * *
+A [Thymeleaf](http://www.thymeleaf.org/) dialect for [Apache Shiro tags](http://shiro.apache.org/tags).
 
-### The `guest` tag
-    <shiro:guest>
-        <p>Please <a href="login.html">Login</a></p>
-    </shiro:guest>
 
-preferred approach:
+## Example
+```html
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
 
-    <p shiro:guest="">Please <a href="login.html">Login</a></p>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 
-### The `user` tag
-    <shiro:user>
-        <div>Welcome back John!  Not John? Click <a href="login.html">here<a> to login.</div>
-    </shiro:user>
+  <head>
+    <title>thymeleaf-extras-shiro</title>
+  </head>
 
-preferred approach:
+  <body>
+    <p shiro:guest="">Please <a href="login.html">login</a></p>
+    <p shiro:authenticated="">Hello, <span shiro:principal=""></span>, how are you today?</p>
+  </body>
 
-    <div shiro:user="">
-        Welcome back John!  Not John? Click <a href="login.html">here<a> to login.
-    </div>
+</html>
+```
 
-### The `authenticated` tag
-    <shiro:authenticated>
-        <a href="updateAccount.html">Update your contact information</a>.
-    </shiro:authenticated>
+### Tags
 
-preferred approach:
+The following examples show how to integrate the tags in your Thymeleaf templates.
+These are all implementations of the examples given in the [JSP / GSP Tag Library Section](http://shiro.apache.org/web.html#Web-JSP%252FGSPTagLibrary) of the Apache Shiro documentation.
 
-    <a shiro:authenticated="" href="updateAccount.html">Update your contact information</a>
+Tags can be written in attribute or element notation:
 
-### The `notAuthenticated` tag
-    <shiro:notAuthenticated>
-        <p>Please <a href="login.html">login</a> in order to update your credit card information.</p>
-    </shiro:notAuthenticated>
+##### Attribute
+```html
+<p shiro:anyTag>
+  Goodbye cruel World!
+</p>
+```
 
-preferred approach:
+##### Element
+```html
+<shiro:anyTag>
+  <p>Hello World!</p>
+</shiro:anyTag>
+```
 
-    <p shiro:notAuthenticated="">
-        Please <a href="login.html">login</a> in order to update your credit card information.
-    </p>
+#### The `guest` tag
+```html
+<p shiro:guest="">Please <a href="login.html">Login</a></p>
+```
 
-### The `principal` tag
-    <p>Hello, <shiro:principal/>, how are you today?</p>
+#### The `user` tag
+```html
+<div shiro:user="">
+  Welcome back John! Not John? Click <a href="login.html">here<a> to login.
+</div>
+```
 
-preferred approach:
+#### The `authenticated` tag
+```html
+<a shiro:authenticated="" href="updateAccount.html">Update your contact information</a>
+```
 
-    <p>Hello, <span shiro:principal="" />, how are you today?</p>
+#### The `notAuthenticated` tag
+```html
+<p shiro:notAuthenticated="">
+  Please <a href="login.html">login</a> in order to update your credit card information.
+</p>
+```
+
+#### The `principal` tag
+```html
+<p>Hello, <span shiro:principal=""></span>, how are you today?</p>
+```
+or
+```html
+<p>Hello, <shiro:principal/>, how are you today?</p>
+```
 
 **Typed principal and principal property are also supported**
 
-### The `hasRole` tag
-    <shiro:hasRole name="administrator">
-        <a href="admin.html">Administer the system</a>
-    </shiro:hasRole>
+#### The `hasRole` tag
+```html
+<a shiro:hasRole="administrator" href="admin.html">Administer the system</a>
+```
 
-preferred approach:
+#### The `lacksRole` tag
+```html
+<p shiro:lacksRole="administrator">
+  Sorry, you are not allowed to administer the system.
+</p>
+```
 
-    <a shiro:hasRole="administrator" href="admin.html">Administer the system</a>
+#### The `hasAnyRoles` tag
+```html
+<div shiro:hasAnyRoles="developer, project manager, administrator" class="message">
+  You are either a developer, project manager, or administrator.
+</div>
+```
 
-### The `lacksRole` tag
-    <shiro:lacksRole name="administrator">
-        <p>Sorry, you are not allowed to administer the system.</p>
-    </shiro:lacksRole>
+#### The `hasPermission` tag
+```html
+<a shiro:hasPermission="user:create" href="createUser.html">Create a new User</a>
+```
 
-preferred approach:
+#### The `lacksPermission` tag
+```html
+<p shiro:lacksPermission="user:delete">Sorry, you are not allowed to delete user accounts.</p>
+```
 
-    <p shiro:lacksRole="administrator">
-        Sorry, you are not allowed to administer the system.
-    </p>
+License
+-------
 
-### The `hasAnyRoles` tag
-    <shiro:hasAnyRoles name="developer, project manager, administrator">
-        <div class="message">You are either a developer, project manager, or administrator.</div>
-    </shiro:lacksRole>
-
-preferred approach:
-
-    <div shiro:hasAnyRoles="developer, project manager, administrator" class="message">
-        You are either a developer, project manager, or administrator.
-    </div>
-
-### The `hasPermission` tag
-    <shiro:hasPermission name="user:create">
-        <a href="createUser.html">Create a new User</a>
-    </shiro:hasPermission>
-
-preferred approach:
-
-    <a shiro:hasPermission="user:create" href="createUser.html">Create a new User</a>
-
-### The `lacksPermission` tag
-    <shiro:lacksPermission name="user:delete">
-        <p>Sorry, you are not allowed to delete user accounts.</p>
-    </shiro:hasPermission>
-
-preferred approach:
-
-    <p shiro:lacksPermission="user:delete">Sorry, you are not allowed to delete user accounts.</p>
+The project is licensed under the Apache license. See
+[LICENSE](https://github.com/theborakompanioni/thymeleaf-extras-shiro/blob/master/LICENSE.md) for details.
