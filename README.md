@@ -1,14 +1,31 @@
 thymeleaf-extras-shiro
 ---
+
 A [Thymeleaf](http://www.thymeleaf.org/) dialect for [Apache Shiro](https://shiro.apache.org) [tags](https://shiro.apache.org/tags).
 
 
+## Download
+
+##### Maven
+```
+<dependency>
+    <groupId>com.github.theborakompanioni</groupId>
+    <artifactId>thymeleaf-extras-shiro</artifactId>
+    <version>1.1.0</version>
+</dependency>
+```
+##### Jar
+[Download](http://search.maven.org/#search|gav|1|g%3A%22com.github.theborakompanioni%22%20AND%20a%3A%22thymeleaf-extras-shiro%22) from Maven Central.
+
+##### Repository
+```
+git clone https://github.com/theborakompanioni/thymeleaf-extras-shiro.git
+```
+
 ## Example
 ```html
-<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html>
 
   <head>
     <title>thymeleaf-extras-shiro</title>
