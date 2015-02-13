@@ -49,14 +49,16 @@ Tags can be written in attribute or element notation:
 
 #### The `guest` tag
 ```html
-<p shiro:guest="">Please <a href="login.html">Login</a></p>
+<p shiro:guest="">
+  Please <a href="login.html">Login</a>
+</p>
 ```
 
 #### The `user` tag
 ```html
-<div shiro:user="">
+<p shiro:user="">
   Welcome back John! Not John? Click <a href="login.html">here<a> to login.
-</div>
+</p>
 ```
 
 #### The `authenticated` tag
@@ -80,7 +82,7 @@ or
 <p>Hello, <shiro:principal/>, how are you today?</p>
 ```
 
-**Typed principal and principal property are also supported**
+Typed principal and principal property are also supported.
 
 #### The `hasRole` tag
 ```html
@@ -96,9 +98,9 @@ or
 
 #### The `hasAnyRoles` tag
 ```html
-<div shiro:hasAnyRoles="developer, project manager, administrator" class="message">
+<p shiro:hasAnyRoles="developer, project manager, administrator" class="message">
   You are either a developer, project manager, or administrator.
-</div>
+</p>
 ```
 
 #### The `hasPermission` tag
@@ -108,7 +110,9 @@ or
 
 #### The `lacksPermission` tag
 ```html
-<p shiro:lacksPermission="user:delete">Sorry, you are not allowed to delete user accounts.</p>
+<p shiro:lacksPermission="user:delete">
+  Sorry, you are not allowed to delete user accounts.
+</p>
 ```
 
 License
