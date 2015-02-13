@@ -1,6 +1,6 @@
 thymeleaf-extras-shiro
 ---
-A [Thymeleaf](http://www.thymeleaf.org/) dialect for [Apache Shiro tags](http://shiro.apache.org/tags).
+A [Thymeleaf](http://www.thymeleaf.org/) dialect for [Apache Shiro](https://shiro.apache.org) [tags](https://shiro.apache.org/tags).
 
 
 ## Example
