@@ -16,7 +16,9 @@ A [Thymeleaf](http://www.thymeleaf.org/) dialect for [Apache Shiro tags](http://
 
   <body>
     <p shiro:guest="">Please <a href="login.html">login</a></p>
-    <p shiro:authenticated="">Hello, <span shiro:principal=""></span>, how are you today?</p>
+    <p shiro:authenticated="">
+      Hello, <span shiro:principal=""></span>, how are you today?
+    </p>
   </body>
 
 </html>
@@ -42,6 +44,8 @@ Tags can be written in attribute or element notation:
   <p>Hello World!</p>
 </shiro:anyTag>
 ```
+
+* * * 
 
 #### The `guest` tag
 ```html
