@@ -24,7 +24,7 @@ git clone https://github.com/theborakompanioni/thymeleaf-extras-shiro.git
 
 ## Example
 ```html
-<!DOCTYPE html>
+<!DOCTYPE html xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <html>
 
   <head>

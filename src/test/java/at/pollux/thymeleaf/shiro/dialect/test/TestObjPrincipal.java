@@ -16,19 +16,18 @@
 package at.pollux.thymeleaf.shiro.dialect.test;
 
 /**
- *
  * @author art
  */
 public class TestObjPrincipal {
-    
+
     private String name;
-    
+
     public TestObjPrincipal(String name) {
-	this.name = name;
+        this.name = name;
     }
 
     public String getName() {
-	return name;
+        return name;
     }
-    
+
 }

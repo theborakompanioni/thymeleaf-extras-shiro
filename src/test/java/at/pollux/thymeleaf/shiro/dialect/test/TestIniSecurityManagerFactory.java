@@ -17,26 +17,27 @@ package at.pollux.thymeleaf.shiro.dialect.test;
 
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.config.IniSecurityManagerFactory;
+
 import static org.apache.shiro.config.IniSecurityManagerFactory.INI_REALM_NAME;
+
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.realm.text.IniRealm;
 
 /**
- *
  * @author artgramlich
  */
 public class TestIniSecurityManagerFactory extends IniSecurityManagerFactory {
 
     public TestIniSecurityManagerFactory(Ini config) {
-	super(config);
+        super(config);
     }
 
     @Override
     protected Realm createRealm(Ini ini) {
-	//IniRealm realm = new IniRealm(ini); changed to support SHIRO-322
-	IniRealm realm = new TestIniRealm();
-	realm.setName(INI_REALM_NAME);
-	realm.setIni(ini); //added for SHIRO-322
-	return realm;
+        //IniRealm realm = new IniRealm(ini); changed to support SHIRO-322
+        IniRealm realm = new TestIniRealm();
+        realm.setName(INI_REALM_NAME);
+        realm.setIni(ini); //added for SHIRO-322
+        return realm;
     }
 }

@@ -16,47 +16,45 @@
 package at.pollux.thymeleaf.shiro.dialect.test;
 
 import java.util.concurrent.atomic.AtomicInteger;
+
 import org.apache.shiro.authc.SimpleAccount;
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.realm.text.IniRealm;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 
 /**
- *
  * @author art
  */
 public class TestIniRealm extends IniRealm {
-    
+
     private AtomicInteger counter = new AtomicInteger();
 
     public TestIniRealm() {
     }
 
     public TestIniRealm(String resourcePath) {
-	super(resourcePath);
+        super(resourcePath);
     }
 
     public TestIniRealm(Ini ini) {
-	super(ini);
+        super(ini);
     }
 
     @Override
     protected void add(SimpleAccount account) {
-	String username = (String)account.getPrincipals().getPrimaryPrincipal();
+        String username = (String) account.getPrincipals().getPrimaryPrincipal();
 
-	// Let's add some additional principals for testing
-	SimplePrincipalCollection principalCollection = new SimplePrincipalCollection();
-	principalCollection.addAll(account.getPrincipals());
-	principalCollection.add(counter.getAndIncrement(), "integerRealm");
-	TestObjPrincipal objPrinc = new TestObjPrincipal(username.toUpperCase()+" "+username.toUpperCase());
-	principalCollection.add(objPrinc, "objRealm");
-	account.setPrincipals(principalCollection);
+        // Let's add some additional principals for testing
+        SimplePrincipalCollection principalCollection = new SimplePrincipalCollection();
+        principalCollection.addAll(account.getPrincipals());
+        principalCollection.add(counter.getAndIncrement(), "integerRealm");
+        TestObjPrincipal objPrinc = new TestObjPrincipal(username.toUpperCase() + " " + username.toUpperCase());
+        principalCollection.add(objPrinc, "objRealm");
+        account.setPrincipals(principalCollection);
 
-	
 
-	super.add(account); //To change body of generated methods, choose Tools | Templates.
+        super.add(account); //To change body of generated methods, choose Tools | Templates.
     }
-    
 
-    
+
 }
