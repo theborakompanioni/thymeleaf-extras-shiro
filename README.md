@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/theborakompanioni/thymeleaf-extras-shiro.svg)](https://travis-ci.org/theborakompanioni/thymeleaf-extras-shiro)
+
 thymeleaf-extras-shiro
 ---
 
