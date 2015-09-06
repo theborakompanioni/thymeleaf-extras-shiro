@@ -117,7 +117,7 @@ Typed principal and principal property are also supported.
 
 #### The `hasAnyRoles` tag
 ```html
-<p shiro:hasAnyRoles="developer, project manager, administrator" class="message">
+<p shiro:hasAnyRoles="developer, project manager, administrator">
   You are either a developer, project manager, or administrator.
 </p>
 ```
@@ -134,8 +134,14 @@ Typed principal and principal property are also supported.
 </p>
 ```
 
+#### The `hasAnyPermissions` tag
+```html
+<p shiro:hasAnyPermissions="user:create, user:delete">
+  You can create or delete users.
+</p>
+```
+
 License
 -------
-
 The project is licensed under the Apache license. See
 [LICENSE](https://github.com/theborakompanioni/thymeleaf-extras-shiro/blob/master/LICENSE.md) for details.

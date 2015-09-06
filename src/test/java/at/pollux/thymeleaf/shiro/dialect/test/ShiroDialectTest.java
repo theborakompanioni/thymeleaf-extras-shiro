@@ -363,6 +363,52 @@ public class ShiroDialectTest extends AbstractShiroTest {
 
     }
 
+
+    @Test
+    public void testHasAnyPermissions() {
+        Subject subjectUnderTest = new Subject.Builder(getSecurityManager()).buildSubject();
+        setSubject(subjectUnderTest);
+
+        Context context = new Context();
+        String result;
+
+        // Guest user
+        result = templateEngine.process(TEST_TEMPL, context);
+        assertFalse(result.contains("shiro:"));
+        assertFalse(result.contains("HASANYPERMISSIONS1"));
+        assertFalse(result.contains("HASANYPERMISSIONS2"));
+
+        // Logged in user 1
+        subjectUnderTest.login(new UsernamePasswordToken(USER1, PASS1));
+        assertTrue(subjectUnderTest.isPermitted("permtype1:permaction1:perminst1")); //sanity
+        assertTrue(subjectUnderTest.isPermitted("permtype1:permaction1:xyz")); //sanity
+        result = templateEngine.process(TEST_TEMPL, context);
+        assertFalse(result.contains("shiro:"));
+        assertTrue(result.contains("HASANYPERMISSIONS1"));
+        assertTrue(result.contains("HASANYPERMISSIONS2"));
+        subjectUnderTest.logout();
+
+        // Logged in user 2
+        subjectUnderTest.login(new UsernamePasswordToken(USER2, PASS2));
+        assertTrue(subjectUnderTest.isPermitted("permtype1:permaction1:perminst1")); //sanity
+        assertFalse(subjectUnderTest.isPermitted("permtype1:permaction1:xyz")); //sanity
+        result = templateEngine.process(TEST_TEMPL, context);
+        assertFalse(result.contains("shiro:"));
+        assertTrue(result.contains("HASANYPERMISSIONS1"));
+        assertTrue(result.contains("HASANYPERMISSIONS2"));
+        subjectUnderTest.logout();
+
+        // Logged in user 3
+        subjectUnderTest.login(new UsernamePasswordToken(USER3, PASS3));
+        assertFalse(subjectUnderTest.isPermitted("permtype1:permaction1:perminst1")); //sanity
+        assertFalse(subjectUnderTest.isPermitted("permtype1:permaction1:xyz")); //sanity
+        result = templateEngine.process(TEST_TEMPL, context);
+        assertFalse(result.contains("shiro:"));
+        assertFalse(result.contains("HASANYPERMISSIONS1"));
+        assertFalse(result.contains("HASANYPERMISSIONS2"));
+        subjectUnderTest.logout();
+    }
+
     @Test
     public void testPermissions() {
         Subject subjectUnderTest = new Subject.Builder(getSecurityManager()).buildSubject();

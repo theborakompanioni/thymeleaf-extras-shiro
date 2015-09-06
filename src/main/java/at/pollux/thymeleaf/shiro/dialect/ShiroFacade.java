@@ -1,12 +1,12 @@
 /*****************************************************************************
  * Copyright (c) 2013, theborakompanioni (http://www.example.org)
- * 
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -15,13 +15,13 @@
  ****************************************************************************/
 package at.pollux.thymeleaf.shiro.dialect;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
+import org.thymeleaf.util.StringUtils;
+
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
-
-import org.apache.shiro.SecurityUtils;
-import org.thymeleaf.util.StringUtils;
-import org.thymeleaf.util.Validate;
 
 public final class ShiroFacade {
     public static boolean isAuthenticated() {
@@ -58,8 +58,21 @@ public final class ShiroFacade {
 
     public static boolean hasAnyRoles(final String... roles) {
         if (SecurityUtils.getSubject() != null) {
+            final Subject subject = SecurityUtils.getSubject();
             for (final String role : roles) {
-                if (SecurityUtils.getSubject().hasRole(StringUtils.trim(role))) {
+                if (subject.hasRole(StringUtils.trim(role))) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static boolean hasAnyPermissions(final String... permissions) {
+        if (SecurityUtils.getSubject() != null) {
+            final Subject subject = SecurityUtils.getSubject();
+            for (final String permission : permissions) {
+                if (subject.isPermitted(permission)) {
                     return true;
                 }
             }
@@ -87,14 +100,16 @@ public final class ShiroFacade {
     }
 
     public static Object getPrincipalFromClassName(final String type) {
-        Object principal = null;
+        Object principal;
 
         try {
             final Class<?> cls = Class.forName(type);
             principal = SecurityUtils.getSubject().getPrincipals().oneByType(cls);
         } catch (final ClassNotFoundException e) {
-            Validate.isTrue(false, "Unable to find class for name [" + type + "]");
+            String message = "Unable to find class for name [" + type + "]";
+            throw new IllegalArgumentException(message, e);
         }
+
         return principal;
     }
 
@@ -108,10 +123,10 @@ public final class ShiroFacade {
                 }
             }
         } catch (final Exception e) {
-            Validate.isTrue(false, "Error reading property [" + property + "] from principal of type [" + principal.getClass().getName() + "]");
+            String message = "Error reading property [" + property + "] from principal of type [" + principal.getClass().getName() + "]";
+            throw new IllegalArgumentException(message, e);
         }
 
-        Validate.isTrue(false, "Property [" + property + "] not found in principal of type [" + principal.getClass().getName() + "]");
-        return "";
+        throw new IllegalArgumentException("Property [" + property + "] not found in principal of type [" + principal.getClass().getName() + "]");
     }
 }

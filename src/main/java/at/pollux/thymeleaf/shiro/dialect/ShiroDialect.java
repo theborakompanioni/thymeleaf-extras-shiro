@@ -1,12 +1,12 @@
 /*****************************************************************************
  * Copyright (c) 2013, theborakompanioni (http://www.example.org)
- * 
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -15,37 +15,19 @@
  ****************************************************************************/
 package at.pollux.thymeleaf.shiro.dialect;
 
+import at.pollux.thymeleaf.shiro.processor.attribute.*;
+import at.pollux.thymeleaf.shiro.processor.element.*;
+import org.thymeleaf.dialect.AbstractDialect;
+import org.thymeleaf.processor.IProcessor;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.thymeleaf.dialect.AbstractDialect;
-import org.thymeleaf.processor.IProcessor;
-
-import at.pollux.thymeleaf.shiro.processor.attribute.AuthenticatedAttrProcessor;
-import at.pollux.thymeleaf.shiro.processor.attribute.GuestAttrProcessor;
-import at.pollux.thymeleaf.shiro.processor.attribute.HasAnyRolesAttrProcessor;
-import at.pollux.thymeleaf.shiro.processor.attribute.HasPermissionAttrProcessor;
-import at.pollux.thymeleaf.shiro.processor.attribute.HasRoleAttrProcessor;
-import at.pollux.thymeleaf.shiro.processor.attribute.LacksPermissionAttrProcessor;
-import at.pollux.thymeleaf.shiro.processor.attribute.LacksRoleAttrProcessor;
-import at.pollux.thymeleaf.shiro.processor.attribute.NotAuthenticatedAttrProcessor;
-import at.pollux.thymeleaf.shiro.processor.attribute.PrincipalAttrProcessor;
-import at.pollux.thymeleaf.shiro.processor.attribute.UserAttrProcessor;
-import at.pollux.thymeleaf.shiro.processor.element.AuthenticatedElementProcessor;
-import at.pollux.thymeleaf.shiro.processor.element.GuestElementProcessor;
-import at.pollux.thymeleaf.shiro.processor.element.HasAnyRolesElementProcessor;
-import at.pollux.thymeleaf.shiro.processor.element.HasPermissionElementProcessor;
-import at.pollux.thymeleaf.shiro.processor.element.HasRoleElementProcessor;
-import at.pollux.thymeleaf.shiro.processor.element.LacksPermissionElementProcessor;
-import at.pollux.thymeleaf.shiro.processor.element.LacksRoleElementProcessor;
-import at.pollux.thymeleaf.shiro.processor.element.NotAuthenticatedElementProcessor;
-import at.pollux.thymeleaf.shiro.processor.element.PrincipalElementProcessor;
-import at.pollux.thymeleaf.shiro.processor.element.UserElementProcessor;
-
 public class ShiroDialect extends AbstractDialect {
     private static final String PREFIX = "shiro";
     private static final Set<IProcessor> processors = new HashSet<IProcessor>();
+
     static {
         processors.add(PrincipalAttrProcessor.create());
         processors.add(PrincipalElementProcessor.create());
@@ -58,6 +40,9 @@ public class ShiroDialect extends AbstractDialect {
 
         processors.add(LacksRoleAttrProcessor.create());
         processors.add(LacksRoleElementProcessor.create());
+
+        processors.add(HasAnyPermissionsAttrProcessor.create());
+        processors.add(HasAnyPermissionsElementProcessor.create());
 
         processors.add(HasPermissionAttrProcessor.create());
         processors.add(HasPermissionElementProcessor.create());
