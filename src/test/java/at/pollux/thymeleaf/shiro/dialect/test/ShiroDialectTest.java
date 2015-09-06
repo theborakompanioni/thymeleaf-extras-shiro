@@ -39,8 +39,8 @@ import static org.junit.Assert.*;
  */
 public class ShiroDialectTest extends AbstractShiroTest {
 
-    private static final String PGKPATH = "at/pollux/thymeleaf/shiro/dialect/test";
-    private static final String TEST_TEMPL = PGKPATH + "/test.html";
+    private static final String PACKAGE_PATH = "at/pollux/thymeleaf/shiro/dialect/test";
+    private static final String TEST_TEMPLATE_PATH = PACKAGE_PATH + "/test.html";
     private static final String USER1 = "u1";
     private static final String PASS1 = "p1";
     private static final String USER2 = "u2";
@@ -50,9 +50,7 @@ public class ShiroDialectTest extends AbstractShiroTest {
 
     private static TemplateEngine templateEngine;
 
-    @BeforeClass
-    public static void beforeClass() {
-        //Set up shiro
+    private static void setupShiro() {
         Ini ini = new Ini();
         Ini.Section usersSection = ini.addSection("users");
         usersSection.put(USER1, PASS1 + ",rolea,roled");
@@ -66,8 +64,9 @@ public class ShiroDialectTest extends AbstractShiroTest {
         Factory<SecurityManager> factory = new TestIniSecurityManagerFactory(ini);
         SecurityManager secMgr = factory.getInstance();
         setSecurityManager(secMgr);
+    }
 
-        //Set up thymeleaf
+    private static void setupThymeleaf() {
         ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
         templateResolver.setCacheable(false);
         templateResolver.setCharacterEncoding("UTF-8");
@@ -76,6 +75,12 @@ public class ShiroDialectTest extends AbstractShiroTest {
         templateEngine = new TemplateEngine();
         templateEngine.setTemplateResolver(templateResolver);
         templateEngine.addDialect("shiro", new ShiroDialect());
+    }
+
+    @BeforeClass
+    public static void beforeClass() {
+        setupShiro();
+        setupThymeleaf();
     }
 
     @After
@@ -88,24 +93,22 @@ public class ShiroDialectTest extends AbstractShiroTest {
         Subject subjectUnderTest = new Subject.Builder(getSecurityManager()).buildSubject();
         setSubject(subjectUnderTest);
 
-
         Context context = new Context();
         String result;
 
         // Guest user
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertTrue(result.contains("GUEST1"));
         assertTrue(result.contains("GUEST2"));
 
         // Logged in user
         subjectUnderTest.login(new UsernamePasswordToken(USER1, PASS1));
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertFalse(result.contains("GUEST1"));
         assertFalse(result.contains("GUEST2"));
         subjectUnderTest.logout();
-
     }
 
     @Test
@@ -117,14 +120,14 @@ public class ShiroDialectTest extends AbstractShiroTest {
         String result;
 
         // Guest user
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertFalse(result.contains("USER1"));
         assertFalse(result.contains("USER2"));
 
         // Logged in user
         subjectUnderTest.login(new UsernamePasswordToken(USER1, PASS1));
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertTrue(result.contains("USER1"));
         assertTrue(result.contains("USER2"));
@@ -140,7 +143,7 @@ public class ShiroDialectTest extends AbstractShiroTest {
         String result;
 
         // Guest user
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(subjectUnderTest.isAuthenticated()); // sanity
         assertFalse(result.contains("shiro:"));
         assertFalse(result.contains("ISAUTHENTICATED1"));
@@ -149,7 +152,7 @@ public class ShiroDialectTest extends AbstractShiroTest {
         // Logged in user
         subjectUnderTest.login(new UsernamePasswordToken(USER1, PASS1));
         assertTrue(subjectUnderTest.isAuthenticated()); // sanity
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertTrue(result.contains("ISAUTHENTICATED1"));
         assertTrue(result.contains("ISAUTHENTICATED2"));
@@ -168,7 +171,7 @@ public class ShiroDialectTest extends AbstractShiroTest {
         String result;
 
         // Guest user
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(subjectUnderTest.isAuthenticated()); // sanity
         assertFalse(result.contains("shiro:"));
         assertTrue(result.contains("NOTAUTHENTICATED1"));
@@ -177,7 +180,7 @@ public class ShiroDialectTest extends AbstractShiroTest {
         // Logged in user
         subjectUnderTest.login(new UsernamePasswordToken(USER1, PASS1));
         assertTrue(subjectUnderTest.isAuthenticated()); // sanity
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertFalse(result.contains("NOTAUTHENTICATED1"));
         assertFalse(result.contains("NOTAUTHENTICATED2"));
@@ -196,7 +199,7 @@ public class ShiroDialectTest extends AbstractShiroTest {
         String result;
 
         // Guest user
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertNull(subjectUnderTest.getPrincipal()); // sanity
         assertFalse(result.contains("shiro:"));
         assertFalse(result.contains("DEFPRINCIPAL1"));
@@ -205,12 +208,11 @@ public class ShiroDialectTest extends AbstractShiroTest {
         // Logged in user
         subjectUnderTest.login(new UsernamePasswordToken(USER1, PASS1));
         assertEquals(USER1, subjectUnderTest.getPrincipal()); // sanity
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertTrue(result.contains("DEFPRINCIPAL1<span>" + USER1 + "</span>DEFPRINCIPAL1"));
         assertTrue(result.contains("DEFPRINCIPAL2" + USER1 + "DEFPRINCIPAL2"));
         subjectUnderTest.logout();
-
     }
 
     @Test
@@ -222,7 +224,7 @@ public class ShiroDialectTest extends AbstractShiroTest {
         String result;
 
         // Guest user
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertFalse(result.contains("TYPEPRINCIPAL1"));
         assertFalse(result.contains("TYPEPRINCIPAL2"));
@@ -230,13 +232,11 @@ public class ShiroDialectTest extends AbstractShiroTest {
         // Logged in user
         subjectUnderTest.login(new UsernamePasswordToken(USER1, PASS1));
         assertEquals(Integer.valueOf(0), SecurityUtils.getSubject().getPrincipals().oneByType(Integer.class)); // sanity
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertTrue(result.contains("TYPEPRINCIPAL1<span>0</span>TYPEPRINCIPAL1"));
         assertTrue(result.contains("TYPEPRINCIPAL20TYPEPRINCIPAL2"));
         subjectUnderTest.logout();
-
-
     }
 
     @Test
@@ -248,7 +248,7 @@ public class ShiroDialectTest extends AbstractShiroTest {
         String result;
 
         // Guest user
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertFalse(result.contains("PROPPRINCIPAL1"));
         assertFalse(result.contains("PROPPRINCIPAL2"));
@@ -256,7 +256,7 @@ public class ShiroDialectTest extends AbstractShiroTest {
         // Logged in user
         subjectUnderTest.login(new UsernamePasswordToken(USER1, PASS1));
         assertEquals(Integer.valueOf(0), SecurityUtils.getSubject().getPrincipals().oneByType(Integer.class)); // sanity
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertTrue(result.contains("PROPPRINCIPAL1<span>" + USER1.toUpperCase() + " " + USER1.toUpperCase() + "</span>PROPPRINCIPAL1"));
         assertTrue(result.contains("PROPPRINCIPAL2" + USER1.toUpperCase() + " " + USER1.toUpperCase() + "PROPPRINCIPAL2"));
@@ -272,7 +272,7 @@ public class ShiroDialectTest extends AbstractShiroTest {
         String result;
 
         // Guest user
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertFalse(result.contains("HASROLE1"));
         assertFalse(result.contains("HASROLE2"));
@@ -280,7 +280,7 @@ public class ShiroDialectTest extends AbstractShiroTest {
         // Logged in user 1
         subjectUnderTest.login(new UsernamePasswordToken(USER1, PASS1));
         assertTrue(subjectUnderTest.hasRole("rolea")); // sanity
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertTrue(result.contains("HASROLE1"));
         assertTrue(result.contains("HASROLE2"));
@@ -289,12 +289,11 @@ public class ShiroDialectTest extends AbstractShiroTest {
         // Logged in user 2
         subjectUnderTest.login(new UsernamePasswordToken(USER2, PASS2));
         assertFalse(subjectUnderTest.hasRole("rolea")); // sanity
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertFalse(result.contains("HASROLE1"));
         assertFalse(result.contains("HASROLE2"));
         subjectUnderTest.logout();
-
     }
 
     @Test
@@ -306,7 +305,7 @@ public class ShiroDialectTest extends AbstractShiroTest {
         String result;
 
         // Guest user
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertTrue(result.contains("LACKSROLE1"));
         assertTrue(result.contains("LACKSROLE2"));
@@ -314,7 +313,7 @@ public class ShiroDialectTest extends AbstractShiroTest {
         // Logged in user 1
         subjectUnderTest.login(new UsernamePasswordToken(USER1, PASS1));
         assertTrue(subjectUnderTest.hasRole("rolea")); // sanity
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertFalse(result.contains("LACKSROLE1"));
         assertFalse(result.contains("LACKSROLE2"));
@@ -323,12 +322,11 @@ public class ShiroDialectTest extends AbstractShiroTest {
         // Logged in user 2
         subjectUnderTest.login(new UsernamePasswordToken(USER2, PASS2));
         assertFalse(subjectUnderTest.hasRole("rolea")); // sanity
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertTrue(result.contains("LACKSROLE1"));
         assertTrue(result.contains("LACKSROLE2"));
         subjectUnderTest.logout();
-
     }
 
     @Test
@@ -340,7 +338,7 @@ public class ShiroDialectTest extends AbstractShiroTest {
         String result;
 
         // Guest user
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertFalse(result.contains("HASANYROLES1"));
         assertFalse(result.contains("HASANYROLES2"));
@@ -348,7 +346,7 @@ public class ShiroDialectTest extends AbstractShiroTest {
         // Logged in user 1
         subjectUnderTest.login(new UsernamePasswordToken(USER1, PASS1));
         assertTrue(subjectUnderTest.hasRole("rolea")); // sanity
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertTrue(result.contains("HASANYROLES1"));
         assertTrue(result.contains("HASANYROLES2"));
@@ -357,12 +355,11 @@ public class ShiroDialectTest extends AbstractShiroTest {
         // Logged in user 2
         subjectUnderTest.login(new UsernamePasswordToken(USER2, PASS2));
         assertFalse(subjectUnderTest.hasRole("rolea")); // sanity
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertFalse(result.contains("HASANYROLES1"));
         assertFalse(result.contains("HASANYROLES2"));
         subjectUnderTest.logout();
-
     }
 
     @Test
@@ -374,7 +371,7 @@ public class ShiroDialectTest extends AbstractShiroTest {
         String result;
 
         // Guest user
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertFalse(result.contains("HASALLROLES1"));
         assertFalse(result.contains("HASALLROLES2"));
@@ -382,7 +379,7 @@ public class ShiroDialectTest extends AbstractShiroTest {
         // Logged in user 1
         subjectUnderTest.login(new UsernamePasswordToken(USER1, PASS1));
         assertFalse(subjectUnderTest.hasAllRoles(Arrays.asList("roleb", "rolec"))); // sanity
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertFalse(result.contains("HASALLROLES1"));
         assertFalse(result.contains("HASALLROLES2"));
@@ -391,12 +388,11 @@ public class ShiroDialectTest extends AbstractShiroTest {
         // Logged in user 2
         subjectUnderTest.login(new UsernamePasswordToken(USER2, PASS2));
         assertTrue(subjectUnderTest.hasAllRoles(Arrays.asList("roleb", "rolec"))); // sanity
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertTrue(result.contains("HASALLROLES1"));
         assertTrue(result.contains("HASALLROLES2"));
         subjectUnderTest.logout();
-
     }
 
     @Test
@@ -408,7 +404,7 @@ public class ShiroDialectTest extends AbstractShiroTest {
         String result;
 
         // Guest user
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertFalse(result.contains("HASANYPERMISSIONS1"));
         assertFalse(result.contains("HASANYPERMISSIONS2"));
@@ -417,7 +413,7 @@ public class ShiroDialectTest extends AbstractShiroTest {
         subjectUnderTest.login(new UsernamePasswordToken(USER1, PASS1));
         assertTrue("User 1 has proper permission", subjectUnderTest.isPermitted("permtype1:permaction1:perminst1")); //sanity
         assertTrue("User 1 has proper permission", subjectUnderTest.isPermitted("permtype1:permaction1:xyz")); //sanity
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse("Prefix has been removed", result.contains("shiro:"));
         assertTrue("Value1 is present in document", result.contains("HASALLPERMISSIONS1"));
         assertTrue("Value2 is present in document", result.contains("HASALLPERMISSIONS2"));
@@ -427,7 +423,7 @@ public class ShiroDialectTest extends AbstractShiroTest {
         subjectUnderTest.login(new UsernamePasswordToken(USER2, PASS2));
         assertTrue(subjectUnderTest.isPermitted("permtype1:permaction1:perminst1")); //sanity
         assertFalse(subjectUnderTest.isPermitted("permtype1:permaction1:xyz")); //sanity
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertFalse(result.contains("HASALLPERMISSIONS1"));
         assertFalse(result.contains("HASALLPERMISSIONS2"));
@@ -437,7 +433,7 @@ public class ShiroDialectTest extends AbstractShiroTest {
         subjectUnderTest.login(new UsernamePasswordToken(USER3, PASS3));
         assertFalse(subjectUnderTest.isPermitted("permtype1:permaction1:perminst1")); //sanity
         assertFalse(subjectUnderTest.isPermitted("permtype1:permaction1:xyz")); //sanity
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertFalse(result.contains("HASALLPERMISSIONS1"));
         assertFalse(result.contains("HASALLPERMISSIONS2"));
@@ -453,7 +449,7 @@ public class ShiroDialectTest extends AbstractShiroTest {
         String result;
 
         // Guest user
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertFalse(result.contains("HASANYPERMISSIONS1"));
         assertFalse(result.contains("HASANYPERMISSIONS2"));
@@ -462,7 +458,7 @@ public class ShiroDialectTest extends AbstractShiroTest {
         subjectUnderTest.login(new UsernamePasswordToken(USER1, PASS1));
         assertTrue(subjectUnderTest.isPermitted("permtype1:permaction1:perminst1")); //sanity
         assertTrue(subjectUnderTest.isPermitted("permtype1:permaction1:xyz")); //sanity
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertTrue(result.contains("HASANYPERMISSIONS1"));
         assertTrue(result.contains("HASANYPERMISSIONS2"));
@@ -472,7 +468,7 @@ public class ShiroDialectTest extends AbstractShiroTest {
         subjectUnderTest.login(new UsernamePasswordToken(USER2, PASS2));
         assertTrue(subjectUnderTest.isPermitted("permtype1:permaction1:perminst1")); //sanity
         assertFalse(subjectUnderTest.isPermitted("permtype1:permaction1:xyz")); //sanity
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertTrue(result.contains("HASANYPERMISSIONS1"));
         assertTrue(result.contains("HASANYPERMISSIONS2"));
@@ -482,7 +478,7 @@ public class ShiroDialectTest extends AbstractShiroTest {
         subjectUnderTest.login(new UsernamePasswordToken(USER3, PASS3));
         assertFalse(subjectUnderTest.isPermitted("permtype1:permaction1:perminst1")); //sanity
         assertFalse(subjectUnderTest.isPermitted("permtype1:permaction1:xyz")); //sanity
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertFalse(result.contains("HASANYPERMISSIONS1"));
         assertFalse(result.contains("HASANYPERMISSIONS2"));
@@ -498,7 +494,7 @@ public class ShiroDialectTest extends AbstractShiroTest {
         String result;
 
         // Guest user
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertFalse(result.contains("APERM1"));
         assertFalse(result.contains("APERM2"));
@@ -512,7 +508,7 @@ public class ShiroDialectTest extends AbstractShiroTest {
         assertTrue(subjectUnderTest.isPermitted("permtype1:permaction1:perminst1")); //sanity
         assertTrue(subjectUnderTest.isPermitted("permtype1:permaction1:xyz")); //sanity
         assertTrue(subjectUnderTest.isPermitted("permtype1:permaction2")); //sanity
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertTrue(result.contains("APERM1"));
         assertTrue(result.contains("APERM2"));
@@ -527,7 +523,7 @@ public class ShiroDialectTest extends AbstractShiroTest {
         assertTrue(subjectUnderTest.isPermitted("permtype1:permaction1:perminst1")); //sanity
         assertFalse(subjectUnderTest.isPermitted("permtype1:permaction1:xyz")); //sanity
         assertTrue(subjectUnderTest.isPermitted("permtype1:permaction2")); //sanity
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertTrue(result.contains("APERM1"));
         assertTrue(result.contains("APERM2"));
@@ -542,7 +538,7 @@ public class ShiroDialectTest extends AbstractShiroTest {
         assertFalse(subjectUnderTest.isPermitted("permtype1:permaction1:perminst1")); //sanity
         assertFalse(subjectUnderTest.isPermitted("permtype1:permaction1:xyz")); //sanity
         assertTrue(subjectUnderTest.isPermitted("permtype1:permaction2")); //sanity
-        result = templateEngine.process(TEST_TEMPL, context);
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
         assertFalse(result.contains("shiro:"));
         assertFalse(result.contains("APERM1"));
         assertFalse(result.contains("APERM2"));
@@ -551,8 +547,5 @@ public class ShiroDialectTest extends AbstractShiroTest {
         assertTrue(result.contains("CPERM1"));
         assertTrue(result.contains("CPERM2"));
         subjectUnderTest.logout();
-
     }
-
-
 }

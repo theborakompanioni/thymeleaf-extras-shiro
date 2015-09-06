@@ -115,10 +115,17 @@ Typed principal and principal property are also supported.
 </p>
 ```
 
+#### The `hasAllRoles` tag
+```html
+<p shiro:hasAllRoles="developer, project manager">
+  You are a developer and a project manager.
+</p>
+```
+
 #### The `hasAnyRoles` tag
 ```html
 <p shiro:hasAnyRoles="developer, project manager, administrator">
-  You are either a developer, project manager, or administrator.
+  You are a developer, project manager, or administrator.
 </p>
 ```
 
@@ -131,6 +138,13 @@ Typed principal and principal property are also supported.
 ```html
 <p shiro:lacksPermission="user:delete">
   Sorry, you are not allowed to delete user accounts.
+</p>
+```
+
+#### The `hasAllPermissions` tag
+```html
+<p shiro:hasAllPermissions="user:create, user:delete">
+  You can create and delete users.
 </p>
 ```
 
