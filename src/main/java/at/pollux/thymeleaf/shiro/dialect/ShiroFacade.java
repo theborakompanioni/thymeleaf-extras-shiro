@@ -48,6 +48,31 @@ public final class ShiroFacade {
         return !ShiroFacade.hasPermission(p);
     }
 
+    public static boolean hasAnyPermissions(final String... permissions) {
+        if (SecurityUtils.getSubject() != null) {
+            final Subject subject = SecurityUtils.getSubject();
+            for (final String permission : permissions) {
+                if (subject.isPermitted(permission)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static boolean hasAllPermissions(String... permissions) {
+        if (SecurityUtils.getSubject() != null) {
+            final Subject subject = SecurityUtils.getSubject();
+            for (final String permission : permissions) {
+                if (!subject.isPermitted(permission)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
     public static boolean hasRole(final String roleName) {
         return SecurityUtils.getSubject() != null && SecurityUtils.getSubject().hasRole(roleName);
     }
@@ -68,14 +93,15 @@ public final class ShiroFacade {
         return false;
     }
 
-    public static boolean hasAnyPermissions(final String... permissions) {
+    public static boolean hasAllRoles(final String... roles) {
         if (SecurityUtils.getSubject() != null) {
             final Subject subject = SecurityUtils.getSubject();
-            for (final String permission : permissions) {
-                if (subject.isPermitted(permission)) {
-                    return true;
+            for (final String role : roles) {
+                if (!subject.hasRole(StringUtils.trim(role))) {
+                    return false;
                 }
             }
+            return true;
         }
         return false;
     }
@@ -129,4 +155,5 @@ public final class ShiroFacade {
 
         throw new IllegalArgumentException("Property [" + property + "] not found in principal of type [" + principal.getClass().getName() + "]");
     }
+
 }

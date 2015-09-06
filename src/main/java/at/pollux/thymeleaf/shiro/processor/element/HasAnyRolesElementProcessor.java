@@ -23,6 +23,8 @@ import org.thymeleaf.util.Validate;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroFacade;
 
+import static at.pollux.thymeleaf.shiro.processor.AttributeUtils.getRawValue;
+
 public class HasAnyRolesElementProcessor extends AbstractConditionalVisibilityElementProcessor {
 
     public static HasAnyRolesElementProcessor create() {
@@ -32,7 +34,7 @@ public class HasAnyRolesElementProcessor extends AbstractConditionalVisibilityEl
     private static final String ELEMENT_NAME = "hasanyroles";
     private static final int PRECEDENCE = 300;
 
-    private static final String ROLES_DELIMITER = ",";
+    private static final String DELIMITER = ",";
 
     protected HasAnyRolesElementProcessor() {
         super(ELEMENT_NAME);
@@ -50,11 +52,8 @@ public class HasAnyRolesElementProcessor extends AbstractConditionalVisibilityEl
 
     @Override
     public boolean isVisible(final Arguments arguments, final Element element) {
-        Validate.notNull(element, "element must not be null");
+        String rawValue = getRawValue(element, "name");
 
-        final String rawRoles = StringUtils.trim(element.getAttributeValue("name"));
-        Validate.notEmpty(rawRoles, "value of 'name' must not be empty");
-
-        return ShiroFacade.hasAnyRoles(StringUtils.split(rawRoles, ROLES_DELIMITER));
+        return ShiroFacade.hasAnyRoles(StringUtils.split(rawValue, DELIMITER));
     }
 }

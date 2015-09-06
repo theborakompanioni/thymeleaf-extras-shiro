@@ -32,6 +32,9 @@ public class ShiroDialect extends AbstractDialect {
         processors.add(PrincipalAttrProcessor.create());
         processors.add(PrincipalElementProcessor.create());
 
+        processors.add(HasAllRolesAttrProcessor.create());
+        processors.add(HasAllRolesElementProcessor.create());
+
         processors.add(HasAnyRolesAttrProcessor.create());
         processors.add(HasAnyRolesElementProcessor.create());
 
@@ -40,6 +43,9 @@ public class ShiroDialect extends AbstractDialect {
 
         processors.add(LacksRoleAttrProcessor.create());
         processors.add(LacksRoleElementProcessor.create());
+
+        processors.add(HasAllPermissionsAttrProcessor.create());
+        processors.add(HasAllPermissionsElementProcessor.create());
 
         processors.add(HasAnyPermissionsAttrProcessor.create());
         processors.add(HasAnyPermissionsElementProcessor.create());

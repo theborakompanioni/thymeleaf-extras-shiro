@@ -18,10 +18,10 @@ package at.pollux.thymeleaf.shiro.processor.attribute;
 import org.thymeleaf.Arguments;
 import org.thymeleaf.dom.Element;
 import org.thymeleaf.processor.attr.AbstractConditionalVisibilityAttrProcessor;
-import org.thymeleaf.util.StringUtils;
-import org.thymeleaf.util.Validate;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroFacade;
+
+import static at.pollux.thymeleaf.shiro.processor.AttributeUtils.getRawValue;
 
 public class LacksRoleAttrProcessor extends AbstractConditionalVisibilityAttrProcessor {
 
@@ -43,11 +43,7 @@ public class LacksRoleAttrProcessor extends AbstractConditionalVisibilityAttrPro
 
     @Override
     public boolean isVisible(final Arguments arguments, final Element element, final String attributeName) {
-        Validate.notNull(element, "element must not be null");
-        Validate.notEmpty(attributeName, "attributeName must not be empty");
-
-        final String role = StringUtils.trim(element.getAttributeValue(attributeName));
-        Validate.notEmpty(role, "value of '" + attributeName + "' must not be empty");
+        String role = getRawValue(element, attributeName);
 
         return ShiroFacade.lacksRole(role);
     }

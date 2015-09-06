@@ -15,26 +15,27 @@
  ****************************************************************************/
 package at.pollux.thymeleaf.shiro.processor.element;
 
+import at.pollux.thymeleaf.shiro.dialect.ShiroFacade;
 import org.thymeleaf.Arguments;
 import org.thymeleaf.dom.Element;
 import org.thymeleaf.processor.element.AbstractConditionalVisibilityElementProcessor;
 import org.thymeleaf.util.StringUtils;
 import org.thymeleaf.util.Validate;
 
-import at.pollux.thymeleaf.shiro.dialect.ShiroFacade;
-
 import static at.pollux.thymeleaf.shiro.processor.AttributeUtils.getRawValue;
 
-public class LacksRoleElementProcessor extends AbstractConditionalVisibilityElementProcessor {
+public class HasAllRolesElementProcessor extends AbstractConditionalVisibilityElementProcessor {
 
-    public static LacksRoleElementProcessor create() {
-        return new LacksRoleElementProcessor();
+    public static HasAllRolesElementProcessor create() {
+        return new HasAllRolesElementProcessor();
     }
 
-    private static final String ELEMENT_NAME = "lacksrole";
+    private static final String ELEMENT_NAME = "hasallroles";
     private static final int PRECEDENCE = 300;
 
-    protected LacksRoleElementProcessor() {
+    private static final String DELIMITER = ",";
+
+    protected HasAllRolesElementProcessor() {
         super(ELEMENT_NAME);
     }
 
@@ -50,8 +51,8 @@ public class LacksRoleElementProcessor extends AbstractConditionalVisibilityElem
 
     @Override
     public boolean isVisible(final Arguments arguments, final Element element) {
-        String role = getRawValue(element, "name");
+        String rawValue = getRawValue(element, "name");
 
-        return ShiroFacade.lacksRole(role);
+        return ShiroFacade.hasAllRoles(StringUtils.split(rawValue, DELIMITER));
     }
 }

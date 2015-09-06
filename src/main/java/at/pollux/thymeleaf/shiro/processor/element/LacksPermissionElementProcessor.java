@@ -23,6 +23,8 @@ import org.thymeleaf.util.Validate;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroFacade;
 
+import static at.pollux.thymeleaf.shiro.processor.AttributeUtils.getRawValue;
+
 public class LacksPermissionElementProcessor extends AbstractConditionalVisibilityElementProcessor {
 
     public static LacksPermissionElementProcessor create() {
@@ -48,10 +50,7 @@ public class LacksPermissionElementProcessor extends AbstractConditionalVisibili
 
     @Override
     public boolean isVisible(final Arguments arguments, final Element element) {
-        Validate.notNull(element, "element must not be null");
-
-        final String permission = StringUtils.trim(element.getAttributeValue("name"));
-        Validate.notEmpty(permission, "value of 'name' must not be empty");
+        String permission = getRawValue(element, "name");
 
         return ShiroFacade.lacksPermission(permission);
     }

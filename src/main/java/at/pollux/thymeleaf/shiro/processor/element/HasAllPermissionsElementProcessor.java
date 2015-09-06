@@ -1,12 +1,12 @@
 /*****************************************************************************
  * Copyright (c) 2013, theborakompanioni (http://www.example.org)
- * 
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -15,26 +15,27 @@
  ****************************************************************************/
 package at.pollux.thymeleaf.shiro.processor.element;
 
+import at.pollux.thymeleaf.shiro.dialect.ShiroFacade;
 import org.thymeleaf.Arguments;
 import org.thymeleaf.dom.Element;
 import org.thymeleaf.processor.element.AbstractConditionalVisibilityElementProcessor;
 import org.thymeleaf.util.StringUtils;
 import org.thymeleaf.util.Validate;
 
-import at.pollux.thymeleaf.shiro.dialect.ShiroFacade;
-
 import static at.pollux.thymeleaf.shiro.processor.AttributeUtils.getRawValue;
 
-public class LacksRoleElementProcessor extends AbstractConditionalVisibilityElementProcessor {
+public class HasAllPermissionsElementProcessor extends AbstractConditionalVisibilityElementProcessor {
 
-    public static LacksRoleElementProcessor create() {
-        return new LacksRoleElementProcessor();
+    public static HasAllPermissionsElementProcessor create() {
+        return new HasAllPermissionsElementProcessor();
     }
 
-    private static final String ELEMENT_NAME = "lacksrole";
+    private static final String ELEMENT_NAME = "hasallpermissions";
     private static final int PRECEDENCE = 300;
 
-    protected LacksRoleElementProcessor() {
+    private static final String DELIMITER = ",";
+
+    protected HasAllPermissionsElementProcessor() {
         super(ELEMENT_NAME);
     }
 
@@ -50,8 +51,8 @@ public class LacksRoleElementProcessor extends AbstractConditionalVisibilityElem
 
     @Override
     public boolean isVisible(final Arguments arguments, final Element element) {
-        String role = getRawValue(element, "name");
+        String rawValue = getRawValue(element, "name");
 
-        return ShiroFacade.lacksRole(role);
+        return ShiroFacade.hasAllPermissions(StringUtils.split(rawValue, DELIMITER));
     }
 }

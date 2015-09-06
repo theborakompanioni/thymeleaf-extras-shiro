@@ -22,6 +22,8 @@ import org.thymeleaf.processor.element.AbstractConditionalVisibilityElementProce
 import org.thymeleaf.util.StringUtils;
 import org.thymeleaf.util.Validate;
 
+import static at.pollux.thymeleaf.shiro.processor.AttributeUtils.getRawValue;
+
 public class HasAnyPermissionsElementProcessor extends AbstractConditionalVisibilityElementProcessor {
 
     public static HasAnyPermissionsElementProcessor create() {
@@ -49,10 +51,7 @@ public class HasAnyPermissionsElementProcessor extends AbstractConditionalVisibi
 
     @Override
     public boolean isVisible(final Arguments arguments, final Element element) {
-        Validate.notNull(element, "element must not be null");
-
-        final String rawValue = StringUtils.trim(element.getAttributeValue("name"));
-        Validate.notEmpty(rawValue, "value of 'name' must not be empty");
+        String rawValue = getRawValue(element, "name");
 
         return ShiroFacade.hasAnyPermissions(StringUtils.split(rawValue, DELIMITER));
     }
