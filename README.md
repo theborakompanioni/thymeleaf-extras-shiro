@@ -13,7 +13,7 @@ A [Thymeleaf](http://www.thymeleaf.org/) dialect for [Apache Shiro](https://shir
 <dependency>
     <groupId>com.github.theborakompanioni</groupId>
     <artifactId>thymeleaf-extras-shiro</artifactId>
-    <version>1.2.0</version>
+    <version>1.2.1</version>
 </dependency>
 ```
 ##### Jar
