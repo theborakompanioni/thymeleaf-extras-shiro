@@ -1,0 +1,29 @@
+# Change Log
+All notable changes to this project will be documented in this file.
+This project adheres to [Semantic Versioning](http://semver.org/).
+
+## [Unreleased][unreleased]
+### Added
+- added support for expression evaluation, e.g:
+```
+<div shiro:hasAllPermissions="${permissions}">
+    You have all necessary permissions.
+</div>
+```
+
+## [1.2.1] - 2015-09-07
+### Fixed
+- Problems with v1.2.0 in Maven Central
+
+
+## [1.2.0] - 2015-09-06
+### Added
+- Added support for `hasAllRoles`, `hasAllPermissions` and `hasAnyPermissions`
+### Updated
+- Updated Thymeleaf version from 2.1.0 to 2.1.4
+- Updated Shiro version from 1.2.2 to 1.2.4
+
+
+[unreleased]: https://github.com/theborakompanioni/thymeleaf-extras-shiro/compare/1.2.1...HEAD
+[1.2.1]: https://github.com/theborakompanioni/thymeleaf-extras-shiro/compare/1.2.0...1.2.1
+[1.2.0]: https://github.com/theborakompanioni/thymeleaf-extras-shiro/compare/74596f4...1.2.0
