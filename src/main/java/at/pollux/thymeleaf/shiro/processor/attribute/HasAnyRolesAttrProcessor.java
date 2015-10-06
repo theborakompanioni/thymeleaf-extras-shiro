@@ -15,13 +15,15 @@
  ****************************************************************************/
 package at.pollux.thymeleaf.shiro.processor.attribute;
 
-import at.pollux.thymeleaf.shiro.dialect.ShiroFacade;
+import at.pollux.thymeleaf.shiro.processor.ShiroFacade;
 import org.thymeleaf.Arguments;
 import org.thymeleaf.dom.Element;
 import org.thymeleaf.processor.attr.AbstractConditionalVisibilityAttrProcessor;
-import org.thymeleaf.util.StringUtils;
 
-import static at.pollux.thymeleaf.shiro.processor.AttributeUtils.getRawValue;
+import java.util.List;
+
+import static at.pollux.thymeleaf.shiro.processor.ThymeleafFacade.evaluateAsStringsWithDelimiter;
+import static at.pollux.thymeleaf.shiro.processor.ThymeleafFacade.getRawValue;
 
 public class HasAnyRolesAttrProcessor extends AbstractConditionalVisibilityAttrProcessor {
 
@@ -46,7 +48,8 @@ public class HasAnyRolesAttrProcessor extends AbstractConditionalVisibilityAttrP
     @Override
     protected boolean isVisible(final Arguments arguments, final Element element, final String attributeName) {
         String rawValue = getRawValue(element, attributeName);
+        List<String> values = evaluateAsStringsWithDelimiter(arguments, rawValue, DELIMITER);
 
-        return ShiroFacade.hasAnyRoles(StringUtils.split(rawValue, DELIMITER));
+        return ShiroFacade.hasAnyRoles(values);
     }
 }

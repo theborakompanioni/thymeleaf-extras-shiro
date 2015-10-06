@@ -1,12 +1,12 @@
 /*****************************************************************************
  * Copyright (c) 2013, theborakompanioni (http://www.example.org)
- * 
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -15,19 +15,23 @@
  ****************************************************************************/
 package at.pollux.thymeleaf.shiro.processor.attribute;
 
+import at.pollux.thymeleaf.shiro.processor.ShiroFacade;
 import org.thymeleaf.Arguments;
 import org.thymeleaf.dom.Element;
 import org.thymeleaf.processor.attr.AbstractConditionalVisibilityAttrProcessor;
 
-import at.pollux.thymeleaf.shiro.dialect.ShiroFacade;
+import java.util.List;
 
-import static at.pollux.thymeleaf.shiro.processor.AttributeUtils.getRawValue;
+import static at.pollux.thymeleaf.shiro.processor.ThymeleafFacade.evaluateAsStringsWithDelimiter;
+import static at.pollux.thymeleaf.shiro.processor.ThymeleafFacade.getRawValue;
 
 public class HasPermissionAttrProcessor extends AbstractConditionalVisibilityAttrProcessor {
 
     public static HasPermissionAttrProcessor create() {
         return new HasPermissionAttrProcessor();
     }
+
+    private static final String DELIMITER = ",";
 
     private static final String ATTRIBUTE_NAME = "hasPermission";
     private static final int PRECEDENCE = 300;
@@ -43,8 +47,9 @@ public class HasPermissionAttrProcessor extends AbstractConditionalVisibilityAtt
 
     @Override
     public boolean isVisible(final Arguments arguments, final Element element, final String attributeName) {
-        String permission = getRawValue(element, attributeName);
+        String rawValue = getRawValue(element, attributeName);
+        List<String> values = evaluateAsStringsWithDelimiter(arguments, rawValue, DELIMITER);
 
-        return ShiroFacade.hasPermission(permission);
+        return ShiroFacade.hasAllPermissions(values);
     }
 }

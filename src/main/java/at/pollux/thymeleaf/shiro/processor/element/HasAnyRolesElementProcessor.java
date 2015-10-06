@@ -19,11 +19,13 @@ import org.thymeleaf.Arguments;
 import org.thymeleaf.dom.Element;
 import org.thymeleaf.processor.element.AbstractConditionalVisibilityElementProcessor;
 import org.thymeleaf.util.StringUtils;
-import org.thymeleaf.util.Validate;
 
-import at.pollux.thymeleaf.shiro.dialect.ShiroFacade;
+import at.pollux.thymeleaf.shiro.processor.ShiroFacade;
 
-import static at.pollux.thymeleaf.shiro.processor.AttributeUtils.getRawValue;
+import java.util.List;
+
+import static at.pollux.thymeleaf.shiro.processor.ThymeleafFacade.evaluateAsStringsWithDelimiter;
+import static at.pollux.thymeleaf.shiro.processor.ThymeleafFacade.getRawValue;
 
 public class HasAnyRolesElementProcessor extends AbstractConditionalVisibilityElementProcessor {
 
@@ -53,7 +55,8 @@ public class HasAnyRolesElementProcessor extends AbstractConditionalVisibilityEl
     @Override
     public boolean isVisible(final Arguments arguments, final Element element) {
         String rawValue = getRawValue(element, "name");
+        List<String> values = evaluateAsStringsWithDelimiter(arguments, rawValue, DELIMITER);
 
-        return ShiroFacade.hasAnyRoles(StringUtils.split(rawValue, DELIMITER));
+        return ShiroFacade.hasAnyRoles(values);
     }
 }

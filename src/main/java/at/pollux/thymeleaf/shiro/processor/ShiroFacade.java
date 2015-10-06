@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ****************************************************************************/
-package at.pollux.thymeleaf.shiro.dialect;
+package at.pollux.thymeleaf.shiro.processor;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -22,6 +22,10 @@ import org.thymeleaf.util.StringUtils;
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.util.Arrays;
+import java.util.Collection;
+
+import static java.util.Collections.singleton;
 
 public final class ShiroFacade {
     public static boolean isAuthenticated() {
@@ -40,15 +44,15 @@ public final class ShiroFacade {
         return !ShiroFacade.isUser();
     }
 
-    public static boolean hasPermission(final String p) {
-        return SecurityUtils.getSubject() != null && SecurityUtils.getSubject().isPermitted(p);
+    public static boolean hasPermission(final String permission) {
+        return hasAllPermissions(singleton(permission));
     }
 
-    public static boolean lacksPermission(final String p) {
-        return !ShiroFacade.hasPermission(p);
+    public static boolean lacksPermission(final String permission) {
+        return !ShiroFacade.hasPermission(permission);
     }
 
-    public static boolean hasAnyPermissions(final String... permissions) {
+    public static boolean hasAnyPermissions(final Collection<String> permissions) {
         if (SecurityUtils.getSubject() != null) {
             final Subject subject = SecurityUtils.getSubject();
             for (final String permission : permissions) {
@@ -60,7 +64,12 @@ public final class ShiroFacade {
         return false;
     }
 
-    public static boolean hasAllPermissions(String... permissions) {
+    public static boolean hasAnyPermissions(final String... permissions) {
+        return hasAnyPermissions(Arrays.asList(permissions));
+    }
+
+
+    public static boolean hasAllPermissions(Collection<String> permissions) {
         if (SecurityUtils.getSubject() != null) {
             final Subject subject = SecurityUtils.getSubject();
             for (final String permission : permissions) {
@@ -73,15 +82,19 @@ public final class ShiroFacade {
         return false;
     }
 
+    public static boolean hasAllPermissions(String... permissions) {
+        return hasAllPermissions(Arrays.asList(permissions));
+    }
+
     public static boolean hasRole(final String roleName) {
-        return SecurityUtils.getSubject() != null && SecurityUtils.getSubject().hasRole(roleName);
+        return hasAllRoles(singleton(roleName));
     }
 
     public static boolean lacksRole(final String roleName) {
         return !ShiroFacade.hasRole(roleName);
     }
 
-    public static boolean hasAnyRoles(final String... roles) {
+    public static boolean hasAnyRoles(final Collection<String> roles) {
         if (SecurityUtils.getSubject() != null) {
             final Subject subject = SecurityUtils.getSubject();
             for (final String role : roles) {
@@ -93,7 +106,11 @@ public final class ShiroFacade {
         return false;
     }
 
-    public static boolean hasAllRoles(final String... roles) {
+    public static boolean hasAnyRoles(final String... roles) {
+        return hasAnyRoles(Arrays.asList(roles));
+    }
+
+    public static boolean hasAllRoles(final Collection<String> roles) {
         if (SecurityUtils.getSubject() != null) {
             final Subject subject = SecurityUtils.getSubject();
             for (final String role : roles) {
@@ -104,6 +121,10 @@ public final class ShiroFacade {
             return true;
         }
         return false;
+    }
+
+    public static boolean hasAllRoles(final String... roles) {
+        return hasAllRoles(Arrays.asList(roles));
     }
 
     public static String getPrincipalText(final String type, final String property) {

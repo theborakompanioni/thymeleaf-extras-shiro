@@ -22,7 +22,7 @@
 
   TYPEPRINCIPAL1<span shiro:principal="" type="java.lang.Integer"/>TYPEPRINCIPAL1
   TYPEPRINCIPAL2<shiro:principal type="java.lang.Integer"/>TYPEPRINCIPAL2
-  
+
   PROPPRINCIPAL1<span shiro:principal="" type="at.pollux.thymeleaf.shiro.dialect.test.TestObjPrincipal" property="name"/>PROPPRINCIPAL1
   PROPPRINCIPAL2<shiro:principal type="at.pollux.thymeleaf.shiro.dialect.test.TestObjPrincipal" property="name"/>PROPPRINCIPAL2
 </div>
@@ -39,7 +39,6 @@
 <div shiro:hasAnyRoles="badrole1,rolea,badrole2">HASANYROLES1</div>
 <shiro:hasAnyRoles name="badrole1,rolea,badrole2">HASANYROLES2</shiro:hasAnyRoles>
 
-
 <div shiro:hasPermission="permtype1:permaction1:perminst1">APERM1</div>
 <shiro:hasPermission name="permtype1:permaction1:perminst1">APERM2</shiro:hasPermission>
 <div shiro:hasPermission="permtype1:permaction1:xyz">BPERM1</div>
@@ -49,6 +48,9 @@
 
 <div shiro:hasAllPermissions="permtype1:permaction1:perminst1,permtype1:permaction1:xyz">HASALLPERMISSIONS1</div>
 <shiro:hasAllPermissions name="permtype1:permaction1:perminst1,permtype1:permaction1:xyz">HASALLPERMISSIONS2</shiro:hasAllPermissions>
+
+<div shiro:hasAllPermissions="${permissions}">HASALLPERMISSIONS_DYNAMIC1</div>
+<shiro:hasAllPermissions name="${permissions}">HASALLPERMISSIONS_DYNAMIC2</shiro:hasAllPermissions>
 
 <div shiro:hasAnyPermissions="permtype1:permaction1:perminst1,permtype1:permaction1:xyz">HASANYPERMISSIONS1</div>
 <shiro:hasAnyPermissions name="permtype1:permaction1:perminst1,permtype1:permaction1:xyz">HASANYPERMISSIONS2</shiro:hasAnyPermissions>

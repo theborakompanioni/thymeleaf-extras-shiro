@@ -15,12 +15,12 @@
  */
 package at.pollux.thymeleaf.shiro.dialect.test;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 import org.apache.shiro.authc.SimpleAccount;
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.realm.text.IniRealm;
 import org.apache.shiro.subject.SimplePrincipalCollection;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author art
@@ -53,7 +53,7 @@ public class TestIniRealm extends IniRealm {
         account.setPrincipals(principalCollection);
 
 
-        super.add(account); //To change body of generated methods, choose Tools | Templates.
+        super.add(account);
     }
 
 

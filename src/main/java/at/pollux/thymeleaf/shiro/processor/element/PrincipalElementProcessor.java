@@ -19,7 +19,7 @@ import org.thymeleaf.Arguments;
 import org.thymeleaf.dom.Element;
 import org.thymeleaf.processor.element.AbstractTextChildModifierElementProcessor;
 
-import at.pollux.thymeleaf.shiro.dialect.ShiroFacade;
+import at.pollux.thymeleaf.shiro.processor.ShiroFacade;
 
 public class PrincipalElementProcessor extends AbstractTextChildModifierElementProcessor {
 

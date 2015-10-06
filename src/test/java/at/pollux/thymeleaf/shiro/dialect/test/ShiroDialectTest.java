@@ -269,6 +269,7 @@ public class ShiroDialectTest extends AbstractShiroTest {
         setSubject(subjectUnderTest);
 
         Context context = new Context();
+        context.setVariable("roleExpression", "roled");
         String result;
 
         // Guest user
@@ -437,6 +438,56 @@ public class ShiroDialectTest extends AbstractShiroTest {
         assertFalse(result.contains("shiro:"));
         assertFalse(result.contains("HASALLPERMISSIONS1"));
         assertFalse(result.contains("HASALLPERMISSIONS2"));
+        subjectUnderTest.logout();
+    }
+
+    @Test
+    public void testHasAllPermissionsWithExpession() {
+        Subject subjectUnderTest = new Subject.Builder(getSecurityManager()).buildSubject();
+        setSubject(subjectUnderTest);
+
+        Context context = new Context();
+        context.setVariable("permissions", Arrays.asList(
+                "permtype1:permaction1:perminst1",
+                "permtype1:permaction2:xyz,permtype1:permaction2:foobar",
+                "foobar"));
+        String result;
+
+        // Guest user
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
+        assertFalse(result.contains("shiro:"));
+        assertFalse(result.contains("HASALLPERMISSIONS_DYNAMIC1"));
+        assertFalse(result.contains("HASALLPERMISSIONS_DYNAMIC2"));
+
+        // Logged in user 1
+        subjectUnderTest.login(new UsernamePasswordToken(USER1, PASS1));
+        assertTrue("User 1 has proper permission", subjectUnderTest.isPermitted("permtype1:permaction1:perminst1")); //sanity
+        assertTrue("User 1 has proper permission", subjectUnderTest.isPermitted("permtype1:permaction1:xyz")); //sanity
+        assertTrue("User 1 has proper permission", subjectUnderTest.isPermitted("permtype1:permaction1:foobar")); //sanity
+        assertTrue("User 1 has proper permission", subjectUnderTest.isPermitted("foobar")); //sanity
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
+        assertFalse("Prefix has been removed", result.contains("shiro:"));
+        assertTrue("Value1 is present in document", result.contains("HASALLPERMISSIONS_DYNAMIC1"));
+        assertTrue("Value2 is present in document", result.contains("HASALLPERMISSIONS_DYNAMIC2"));
+        subjectUnderTest.logout();
+
+        // Logged in user 2
+        subjectUnderTest.login(new UsernamePasswordToken(USER2, PASS2));
+        assertTrue(subjectUnderTest.isPermitted("permtype1:permaction1:perminst1")); //sanity
+        assertFalse(subjectUnderTest.isPermitted("permtype1:permaction1:xyz")); //sanity
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
+        assertFalse(result.contains("shiro:"));
+        assertFalse(result.contains("HASALLPERMISSIONS_DYNAMIC1"));
+        assertFalse(result.contains("HASALLPERMISSIONS_DYNAMIC2"));
+        subjectUnderTest.logout();
+
+        // Logged in user 3
+        subjectUnderTest.login(new UsernamePasswordToken(USER3, PASS3));
+        assertFalse(subjectUnderTest.isPermitted("permtype1:permaction1:perminst1")); //sanity
+        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
+        assertFalse(result.contains("shiro:"));
+        assertFalse(result.contains("HASALLPERMISSIONS_DYNAMIC1"));
+        assertFalse(result.contains("HASALLPERMISSIONS_DYNAMIC2"));
         subjectUnderTest.logout();
     }
 
