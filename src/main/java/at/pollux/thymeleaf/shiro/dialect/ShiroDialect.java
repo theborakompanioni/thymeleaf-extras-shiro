@@ -77,10 +77,6 @@ public class ShiroDialect extends AbstractDialect {
         return PREFIX;
     }
 
-    public boolean isLenient() {
-        return false;
-    }
-
     @Override
     public Set<IProcessor> getProcessors() {
         return Collections.unmodifiableSet(processors);
