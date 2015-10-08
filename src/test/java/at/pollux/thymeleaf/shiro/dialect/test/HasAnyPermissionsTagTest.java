@@ -1,9 +1,6 @@
 package at.pollux.thymeleaf.shiro.dialect.test;
 
-import at.pollux.thymeleaf.shiro.dialect.test.mother.HasAnyPermissionsMother.ShouldNotRenderExpression;
-import at.pollux.thymeleaf.shiro.dialect.test.mother.HasAnyPermissionsMother.ShouldNotRenderForUser;
-import at.pollux.thymeleaf.shiro.dialect.test.mother.HasAnyPermissionsMother.ShouldRenderExpression;
-import at.pollux.thymeleaf.shiro.dialect.test.mother.HasAnyPermissionsMother.ShouldRenderForUser;
+import at.pollux.thymeleaf.shiro.dialect.test.mother.PermissionsMother.HasAnyPermissions;
 import at.pollux.thymeleaf.shiro.dialect.test.user.TestUsers;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
@@ -25,7 +22,7 @@ public class HasAnyPermissionsTagTest extends AbstractThymeleafShiroDialectTest 
     private static final String FILE_UNDER_TEST = "shiro_hasAnyPermissions.html";
 
     @Test
-    public void itShoulNotdRenderWithoutSubject() {
+    public void itShoulNotRenderWithoutSubject() {
         String result = processThymeleafFile(FILE_UNDER_TEST, new Context());
 
         assertThat(result, not(containsString("shiro:")));
@@ -34,7 +31,7 @@ public class HasAnyPermissionsTagTest extends AbstractThymeleafShiroDialectTest 
     }
 
     @Test
-    @Parameters(source = ShouldRenderForUser.class)
+    @Parameters(source = HasAnyPermissions.ShouldRenderForUser.class)
     public void itShouldRenderOnUser(TestUsers user) {
         Subject subjectUnderTest = createAndLoginSubject(user);
 
@@ -51,7 +48,7 @@ public class HasAnyPermissionsTagTest extends AbstractThymeleafShiroDialectTest 
     }
 
     @Test
-    @Parameters(source = ShouldNotRenderForUser.class)
+    @Parameters(source = HasAnyPermissions.ShouldNotRenderForUser.class)
     public void itShouldNotRenderForUser(TestUsers user) {
         Subject subjectUnderTest = createAndLoginSubject(user);
 
@@ -67,7 +64,7 @@ public class HasAnyPermissionsTagTest extends AbstractThymeleafShiroDialectTest 
     }
 
     @Test
-    @Parameters(source = ShouldRenderExpression.class)
+    @Parameters(source = HasAnyPermissions.ShouldRenderExpression.class)
     public void itShouldRenderOnCustomContext(TestUsers user, Context context) {
         Subject subjectUnderTest = createAndLoginSubject(user);
         String result = processThymeleafFile(FILE_UNDER_TEST, context);
@@ -80,7 +77,7 @@ public class HasAnyPermissionsTagTest extends AbstractThymeleafShiroDialectTest 
     }
 
     @Test
-    @Parameters(source = ShouldNotRenderExpression.class)
+    @Parameters(source = HasAnyPermissions.ShouldNotRenderExpression.class)
     public void itShouldNotRenderOnCustomContext(TestUsers user, Context context) {
         Subject subjectUnderTest = createAndLoginSubject(user);
 

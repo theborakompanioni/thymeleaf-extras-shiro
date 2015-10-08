@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+</head>
+<body>
+
+<div shiro:hasAllPermissions="${permissions}">HASALLPERMISSIONS_ATTRIBUTE_DYNAMIC</div>
+<shiro:hasAllPermissions name="${permissions}">HASALLPERMISSIONS_ELEMENT_DYNAMIC</shiro:hasAllPermissions>
+
+<div shiro:hasAllPermissions="permtype1:permaction1:perminst1,permtype1:permaction1:xyz">
+    HASALLPERMISSIONS_ATTRIBUTE_STATIC
+</div>
+<shiro:hasAllPermissions name="permtype1:permaction1:perminst1,permtype1:permaction1:xyz">
+    HASALLPERMISSIONS_ELEMENT_STATIC
+</shiro:hasAllPermissions>
+
+</body>
+</html>
