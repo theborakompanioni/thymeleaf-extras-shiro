@@ -69,9 +69,6 @@ public class HasAllPermissionsTagTest extends AbstractThymeleafShiroDialectTest 
         Subject subjectUnderTest = createAndLoginSubject(user);
         String result = processThymeleafFile(FILE_UNDER_TEST, context);
 
-        boolean hasAllFeatures = hasAllFeaturesSanityCheck(subjectUnderTest);
-        assertThat("User has all features", hasAllFeatures);
-
         assertThat(result, not(containsString("shiro:")));
         assertThat(result, containsString("HASALLPERMISSIONS_ATTRIBUTE_DYNAMIC"));
         assertThat(result, containsString("HASALLPERMISSIONS_ELEMENT_DYNAMIC"));
@@ -83,9 +80,6 @@ public class HasAllPermissionsTagTest extends AbstractThymeleafShiroDialectTest 
     @Parameters(source = HasAllPermissions.ShouldNotRenderExpression.class)
     public void itShouldNotRenderOnCustomContext(TestUsers user, Context context) {
         Subject subjectUnderTest = createAndLoginSubject(user);
-
-        boolean hasAllFeatures = hasAllFeaturesSanityCheck(subjectUnderTest);
-        assertThat("User does not have all features", !hasAllFeatures);
 
         String result = processThymeleafFile(FILE_UNDER_TEST, context);
 
@@ -100,5 +94,4 @@ public class HasAllPermissionsTagTest extends AbstractThymeleafShiroDialectTest 
         return subjectUnderTest.isPermitted("permtype1:permaction1:perminst1") &&
                 subjectUnderTest.isPermitted("permtype1:permaction1:xyz");
     }
-
 }

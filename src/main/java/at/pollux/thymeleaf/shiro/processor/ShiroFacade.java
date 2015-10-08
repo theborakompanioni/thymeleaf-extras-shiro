@@ -71,6 +71,10 @@ public final class ShiroFacade {
 
     public static boolean hasAllPermissions(Collection<String> permissions) {
         if (SecurityUtils.getSubject() != null) {
+            if (permissions.isEmpty()) {
+                return false;
+            }
+
             final Subject subject = SecurityUtils.getSubject();
             for (final String permission : permissions) {
                 if (!subject.isPermitted(permission)) {
@@ -112,6 +116,10 @@ public final class ShiroFacade {
 
     public static boolean hasAllRoles(final Collection<String> roles) {
         if (SecurityUtils.getSubject() != null) {
+            if (roles.isEmpty()) {
+                return false;
+            }
+            
             final Subject subject = SecurityUtils.getSubject();
             for (final String role : roles) {
                 if (!subject.hasRole(StringUtils.trim(role))) {
