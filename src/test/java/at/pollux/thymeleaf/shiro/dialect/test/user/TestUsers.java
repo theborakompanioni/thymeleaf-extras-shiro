@@ -5,8 +5,10 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Sets;
 
+import java.util.Collection;
+
 /**
- * Created by void on 08.10.15.
+ * @author tbk
  */
 public enum TestUsers {
     ALICE(new TestUser("u1", "p1", Sets.newHashSet(
@@ -44,5 +46,13 @@ public enum TestUsers {
                             }
                         }))
         );
+    }
+
+    public Collection<String> permissions() {
+        return Collections2.transform(delegate.getRoles(), new Function<TestRoles, String>() {
+            public String apply(TestRoles input) {
+                return input.permissions();
+            }
+        });
     }
 }

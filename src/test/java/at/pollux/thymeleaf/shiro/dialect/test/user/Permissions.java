@@ -1,7 +1,8 @@
 package at.pollux.thymeleaf.shiro.dialect.test.user;
 
+
 /**
- * Created by void on 08.10.15.
+ * @author tbk
  */
 public enum Permissions {
     PERMISSION_ALL("*"),

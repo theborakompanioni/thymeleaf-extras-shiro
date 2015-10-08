@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.Set;
 
 /**
- * Created by void on 08.10.15.
+ * @author tbk
  */
 public class TestUser {
     private final String email;

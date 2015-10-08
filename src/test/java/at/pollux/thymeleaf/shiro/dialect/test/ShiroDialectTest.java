@@ -442,7 +442,7 @@ public class ShiroDialectTest extends AbstractShiroTest {
     }
 
     @Test
-    public void testHasAllPermissionsWithExpession() {
+    public void testHasAllPermissionsWithExpression() {
         Subject subjectUnderTest = new Subject.Builder(getSecurityManager()).buildSubject();
         setSubject(subjectUnderTest);
 

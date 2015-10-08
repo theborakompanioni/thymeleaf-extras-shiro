@@ -6,7 +6,7 @@ import com.google.common.collect.Collections2;
 import com.google.common.collect.Sets;
 
 /**
- * Created by void on 08.10.15.
+ * @author tbk
  */
 public enum TestRoles {
 
