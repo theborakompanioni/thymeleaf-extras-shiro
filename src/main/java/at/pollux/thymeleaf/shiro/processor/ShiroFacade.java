@@ -91,7 +91,7 @@ public final class ShiroFacade {
     }
 
     public static boolean lacksRole(final String roleName) {
-        return !ShiroFacade.hasRole(roleName);
+        return !hasRole(roleName);
     }
 
     public static boolean hasAnyRoles(final Collection<String> roles) {
