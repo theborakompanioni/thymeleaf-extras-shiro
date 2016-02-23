@@ -22,7 +22,7 @@ public class HasAnyPermissionsTagTest extends AbstractThymeleafShiroDialectTest 
     private static final String FILE_UNDER_TEST = "shiro_hasAnyPermissions.html";
 
     @Test
-    public void itShoulNotRenderWithoutSubject() {
+    public void itShouldNotRenderWithoutSubject() {
         String result = processThymeleafFile(FILE_UNDER_TEST, new Context());
 
         assertThat(result, not(containsString("shiro:")));
