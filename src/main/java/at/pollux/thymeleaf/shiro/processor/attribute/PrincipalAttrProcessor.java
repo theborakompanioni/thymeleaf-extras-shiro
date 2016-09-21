@@ -15,41 +15,64 @@
  ****************************************************************************/
 package at.pollux.thymeleaf.shiro.processor.attribute;
 
+
 import at.pollux.thymeleaf.shiro.processor.ShiroFacade;
-import org.thymeleaf.Arguments;
-import org.thymeleaf.dom.Element;
-import org.thymeleaf.processor.attr.AbstractTextChildModifierAttrProcessor;
+import org.thymeleaf.context.ITemplateContext;
+import org.thymeleaf.engine.AttributeName;
+import org.thymeleaf.model.IModel;
+import org.thymeleaf.model.IModelFactory;
+import org.thymeleaf.model.IProcessableElementTag;
+import org.thymeleaf.processor.element.AbstractAttributeTagProcessor;
+import org.thymeleaf.processor.element.IElementTagStructureHandler;
+import org.thymeleaf.templatemode.TemplateMode;
+import org.unbescape.html.HtmlEscape;
 
-public class PrincipalAttrProcessor extends AbstractTextChildModifierAttrProcessor {
+public class PrincipalAttrProcessor extends AbstractAttributeTagProcessor {
 
-    public static final PrincipalAttrProcessor create() {
-        return new PrincipalAttrProcessor();
-    }
 
     private static final String ATTRIBUTE_NAME = "principal";
+
     private static final int PRECEDENCE = 300;
 
-    protected PrincipalAttrProcessor() {
-        super(ATTRIBUTE_NAME);
+    public PrincipalAttrProcessor(String dialectPrefix) {
+        super(
+                TemplateMode.HTML, // This processor will apply only to HTML mode
+                dialectPrefix, // Prefix to be applied to name for matching
+                null, // No tag name: match any tag name
+                false, // No prefix to be applied to tag name
+                ATTRIBUTE_NAME, // Name of the attribute that will be matched
+                true, // Apply dialect prefix to attribute name
+                PRECEDENCE, // Precedence (inside dialect's precedence)
+                true); // Remove the matched attribute afterwards
     }
 
-    @Override
-    public int getPrecedence() {
-        return PRECEDENCE;
-    }
 
-    @Override
-    protected String getText(final Arguments arguments, final Element element, final String attributeName) {
-        final String type = element.getAttributeValue("type");
-        final String property = element.getAttributeValue("property");
+    protected void doProcess(ITemplateContext iTemplateContext,
+                             IProcessableElementTag iProcessableElementTag,
+                             AttributeName attributeName,
+                             String s,
+                             IElementTagStructureHandler iElementTagStructureHandler) {
 
-        if (element.hasAttribute("type")) {
-            element.removeAttribute("type");
-        }
-        if (element.hasAttribute("property")) {
-            element.removeAttribute("property");
-        }
+        final String type = iProcessableElementTag.getAttributeValue("type");
+        final String property = iProcessableElementTag.getAttributeValue("property");
+//        if (iProcessableElementTag.hasAttribute("type")) {
+//            iElementTagStructureHandler.removeAttribute("type");
+//        }
+//        if (iProcessableElementTag.hasAttribute("property")) {
+//            iElementTagStructureHandler.removeAttribute("property");
+//        }
+//        iElementTagStructureHandler.removeAttribute(attributeName);
 
-        return ShiroFacade.getPrincipalText(type, property);
+        String text = ShiroFacade.getPrincipalText(type, property);
+
+//        iElementTagStructureHandler.setBody(text, false);
+        String elementCompleteName = iProcessableElementTag.getElementCompleteName();
+        final IModelFactory modelFactory = iTemplateContext.getModelFactory();
+        final IModel model = modelFactory.createModel();
+        model.add(modelFactory.createOpenElementTag(elementCompleteName));
+        model.add(modelFactory.createText(HtmlEscape.escapeHtml5(text)));
+        model.add(modelFactory.createCloseElementTag(elementCompleteName));
+        iElementTagStructureHandler.replaceWith(model,false);
+
     }
 }

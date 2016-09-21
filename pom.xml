@@ -53,8 +53,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <thymeleaf.version>2.1.4.RELEASE</thymeleaf.version>
-        <shiro.version>1.2.4</shiro.version>
+        <thymeleaf.version>3.0.1.RELEASE</thymeleaf.version>
+        <shiro.version>1.3.0</shiro.version>
         <slf4j.version>1.7.12</slf4j.version>
         <junit.version>4.12</junit.version>
         <easymock.version>3.3.1</easymock.version>

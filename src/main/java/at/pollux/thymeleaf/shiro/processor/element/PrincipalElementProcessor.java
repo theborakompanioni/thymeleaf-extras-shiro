@@ -15,35 +15,52 @@
  ****************************************************************************/
 package at.pollux.thymeleaf.shiro.processor.element;
 
-import org.thymeleaf.Arguments;
-import org.thymeleaf.dom.Element;
-import org.thymeleaf.processor.element.AbstractTextChildModifierElementProcessor;
+import org.thymeleaf.context.ITemplateContext;
+import org.thymeleaf.model.IProcessableElementTag;
+import org.thymeleaf.processor.element.AbstractElementTagProcessor;
 
 import at.pollux.thymeleaf.shiro.processor.ShiroFacade;
+import org.thymeleaf.processor.element.IElementTagStructureHandler;
+import org.thymeleaf.templatemode.TemplateMode;
 
-public class PrincipalElementProcessor extends AbstractTextChildModifierElementProcessor {
+public class PrincipalElementProcessor extends AbstractElementTagProcessor {
 
-    public static final PrincipalElementProcessor create() {
-        return new PrincipalElementProcessor();
-    }
+
 
     private static final String ELEMENT_NAME = "principal";
     private static final int PRECEDENCE = 300;
 
-    protected PrincipalElementProcessor() {
-        super(ELEMENT_NAME);
+    public PrincipalElementProcessor(String dialectPrefix) {
+        super(
+                TemplateMode.HTML, // This processor will apply only to HTML mode
+                dialectPrefix, // Prefix to be applied to name for matching
+                ELEMENT_NAME, // Tag name: match specifically this tag
+                true, // Apply dialect prefix to tag name
+                null, // No attribute name: will match by tag name
+                false, // No prefix to be applied to attribute name
+                PRECEDENCE); // Precedence (inside dialect's own precedence)
     }
 
-    @Override
-    public int getPrecedence() {
-        return PRECEDENCE;
-    }
+//    @Override
+//    public int getPrecedence() {
+//        return PRECEDENCE;
+//    }
+//
+//    @Override
+//    protected String getText(final Arguments arguments, final Element element) {
+//        final String type = element.getAttributeValue("type");
+//        final String property = element.getAttributeValue("property");
+//
+//        return ShiroFacade.getPrincipalText(type, property);
+//    }
 
-    @Override
-    protected String getText(final Arguments arguments, final Element element) {
-        final String type = element.getAttributeValue("type");
-        final String property = element.getAttributeValue("property");
+    protected void doProcess(ITemplateContext iTemplateContext, IProcessableElementTag iProcessableElementTag, IElementTagStructureHandler iElementTagStructureHandler) {
 
-        return ShiroFacade.getPrincipalText(type, property);
+        final String type = iProcessableElementTag.getAttributeValue("type");
+        final String property = iProcessableElementTag.getAttributeValue("property");
+
+        String text = ShiroFacade.getPrincipalText(type, property);
+        iElementTagStructureHandler.replaceWith(text, false);
+
     }
 }

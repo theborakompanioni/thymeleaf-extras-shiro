@@ -15,47 +15,48 @@
  ****************************************************************************/
 package at.pollux.thymeleaf.shiro.processor.element;
 
-import org.thymeleaf.Arguments;
-import org.thymeleaf.dom.Element;
-import org.thymeleaf.processor.element.AbstractConditionalVisibilityElementProcessor;
+import org.thymeleaf.context.ITemplateContext;
+import org.thymeleaf.model.IProcessableElementTag;
 
 import at.pollux.thymeleaf.shiro.processor.ShiroFacade;
+import org.thymeleaf.processor.element.AbstractElementTagProcessor;
+import org.thymeleaf.processor.element.IElementTagStructureHandler;
+import org.thymeleaf.templatemode.TemplateMode;
 
 import java.util.List;
 
 import static at.pollux.thymeleaf.shiro.processor.ThymeleafFacade.evaluateAsStringsWithDelimiter;
 import static at.pollux.thymeleaf.shiro.processor.ThymeleafFacade.getRawValue;
 
-public class HasPermissionElementProcessor extends AbstractConditionalVisibilityElementProcessor {
+public class HasPermissionElementProcessor extends AbstractElementTagProcessor {
 
-    public static HasPermissionElementProcessor create() {
-        return new HasPermissionElementProcessor();
-    }
 
     private static final String ELEMENT_NAME = "haspermission";
     private static final int PRECEDENCE = 300;
 
     private static final String DELIMITER = ",";
 
-    protected HasPermissionElementProcessor() {
-        super(ELEMENT_NAME);
+    public HasPermissionElementProcessor(String dialectPrefix) {
+        super(
+                TemplateMode.HTML, // This processor will apply only to HTML mode
+                dialectPrefix, // Prefix to be applied to name for matching
+                ELEMENT_NAME, // Tag name: match specifically this tag
+                true, // Apply dialect prefix to tag name
+                null, // No attribute name: will match by tag name
+                false, // No prefix to be applied to attribute name
+                PRECEDENCE); // Precedence (inside dialect's own precedence)
     }
 
-    @Override
-    public int getPrecedence() {
-        return PRECEDENCE;
-    }
 
-    @Override
-    public boolean removeHostElementIfVisible(final Arguments arguments, final Element element) {
-        return true;
-    }
+    protected void doProcess(ITemplateContext iTemplateContext, IProcessableElementTag iProcessableElementTag, IElementTagStructureHandler iElementTagStructureHandler) {
 
-    @Override
-    public boolean isVisible(final Arguments arguments, final Element element) {
-        String rawValue = getRawValue(element, "name");
-        List<String> values = evaluateAsStringsWithDelimiter(arguments, rawValue, DELIMITER);
+        String rawValue = getRawValue(iProcessableElementTag,"name");
+        List<String> values = evaluateAsStringsWithDelimiter(iTemplateContext, rawValue, DELIMITER);
+        if(ShiroFacade.hasAllPermissions(values)){
+            iElementTagStructureHandler.removeTags();
+        }else{
+            iElementTagStructureHandler.removeElement();
+        }
 
-        return ShiroFacade.hasAllPermissions(values);
     }
 }

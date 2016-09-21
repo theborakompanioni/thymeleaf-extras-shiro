@@ -17,68 +17,79 @@ package at.pollux.thymeleaf.shiro.dialect;
 
 import at.pollux.thymeleaf.shiro.processor.attribute.*;
 import at.pollux.thymeleaf.shiro.processor.element.*;
-import org.thymeleaf.dialect.AbstractDialect;
+
+import org.thymeleaf.dialect.AbstractProcessorDialect;
 import org.thymeleaf.processor.IProcessor;
+import org.thymeleaf.standard.StandardDialect;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class ShiroDialect extends AbstractDialect {
+public class ShiroDialect extends AbstractProcessorDialect {
+
+    public static final String NAME = "Shiro";
+
     private static final String PREFIX = "shiro";
-    private static final Set<IProcessor> processors = new HashSet<IProcessor>();
 
-    static {
-        processors.add(PrincipalAttrProcessor.create());
-        processors.add(PrincipalElementProcessor.create());
 
-        processors.add(HasAllRolesAttrProcessor.create());
-        processors.add(HasAllRolesElementProcessor.create());
-
-        processors.add(HasAnyRolesAttrProcessor.create());
-        processors.add(HasAnyRolesElementProcessor.create());
-
-        processors.add(HasRoleAttrProcessor.create());
-        processors.add(HasRoleElementProcessor.create());
-
-        processors.add(LacksRoleAttrProcessor.create());
-        processors.add(LacksRoleElementProcessor.create());
-
-        processors.add(HasAllPermissionsAttrProcessor.create());
-        processors.add(HasAllPermissionsElementProcessor.create());
-
-        processors.add(HasAnyPermissionsAttrProcessor.create());
-        processors.add(HasAnyPermissionsElementProcessor.create());
-
-        processors.add(HasPermissionAttrProcessor.create());
-        processors.add(HasPermissionElementProcessor.create());
-
-        processors.add(LacksPermissionAttrProcessor.create());
-        processors.add(LacksPermissionElementProcessor.create());
-
-        processors.add(AuthenticatedAttrProcessor.create());
-        processors.add(AuthenticatedElementProcessor.create());
-
-        processors.add(NotAuthenticatedAttrProcessor.create());
-        processors.add(NotAuthenticatedElementProcessor.create());
-
-        processors.add(GuestAttrProcessor.create());
-        processors.add(GuestElementProcessor.create());
-
-        processors.add(UserAttrProcessor.create());
-        processors.add(UserElementProcessor.create());
-    }
 
     public ShiroDialect() {
-        super();
+        super(NAME,PREFIX, StandardDialect.PROCESSOR_PRECEDENCE);
     }
 
-    public String getPrefix() {
-        return PREFIX;
+
+
+    public Set<IProcessor> getProcessors(String s) {
+        return createStandardProcessorsSet(s);
     }
 
-    @Override
-    public Set<IProcessor> getProcessors() {
-        return Collections.unmodifiableSet(processors);
+
+    public static Set<IProcessor> createStandardProcessorsSet(String dialectPrefix) {
+        LinkedHashSet processors = new LinkedHashSet();
+
+
+        processors.add(new  PrincipalAttrProcessor(PREFIX));
+        processors.add(new  PrincipalElementProcessor(PREFIX));
+
+        processors.add(new  HasAllRolesAttrProcessor(PREFIX));
+        processors.add(new  HasAllRolesElementProcessor(PREFIX));
+     
+        processors.add(new  HasAnyRolesAttrProcessor(PREFIX));
+        processors.add(new  HasAnyRolesElementProcessor(PREFIX));
+     
+        processors.add(new  HasRoleAttrProcessor(PREFIX));
+        processors.add(new  HasRoleElementProcessor(PREFIX));
+     
+        processors.add(new  LacksRoleAttrProcessor(PREFIX));
+        processors.add(new  LacksRoleElementProcessor(PREFIX));
+     
+        processors.add(new  HasAllPermissionsAttrProcessor(PREFIX));
+        processors.add(new  HasAllPermissionsElementProcessor(PREFIX));
+     
+        processors.add(new  HasAnyPermissionsAttrProcessor(PREFIX));
+        processors.add(new  HasAnyPermissionsElementProcessor(PREFIX));
+     
+        processors.add(new  HasPermissionAttrProcessor(PREFIX));
+        processors.add(new  HasPermissionElementProcessor(PREFIX));
+     
+        processors.add(new  LacksPermissionAttrProcessor(PREFIX));
+        processors.add(new  LacksPermissionElementProcessor(PREFIX));
+     
+        processors.add(new  AuthenticatedAttrProcessor(PREFIX));
+        processors.add(new  AuthenticatedElementProcessor(PREFIX));
+     
+        processors.add(new  NotAuthenticatedAttrProcessor(PREFIX));
+        processors.add(new  NotAuthenticatedElementProcessor(PREFIX));
+     
+        processors.add(new  GuestAttrProcessor(PREFIX));
+        processors.add(new  GuestElementProcessor(PREFIX));
+     
+        processors.add(new  UserAttrProcessor(PREFIX));
+        processors.add(new  UserElementProcessor(PREFIX));
+
+
+        return processors;
     }
 }

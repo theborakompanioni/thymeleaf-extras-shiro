@@ -15,32 +15,43 @@
  ****************************************************************************/
 package at.pollux.thymeleaf.shiro.processor.attribute;
 
-import org.thymeleaf.Arguments;
-import org.thymeleaf.dom.Element;
-import org.thymeleaf.processor.attr.AbstractConditionalVisibilityAttrProcessor;
+
+import org.thymeleaf.context.ITemplateContext;
+import org.thymeleaf.engine.AttributeName;
+import org.thymeleaf.model.IProcessableElementTag;
 
 import at.pollux.thymeleaf.shiro.processor.ShiroFacade;
+import org.thymeleaf.processor.element.AbstractAttributeTagProcessor;
+import org.thymeleaf.processor.element.IElementTagStructureHandler;
+import org.thymeleaf.templatemode.TemplateMode;
 
-public class UserAttrProcessor extends AbstractConditionalVisibilityAttrProcessor {
+public class UserAttrProcessor extends AbstractAttributeTagProcessor {
 
-    public static UserAttrProcessor create() {
-        return new UserAttrProcessor();
-    }
 
     private static final String ATTRIBUTE_NAME = "user";
     private static final int PRECEDENCE = 300;
 
-    protected UserAttrProcessor() {
-        super(ATTRIBUTE_NAME);
+    public UserAttrProcessor(String dialectPrefix) {
+        super(
+                TemplateMode.HTML, // This processor will apply only to HTML mode
+                dialectPrefix, // Prefix to be applied to name for matching
+                null, // No tag name: match any tag name
+                false, // No prefix to be applied to tag name
+                ATTRIBUTE_NAME, // Name of the attribute that will be matched
+                true, // Apply dialect prefix to attribute name
+                PRECEDENCE, // Precedence (inside dialect's precedence)
+                true); // Remove the matched attribute afterwards
     }
 
-    @Override
-    public int getPrecedence() {
-        return PRECEDENCE;
+
+    protected void doProcess(ITemplateContext iTemplateContext, IProcessableElementTag iProcessableElementTag, AttributeName attributeName, String s, IElementTagStructureHandler iElementTagStructureHandler) {
+        if(ShiroFacade.isUser()){
+            iElementTagStructureHandler.removeAttribute(attributeName);
+        }else{
+            iElementTagStructureHandler.removeElement();
+        }
+
     }
 
-    @Override
-    public boolean isVisible(final Arguments arguments, final Element element, final String attributeName) {
-        return ShiroFacade.isUser();
-    }
+
 }

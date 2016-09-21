@@ -12,6 +12,7 @@ import org.junit.After;
 import org.junit.BeforeClass;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 import static at.pollux.thymeleaf.shiro.dialect.test.user.TestRoles.*;
@@ -49,7 +50,7 @@ public class AbstractThymeleafShiroDialectTest extends AbstractShiroTest {
         ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
         templateResolver.setCacheable(false);
         templateResolver.setCharacterEncoding("UTF-8");
-        templateResolver.setTemplateMode("HTML5");
+        templateResolver.setTemplateMode(TemplateMode.HTML);
 
         templateEngine = new TemplateEngine();
         templateEngine.setTemplateResolver(templateResolver);
