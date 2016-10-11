@@ -3,13 +3,20 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
+
+## [2.0.0-SNAPSHOT] - 2016-10-11
 ### Added
 - added support for expression evaluation, e.g:
 ```
 <div shiro:hasAllPermissions="${permissions}">
-    You have all necessary permissions.
+   You have all necessary permissions.
 </div>
 ```
+
+### Updated
+- Updated Thymeleaf version from 2.1.4 to 3.0.2.RELEASE
+- Updated Shiro version from 1.2.4 to 1.3.2
+
 
 ## [1.2.1] - 2015-09-07
 ### Fixed
@@ -24,6 +31,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Updated Shiro version from 1.2.2 to 1.2.4
 
 
-[unreleased]: https://github.com/theborakompanioni/thymeleaf-extras-shiro/compare/1.2.1...HEAD
+[unreleased]: https://github.com/theborakompanioni/thymeleaf-extras-shiro/compare/2.0.0-SNAPSHOT...HEAD
+[2.0.0-SNAPSHOT]: https://github.com/theborakompanioni/thymeleaf-extras-shiro/compare/1.2.1...2.0.0-SNAPSHOT
 [1.2.1]: https://github.com/theborakompanioni/thymeleaf-extras-shiro/compare/1.2.0...1.2.1
 [1.2.0]: https://github.com/theborakompanioni/thymeleaf-extras-shiro/compare/74596f4...1.2.0
