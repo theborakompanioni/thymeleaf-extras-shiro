@@ -68,7 +68,6 @@ public class AbstractThymeleafShiroDialectTest extends AbstractShiroTest {
         clearSubject();
     }
 
-
     protected String processThymeleafFile(String fileName, Context context) {
         return templateEngine.process(PACKAGE_PATH + "/" + fileName, context);
     }

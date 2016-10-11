@@ -29,9 +29,6 @@ import static at.pollux.thymeleaf.shiro.processor.ThymeleafFacade.evaluateAsStri
 import static at.pollux.thymeleaf.shiro.processor.ThymeleafFacade.getRawValue;
 
 public class HasPermissionAttrProcessor extends AbstractAttributeTagProcessor {
-
-
-
     private static final String DELIMITER = ",";
 
     private static final String ATTRIBUTE_NAME = "hasPermission";
@@ -49,13 +46,18 @@ public class HasPermissionAttrProcessor extends AbstractAttributeTagProcessor {
                 true); // Remove the matched attribute afterwards
     }
 
+    @Override
+    protected void doProcess(ITemplateContext iTemplateContext,
+                             IProcessableElementTag iProcessableElementTag,
+                             AttributeName attributeName,
+                             String attributeValue,
+                             IElementTagStructureHandler iElementTagStructureHandler) {
+        final String rawValue = getRawValue(iProcessableElementTag, attributeName);
+        final List<String> values = evaluateAsStringsWithDelimiter(iTemplateContext, rawValue, DELIMITER);
 
-    protected void doProcess(ITemplateContext iTemplateContext, IProcessableElementTag iProcessableElementTag, AttributeName attributeName, String s, IElementTagStructureHandler iElementTagStructureHandler) {
-        String rawValue = getRawValue(iProcessableElementTag, attributeName);
-        List<String> values = evaluateAsStringsWithDelimiter(iTemplateContext, rawValue, DELIMITER);
-        if(ShiroFacade.hasAllPermissions(values)){
+        if (ShiroFacade.hasAllPermissions(values)) {
             iElementTagStructureHandler.removeAttribute(attributeName);
-        }else{
+        } else {
             iElementTagStructureHandler.removeElement();
         }
     }

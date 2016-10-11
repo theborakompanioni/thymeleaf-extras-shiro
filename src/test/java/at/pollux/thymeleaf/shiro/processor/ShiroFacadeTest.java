@@ -18,9 +18,6 @@ import static at.pollux.thymeleaf.shiro.dialect.test.user.Permissions.PERMISSION
 import static at.pollux.thymeleaf.shiro.processor.ShiroFacade.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-/**
- * Created by void on 09.10.15.
- */
 @RunWith(JUnitParamsRunner.class)
 public class ShiroFacadeTest extends AbstractThymeleafShiroDialectTest {
 

@@ -17,9 +17,6 @@ package at.pollux.thymeleaf.shiro.dialect.test;
 
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.config.IniSecurityManagerFactory;
-
-import static org.apache.shiro.config.IniSecurityManagerFactory.INI_REALM_NAME;
-
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.realm.text.IniRealm;
 

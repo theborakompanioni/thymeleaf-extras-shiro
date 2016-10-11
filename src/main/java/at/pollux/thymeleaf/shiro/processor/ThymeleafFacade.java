@@ -1,6 +1,5 @@
 package at.pollux.thymeleaf.shiro.processor;
 
-import org.thymeleaf.IEngineConfiguration;
 import org.thymeleaf.context.ITemplateContext;
 import org.thymeleaf.engine.AttributeName;
 import org.thymeleaf.exceptions.TemplateProcessingException;
@@ -8,7 +7,6 @@ import org.thymeleaf.model.IProcessableElementTag;
 import org.thymeleaf.standard.expression.IStandardExpression;
 import org.thymeleaf.standard.expression.IStandardExpressionParser;
 import org.thymeleaf.standard.expression.StandardExpressionParser;
-import org.thymeleaf.standard.expression.StandardExpressions;
 import org.thymeleaf.util.EvaluationUtils;
 import org.thymeleaf.util.StringUtils;
 
@@ -21,9 +19,6 @@ import static org.thymeleaf.util.StringUtils.trim;
 import static org.thymeleaf.util.Validate.notEmpty;
 import static org.thymeleaf.util.Validate.notNull;
 
-/**
- * Created by void on 06.10.15.
- */
 public final class ThymeleafFacade {
 
     private ThymeleafFacade() {
@@ -31,7 +26,6 @@ public final class ThymeleafFacade {
     }
 
     public static String getRawValue(final IProcessableElementTag element, final AttributeName attributeName) {
-
         notNull(element, "element must not be null");
         notNull(attributeName, "attributeName must not be empty");
 
@@ -40,7 +34,6 @@ public final class ThymeleafFacade {
 
         return rawValue;
     }
-
 
     public static String getRawValue(final IProcessableElementTag element, final String attributeName) {
         notNull(element, "element must not be null");
@@ -52,15 +45,9 @@ public final class ThymeleafFacade {
         return rawValue;
     }
 
-
-
-
-
     public static Object evaluateExpression(ITemplateContext arguments, String expression) throws TemplateProcessingException {
         notNull(arguments, "arguments must not be null");
         notEmpty(expression, "expression must not be empty");
-
-
 
         final IStandardExpressionParser parser = new StandardExpressionParser();
 
@@ -73,16 +60,16 @@ public final class ThymeleafFacade {
         notNull(arguments, "arguments must not be null");
         notEmpty(rawValue, "rawValue must not be empty");
 
-        Object evaluatedExpression = evaluateExpression(arguments, rawValue);
+        final Object evaluatedExpression = evaluateExpression(arguments, rawValue);
 
-        return  EvaluationUtils.evaluateAsList(evaluatedExpression);
+        return EvaluationUtils.evaluateAsList(evaluatedExpression);
     }
 
     public static List<Object> evaluateAsIterableOrRawValue(ITemplateContext arguments, String rawValue) {
         notNull(arguments, "arguments must not be null");
         notEmpty(rawValue, "rawValue must not be empty");
 
-        List<Object> result = new ArrayList<Object>();
+        final List<Object> result = new ArrayList<Object>();
         try {
             result.addAll(evaluateAsIterable(arguments, rawValue));
         } catch (TemplateProcessingException ex) {
@@ -97,8 +84,8 @@ public final class ThymeleafFacade {
         notEmpty(rawValue, "rawValue must not be empty");
         notEmpty(delimiter, "delimiter must not be empty");
 
-        List<String> result = new ArrayList<String>();
-        List<Object> iterates = evaluateAsIterableOrRawValue(arguments, rawValue);
+        final List<String> result = new ArrayList<String>();
+        final List<Object> iterates = evaluateAsIterableOrRawValue(arguments, rawValue);
 
         for (Object o : iterates) {
             result.addAll(asList(StringUtils.split(o, delimiter)));
