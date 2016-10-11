@@ -6,7 +6,6 @@ import at.pollux.thymeleaf.shiro.dialect.test.user.TestRoles;
 import at.pollux.thymeleaf.shiro.dialect.test.user.TestUsers;
 import com.google.common.collect.Sets;
 import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
 import org.apache.shiro.subject.Subject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,23 +16,30 @@ import java.util.UUID;
 import static at.pollux.thymeleaf.shiro.dialect.test.user.Permissions.PERMISSION_TYPE_1_ACTION_2;
 import static at.pollux.thymeleaf.shiro.processor.ShiroFacade.*;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 
 @RunWith(JUnitParamsRunner.class)
 public class ShiroFacadeTest extends AbstractThymeleafShiroDialectTest {
 
     @Test(expected = IllegalArgumentException.class)
-    @Parameters(value = {""})
-    public void testIllegalArgumentExceptionWithLoggedInUser(String value) throws Exception {
+    public void testOddityOfShiroToThrowExceptionOnLoggedInUserWithEmptyPermissionString() throws Exception {
         final Subject subject = createAndLoginSubject(TestUsers.ALICE);
+        final String emptyPermission = "";
         try {
-            hasPermission(value);
+            hasPermission(emptyPermission);
+        } catch (Exception e) {
+            String expectedMessage = "Wildcard string cannot be null or empty. Make sure permission strings are properly formatted.";
+            assertThat(e.getMessage(), is(equalTo(expectedMessage)));
+
+            throw e;
         } finally {
             subject.logout();
         }
     }
 
     @Test
-    public void testGuest() throws Exception {
+    public void itShouldVerifyGuestRolesAndPermissions() throws Exception {
         assertThat("Guest does not have permission", !hasPermission(null));
         assertThat("Guest does not have permission", !hasPermission(""));
         assertThat("Guest does not have permission", !hasPermission("foo"));
@@ -61,7 +67,7 @@ public class ShiroFacadeTest extends AbstractThymeleafShiroDialectTest {
     }
 
     @Test
-    public void testAlice() throws Exception {
+    public void itShouldVerifyUserAliceRolesAndPermissions() throws Exception {
         final Subject subject = createAndLoginSubject(TestUsers.ALICE);
 
         String randomPermission = UUID.randomUUID().toString();
@@ -78,9 +84,8 @@ public class ShiroFacadeTest extends AbstractThymeleafShiroDialectTest {
         subject.logout();
     }
 
-
     @Test
-    public void testBob() throws Exception {
+    public void itShouldVerifyUserBobRolesAndPermissions() throws Exception {
         final Subject subject = createAndLoginSubject(TestUsers.BOB);
         String randomPermission = UUID.randomUUID().toString();
 
@@ -109,7 +114,7 @@ public class ShiroFacadeTest extends AbstractThymeleafShiroDialectTest {
     }
 
     @Test
-    public void testCaesar() throws Exception {
+    public void itShouldVerifyUserCaesarRolesAndPermissions() throws Exception {
         final Subject subject = createAndLoginSubject(TestUsers.CAESAR);
 
         assertThat("Caesar has permission", hasPermission(PERMISSION_TYPE_1_ACTION_2.label()));
