@@ -157,5 +157,4 @@ Typed principal and principal property are also supported.
 
 License
 -------
-The project is licensed under the Apache license. See
-[LICENSE](https://github.com/theborakompanioni/thymeleaf-extras-shiro/blob/master/LICENSE.md) for details.
+The project is licensed under the Apache License. See [LICENSE](LICENSE) for details.
