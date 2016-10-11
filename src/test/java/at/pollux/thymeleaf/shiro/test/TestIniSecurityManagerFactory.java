@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.pollux.thymeleaf.shiro.dialect.test;
+package at.pollux.thymeleaf.shiro.test;
 
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.config.IniSecurityManagerFactory;

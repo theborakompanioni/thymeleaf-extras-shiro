@@ -1,4 +1,4 @@
-package at.pollux.thymeleaf.shiro.dialect.test.user;
+package at.pollux.thymeleaf.shiro.test.user;
 
 import java.util.Collections;
 import java.util.Set;

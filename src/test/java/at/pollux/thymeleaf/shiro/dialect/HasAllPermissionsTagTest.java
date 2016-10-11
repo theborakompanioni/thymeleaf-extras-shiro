@@ -1,7 +1,8 @@
-package at.pollux.thymeleaf.shiro.dialect.test;
+package at.pollux.thymeleaf.shiro.dialect;
 
-import at.pollux.thymeleaf.shiro.dialect.test.mother.PermissionsMother.HasAllPermissions;
-import at.pollux.thymeleaf.shiro.dialect.test.user.TestUsers;
+import at.pollux.thymeleaf.shiro.test.mother.PermissionsMother.HasAllPermissions;
+import at.pollux.thymeleaf.shiro.test.user.TestUsers;
+import at.pollux.thymeleaf.shiro.test.AbstractThymeleafShiroDialectTest;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.apache.shiro.subject.Subject;

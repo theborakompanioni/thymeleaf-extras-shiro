@@ -1,7 +1,8 @@
-package at.pollux.thymeleaf.shiro.dialect.test;
+package at.pollux.thymeleaf.shiro.test;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
-import at.pollux.thymeleaf.shiro.dialect.test.user.TestUsers;
+import at.pollux.thymeleaf.shiro.test.user.TestUsers;
+import com.google.common.base.Charsets;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.mgt.SecurityManager;
@@ -15,8 +16,8 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
-import static at.pollux.thymeleaf.shiro.dialect.test.user.TestRoles.*;
-import static at.pollux.thymeleaf.shiro.dialect.test.user.TestUsers.*;
+import static at.pollux.thymeleaf.shiro.test.user.TestRoles.*;
+import static at.pollux.thymeleaf.shiro.test.user.TestUsers.*;
 
 /**
  * @author tbk
@@ -26,36 +27,6 @@ public class AbstractThymeleafShiroDialectTest extends AbstractShiroTest {
     private static final String PACKAGE_PATH = "at/pollux/thymeleaf/shiro/dialect/test";
 
     private static TemplateEngine templateEngine;
-
-    private static void setupShiro() {
-        Ini ini = new Ini();
-        Ini.Section usersSection = ini.addSection("users");
-
-        usersSection.put(ALICE.email(), ALICE.roles());
-        usersSection.put(BOB.email(), BOB.roles());
-        usersSection.put(CAESAR.email(), CAESAR.roles());
-
-        Ini.Section rolesSection = ini.addSection("roles");
-        rolesSection.put(ROLE_A.label(), ROLE_A.permissions());
-        rolesSection.put(ROLE_B.label(), ROLE_B.permissions());
-        rolesSection.put(ROLE_C.label(), ROLE_C.permissions());
-        rolesSection.put(ROLE_D.label(), ROLE_D.permissions());
-
-        Factory<SecurityManager> factory = new TestIniSecurityManagerFactory(ini);
-        SecurityManager secMgr = factory.getInstance();
-        setSecurityManager(secMgr);
-    }
-
-    private static void setupThymeleaf() {
-        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
-        templateResolver.setCacheable(false);
-        templateResolver.setCharacterEncoding("UTF-8");
-        templateResolver.setTemplateMode(TemplateMode.HTML);
-
-        templateEngine = new TemplateEngine();
-        templateEngine.setTemplateResolver(templateResolver);
-        templateEngine.addDialect("shiro", new ShiroDialect());
-    }
 
     @BeforeClass
     public static void beforeClass() {
@@ -87,5 +58,37 @@ public class AbstractThymeleafShiroDialectTest extends AbstractShiroTest {
             subjectUnderTest.login(new UsernamePasswordToken(userOrNull.email(), userOrNull.password()));
         }
         return subjectUnderTest;
+    }
+
+    private static void setupShiro() {
+        Ini ini = new Ini();
+        Ini.Section usersSection = ini.addSection("users");
+
+        usersSection.put(ALICE.email(), ALICE.roles());
+        usersSection.put(BOB.email(), BOB.roles());
+        usersSection.put(CAESAR.email(), CAESAR.roles());
+
+        Ini.Section rolesSection = ini.addSection("roles");
+        rolesSection.put(ROLE_A.label(), ROLE_A.permissions());
+        rolesSection.put(ROLE_B.label(), ROLE_B.permissions());
+        rolesSection.put(ROLE_C.label(), ROLE_C.permissions());
+        rolesSection.put(ROLE_D.label(), ROLE_D.permissions());
+
+        Factory<SecurityManager> factory = new TestIniSecurityManagerFactory(ini);
+        SecurityManager secMgr = factory.getInstance();
+        setSecurityManager(secMgr);
+    }
+
+    private static void setupThymeleaf() {
+        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+        templateResolver.setCacheable(false);
+        templateResolver.setCharacterEncoding(Charsets.UTF_8.name());
+        templateResolver.setTemplateMode(TemplateMode.HTML);
+
+        templateEngine = new TemplateEngine();
+        templateEngine.setTemplateResolver(templateResolver);
+        final ShiroDialect dialect = new ShiroDialect();
+        templateEngine.addDialect(dialect.getPrefix(), dialect);
+
     }
 }

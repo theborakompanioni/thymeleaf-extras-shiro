@@ -1,9 +1,9 @@
 package at.pollux.thymeleaf.shiro.processor;
 
-import at.pollux.thymeleaf.shiro.dialect.test.AbstractThymeleafShiroDialectTest;
-import at.pollux.thymeleaf.shiro.dialect.test.user.Permissions;
-import at.pollux.thymeleaf.shiro.dialect.test.user.TestRoles;
-import at.pollux.thymeleaf.shiro.dialect.test.user.TestUsers;
+import at.pollux.thymeleaf.shiro.test.AbstractThymeleafShiroDialectTest;
+import at.pollux.thymeleaf.shiro.test.user.Permissions;
+import at.pollux.thymeleaf.shiro.test.user.TestRoles;
+import at.pollux.thymeleaf.shiro.test.user.TestUsers;
 import com.google.common.collect.Sets;
 import junitparams.JUnitParamsRunner;
 import org.apache.shiro.subject.Subject;
@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
 import java.util.Collections;
 import java.util.UUID;
 
-import static at.pollux.thymeleaf.shiro.dialect.test.user.Permissions.PERMISSION_TYPE_1_ACTION_2;
+import static at.pollux.thymeleaf.shiro.test.user.Permissions.PERMISSION_TYPE_1_ACTION_2;
 import static at.pollux.thymeleaf.shiro.processor.ShiroFacade.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;

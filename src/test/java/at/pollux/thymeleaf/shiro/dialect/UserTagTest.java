@@ -1,11 +1,12 @@
-package at.pollux.thymeleaf.shiro.dialect.test;
+package at.pollux.thymeleaf.shiro.dialect;
 
+import at.pollux.thymeleaf.shiro.test.AbstractThymeleafShiroDialectTest;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.junit.Test;
 import org.thymeleaf.context.Context;
 
-import static at.pollux.thymeleaf.shiro.dialect.test.user.TestUsers.ALICE;
+import static at.pollux.thymeleaf.shiro.test.user.TestUsers.ALICE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;

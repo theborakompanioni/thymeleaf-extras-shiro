@@ -1,6 +1,6 @@
-package at.pollux.thymeleaf.shiro.dialect.test.mother;
+package at.pollux.thymeleaf.shiro.test.mother;
 
-import static at.pollux.thymeleaf.shiro.dialect.test.user.TestUsers.*;
+import static at.pollux.thymeleaf.shiro.test.user.TestUsers.*;
 import static junitparams.JUnitParamsRunner.$;
 
 /**

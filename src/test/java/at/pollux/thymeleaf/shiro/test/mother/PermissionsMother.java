@@ -1,10 +1,10 @@
-package at.pollux.thymeleaf.shiro.dialect.test.mother;
+package at.pollux.thymeleaf.shiro.test.mother;
 
-import at.pollux.thymeleaf.shiro.dialect.test.user.TestUsers;
+import at.pollux.thymeleaf.shiro.test.user.TestUsers;
 import com.google.common.collect.Sets;
 import org.thymeleaf.context.Context;
 
-import static at.pollux.thymeleaf.shiro.dialect.test.user.TestUsers.*;
+import static at.pollux.thymeleaf.shiro.test.user.TestUsers.*;
 import static junitparams.JUnitParamsRunner.$;
 
 /**
