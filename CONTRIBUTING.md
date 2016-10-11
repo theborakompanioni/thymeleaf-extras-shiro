@@ -150,16 +150,11 @@ included in the project:
 
 ## Code guidelines
 
-- Use semicolons!
-- 2 spaces (no tabs)
-- strict mode
+- Be consistent.
+- Write clean code.
+- Test your stuff.
 
-
-### Checking coding style
-
-Ideally the build process will warn you when you are about to violate any of these "rules". 
-Run `grunt test` before committing to ensure your changes follow the coding standards.
-
+Run `mvn install -Dgpg.skip=true` before committing.
 
 ## License
 
