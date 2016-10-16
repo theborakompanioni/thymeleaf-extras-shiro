@@ -22,6 +22,11 @@ public class HasAnyPermissionsTagTest extends AbstractThymeleafShiroDialectTest 
 
     private static final String FILE_UNDER_TEST = "shiro_hasAnyPermissions.html";
 
+    private static boolean hasAnyFeatureSanityCheck(Subject subjectUnderTest) {
+        return subjectUnderTest.isPermitted("permtype1:permaction1:perminst1") ||
+                subjectUnderTest.isPermitted("permtype1:permaction1:xyz");
+    }
+
     @Test
     public void itShouldNotRenderWithoutSubject() {
         String result = processThymeleafFile(FILE_UNDER_TEST, new Context());
@@ -89,11 +94,6 @@ public class HasAnyPermissionsTagTest extends AbstractThymeleafShiroDialectTest 
         assertThat(result, not(containsString("HASANYPERMISSIONS_ELEMENT_DYNAMIC")));
 
         subjectUnderTest.logout();
-    }
-
-    private boolean hasAnyFeatureSanityCheck(Subject subjectUnderTest) {
-        return subjectUnderTest.isPermitted("permtype1:permaction1:perminst1") ||
-                subjectUnderTest.isPermitted("permtype1:permaction1:xyz");
     }
 
 }
