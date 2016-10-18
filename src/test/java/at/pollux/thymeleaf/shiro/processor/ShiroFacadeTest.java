@@ -1,7 +1,7 @@
 package at.pollux.thymeleaf.shiro.processor;
 
 import at.pollux.thymeleaf.shiro.test.AbstractThymeleafShiroDialectTest;
-import at.pollux.thymeleaf.shiro.test.user.Permissions;
+import at.pollux.thymeleaf.shiro.test.user.TestPermissions;
 import at.pollux.thymeleaf.shiro.test.user.TestRoles;
 import at.pollux.thymeleaf.shiro.test.user.TestUsers;
 import com.google.common.collect.Sets;
@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
 import java.util.Collections;
 import java.util.UUID;
 
-import static at.pollux.thymeleaf.shiro.test.user.Permissions.PERMISSION_TYPE_1_ACTION_2;
+import static at.pollux.thymeleaf.shiro.test.user.TestPermissions.PERMISSION_TYPE_1_ACTION_2;
 import static at.pollux.thymeleaf.shiro.processor.ShiroFacade.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -90,10 +90,10 @@ public class ShiroFacadeTest extends AbstractThymeleafShiroDialectTest {
         String randomPermission = UUID.randomUUID().toString();
 
         assertThat("User Bob does not have any random permission", !hasPermission(randomPermission));
-        assertThat("User Bob has permission", hasPermission(Permissions.PERMISSION_TYPE_1_ACTION_1_INST_1.label()));
+        assertThat("User Bob has permission", hasPermission(TestPermissions.PERMISSION_TYPE_1_ACTION_1_INST_1.label()));
 
         assertThat("User Bob lacks random permission", lacksPermission(randomPermission));
-        assertThat("User Bob does not lack permission", !lacksPermission(Permissions.PERMISSION_TYPE_1_ACTION_1_INST_1.label()));
+        assertThat("User Bob does not lack permission", !lacksPermission(TestPermissions.PERMISSION_TYPE_1_ACTION_1_INST_1.label()));
 
         final String roleBPermissions = TestRoles.ROLE_B.permissions();
         final String roleCPermissions = TestRoles.ROLE_C.permissions();
@@ -101,13 +101,13 @@ public class ShiroFacadeTest extends AbstractThymeleafShiroDialectTest {
         assertThat("User Bob has role B permissions", hasAllPermissions(roleBPermissions));
         assertThat("User Bob has role C permissions", hasAllPermissions(roleCPermissions));
         assertThat("User Bob has permissions", hasAllPermissions(
-                Permissions.PERMISSION_TYPE_1_ACTION_1_INST_1.label(),
+                TestPermissions.PERMISSION_TYPE_1_ACTION_1_INST_1.label(),
                 PERMISSION_TYPE_1_ACTION_2.label()
         ));
         assertThat("User Bob does not have all permissions", !hasAllPermissions("foo", "bar", randomPermission));
 
         assertThat("User Bob has any permissions", hasAnyPermissions("foo", "bar",
-                Permissions.PERMISSION_TYPE_1_ACTION_1_INST_1.label()));
+                TestPermissions.PERMISSION_TYPE_1_ACTION_1_INST_1.label()));
         assertThat("User Bob does not have any permissions", !hasAnyPermissions("foo", "bar", randomPermission));
 
         subject.logout();

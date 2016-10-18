@@ -37,9 +37,9 @@ public class HasPermissionTagTest extends AbstractThymeleafShiroDialectTest {
         String result = processThymeleafFile(FILE_UNDER_TEST, new Context());
 
         assertThat(result, not(containsString("shiro:")));
-        assertThat(result, not(containsString("APERM")));
-        assertThat(result, not(containsString("BPERM")));
-        assertThat(result, not(containsString("CPERM")));
+        assertThat(result, not(containsString("PERM_A")));
+        assertThat(result, not(containsString("PERM_B")));
+        assertThat(result, not(containsString("PERM_C")));
     }
 
     @Test
@@ -50,12 +50,12 @@ public class HasPermissionTagTest extends AbstractThymeleafShiroDialectTest {
         String result = processThymeleafFile(FILE_UNDER_TEST, new Context());
 
         assertThat(result, not(containsString("shiro:")));
-        assertThat(result, containsString("APERM1"));
-        assertThat(result, containsString("APERM2"));
-        assertThat(result, containsString("BPERM1"));
-        assertThat(result, containsString("BPERM2"));
-        assertThat(result, containsString("CPERM1"));
-        assertThat(result, containsString("CPERM2"));
+        assertThat(result, containsString("PERM_A_ATTRIBUTE_STATIC"));
+        assertThat(result, containsString("PERM_A_ELEMENT_STATIC"));
+        assertThat(result, containsString("PERM_B_ATTRIBUTE_STATIC"));
+        assertThat(result, containsString("PERM_B_ELEMENT_STATIC"));
+        assertThat(result, containsString("PERM_C_ATTRIBUTE_STATIC"));
+        assertThat(result, containsString("PERM_C_ELEMENT_STATIC"));
 
         subjectUnderTest.logout();
     }
@@ -68,12 +68,12 @@ public class HasPermissionTagTest extends AbstractThymeleafShiroDialectTest {
         String result = processThymeleafFile(FILE_UNDER_TEST, new Context());
 
         assertThat(result, not(containsString("shiro:")));
-        assertThat(result, containsString("APERM1"));
-        assertThat(result, containsString("APERM2"));
-        assertThat(result, not(containsString("BPERM1")));
-        assertThat(result, not(containsString("BPERM2")));
-        assertThat(result, containsString("CPERM1"));
-        assertThat(result, containsString("CPERM2"));
+        assertThat(result, containsString("PERM_A_ATTRIBUTE_STATIC"));
+        assertThat(result, containsString("PERM_A_ELEMENT_STATIC"));
+        assertThat(result, not(containsString("PERM_B_ATTRIBUTE_STATIC")));
+        assertThat(result, not(containsString("PERM_B_ELEMENT_STATIC")));
+        assertThat(result, containsString("PERM_C_ATTRIBUTE_STATIC"));
+        assertThat(result, containsString("PERM_C_ELEMENT_STATIC"));
 
         subjectUnderTest.logout();
     }
@@ -86,12 +86,12 @@ public class HasPermissionTagTest extends AbstractThymeleafShiroDialectTest {
         String result = processThymeleafFile(FILE_UNDER_TEST, new Context());
 
         assertThat(result, not(containsString("shiro:")));
-        assertThat(result, not(containsString("APERM1")));
-        assertThat(result, not(containsString("APERM2")));
-        assertThat(result, not(containsString("BPERM1")));
-        assertThat(result, not(containsString("BPERM2")));
-        assertThat(result, containsString("CPERM1"));
-        assertThat(result, containsString("CPERM2"));
+        assertThat(result, not(containsString("PERM_A_ATTRIBUTE_STATIC")));
+        assertThat(result, not(containsString("PERM_A_ELEMENT_STATIC")));
+        assertThat(result, not(containsString("PERM_B_ATTRIBUTE_STATIC")));
+        assertThat(result, not(containsString("PERM_B_ELEMENT_STATIC")));
+        assertThat(result, containsString("PERM_C_ATTRIBUTE_STATIC"));
+        assertThat(result, containsString("PERM_C_ELEMENT_STATIC"));
 
         subjectUnderTest.logout();
     }

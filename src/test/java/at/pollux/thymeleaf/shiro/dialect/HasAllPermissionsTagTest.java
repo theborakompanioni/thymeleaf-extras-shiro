@@ -1,8 +1,8 @@
 package at.pollux.thymeleaf.shiro.dialect;
 
+import at.pollux.thymeleaf.shiro.test.AbstractThymeleafShiroDialectTest;
 import at.pollux.thymeleaf.shiro.test.mother.PermissionsMother.HasAllPermissions;
 import at.pollux.thymeleaf.shiro.test.user.TestUsers;
-import at.pollux.thymeleaf.shiro.test.AbstractThymeleafShiroDialectTest;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.apache.shiro.subject.Subject;
@@ -10,6 +10,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.thymeleaf.context.Context;
 
+import static at.pollux.thymeleaf.shiro.test.user.TestPermissions.PERMISSION_TYPE_1_ACTION_1_INST_1;
+import static at.pollux.thymeleaf.shiro.test.user.TestPermissions.PERMISSION_TYPE_1_ACTION_2_EXAMPLE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
@@ -22,9 +24,9 @@ public class HasAllPermissionsTagTest extends AbstractThymeleafShiroDialectTest 
 
     private static final String FILE_UNDER_TEST = "shiro_hasAllPermissions.html";
 
-    private static boolean hasAllFeaturesSanityCheck(Subject subjectUnderTest) {
-        return subjectUnderTest.isPermitted("permtype1:permaction1:perminst1") &&
-                subjectUnderTest.isPermitted("permtype1:permaction1:xyz");
+    private static boolean hasAllFeaturesSanityCheck(Subject subject) {
+        return subject.isPermitted(PERMISSION_TYPE_1_ACTION_1_INST_1.label()) &&
+                subject.isPermitted(PERMISSION_TYPE_1_ACTION_2_EXAMPLE);
     }
 
     @Test
@@ -34,6 +36,8 @@ public class HasAllPermissionsTagTest extends AbstractThymeleafShiroDialectTest 
         assertThat(result, not(containsString("shiro:")));
         assertThat(result, not(containsString("HASALLPERMISSIONS_ATTRIBUTE_DYNAMIC")));
         assertThat(result, not(containsString("HASALLPERMISSIONS_ELEMENT_DYNAMIC")));
+        assertThat(result, not(containsString("HASALLPERMISSIONS_ATTRIBUTE_STATIC")));
+        assertThat(result, not(containsString("HASALLPERMISSIONS_ELEMENT_STATIC")));
     }
 
     @Test

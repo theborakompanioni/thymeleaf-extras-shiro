@@ -9,9 +9,9 @@ import java.util.Set;
  */
 public class TestRole {
     private final String label;
-    private final Set<Permissions> permissions;
+    private final Set<TestPermissions> permissions;
 
-    public TestRole(String name, Set<Permissions> permissions) {
+    public TestRole(String name, Set<TestPermissions> permissions) {
         this.label = name;
         this.permissions = Collections.unmodifiableSet(permissions);
     }
@@ -20,7 +20,7 @@ public class TestRole {
         return label;
     }
 
-    public Set<Permissions> getPermissions() {
+    public Set<TestPermissions> getPermissions() {
         return permissions;
     }
 }

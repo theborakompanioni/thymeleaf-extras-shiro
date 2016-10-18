@@ -11,18 +11,18 @@ import com.google.common.collect.Sets;
 public enum TestRoles {
 
     ROLE_A(new TestRole("rolea", Sets.newHashSet(
-            Permissions.PERMISSION_ALL
+            TestPermissions.PERMISSION_ALL
     ))),
     ROLE_B(new TestRole("roleb", Sets.newHashSet(
-            Permissions.PERMISSION_TYPE_1_ACTION_1_INST_1
+            TestPermissions.PERMISSION_TYPE_1_ACTION_1_INST_1
     ))),
     ROLE_C(new TestRole("rolec", Sets.newHashSet(
-            Permissions.PERMISSION_TYPE_1_ACTION_2
+            TestPermissions.PERMISSION_TYPE_1_ACTION_2
     ))),
     ROLE_D(new TestRole("roled", Sets.newHashSet(
-            Permissions.PERMISSION_TYPE_3
+            TestPermissions.PERMISSION_TYPE_3
     ))),
-    ROLE_E(new TestRole("rolee", Sets.<Permissions>newHashSet()));
+    ROLE_E(new TestRole("rolee", Sets.<TestPermissions>newHashSet()));
 
     private static Joiner colonJoiner = Joiner.on(",");
 
@@ -37,8 +37,8 @@ public enum TestRoles {
     }
 
     public String permissions() {
-        return colonJoiner.join(Collections2.transform(delegate.getPermissions(), new Function<Permissions, String>() {
-            public String apply(Permissions input) {
+        return colonJoiner.join(Collections2.transform(delegate.getPermissions(), new Function<TestPermissions, String>() {
+            public String apply(TestPermissions input) {
                 return input.label();
             }
         }));

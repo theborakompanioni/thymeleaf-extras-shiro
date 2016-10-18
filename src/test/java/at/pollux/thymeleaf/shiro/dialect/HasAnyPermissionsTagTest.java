@@ -10,6 +10,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.thymeleaf.context.Context;
 
+import static at.pollux.thymeleaf.shiro.test.user.TestPermissions.PERMISSION_TYPE_1_ACTION_1_INST_1;
+import static at.pollux.thymeleaf.shiro.test.user.TestPermissions.PERMISSION_TYPE_1_ACTION_2_EXAMPLE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
@@ -23,8 +25,8 @@ public class HasAnyPermissionsTagTest extends AbstractThymeleafShiroDialectTest 
     private static final String FILE_UNDER_TEST = "shiro_hasAnyPermissions.html";
 
     private static boolean hasAnyFeatureSanityCheck(Subject subjectUnderTest) {
-        return subjectUnderTest.isPermitted("permtype1:permaction1:perminst1") ||
-                subjectUnderTest.isPermitted("permtype1:permaction1:xyz");
+        return subjectUnderTest.isPermitted(PERMISSION_TYPE_1_ACTION_1_INST_1.label()) ||
+                subjectUnderTest.isPermitted(PERMISSION_TYPE_1_ACTION_2_EXAMPLE);
     }
 
     @Test
@@ -32,6 +34,8 @@ public class HasAnyPermissionsTagTest extends AbstractThymeleafShiroDialectTest 
         String result = processThymeleafFile(FILE_UNDER_TEST, new Context());
 
         assertThat(result, not(containsString("shiro:")));
+        assertThat(result, not(containsString("HASANYPERMISSIONS_ATTRIBUTE_DYNAMIC")));
+        assertThat(result, not(containsString("HASANYPERMISSIONS_ELEMENT_DYNAMIC")));
         assertThat(result, not(containsString("HASANYPERMISSIONS_ATTRIBUTE_DYNAMIC")));
         assertThat(result, not(containsString("HASANYPERMISSIONS_ELEMENT_DYNAMIC")));
     }

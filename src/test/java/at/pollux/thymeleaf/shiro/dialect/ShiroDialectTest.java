@@ -364,37 +364,4 @@ public class ShiroDialectTest extends AbstractShiroTest {
         assertFalse(result.contains("HASANYROLES2"));
         subjectUnderTest.logout();
     }
-
-    @Test
-    public void testHasAllRoles() {
-        Subject subjectUnderTest = new Subject.Builder(getSecurityManager()).buildSubject();
-        setSubject(subjectUnderTest);
-
-        Context context = new Context();
-        String result;
-
-        // Guest user
-        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
-        assertFalse(result.contains("shiro:"));
-        assertFalse(result.contains("HASALLROLES1"));
-        assertFalse(result.contains("HASALLROLES2"));
-
-        // Logged in user 1
-        subjectUnderTest.login(new UsernamePasswordToken(USER1, PASS1));
-        assertFalse(subjectUnderTest.hasAllRoles(Arrays.asList("roleb", "rolec"))); // sanity
-        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
-        assertFalse(result.contains("shiro:"));
-        assertFalse(result.contains("HASALLROLES1"));
-        assertFalse(result.contains("HASALLROLES2"));
-        subjectUnderTest.logout();
-
-        // Logged in user 2
-        subjectUnderTest.login(new UsernamePasswordToken(USER2, PASS2));
-        assertTrue(subjectUnderTest.hasAllRoles(Arrays.asList("roleb", "rolec"))); // sanity
-        result = templateEngine.process(TEST_TEMPLATE_PATH, context);
-        assertFalse(result.contains("shiro:"));
-        assertTrue(result.contains("HASALLROLES1"));
-        assertTrue(result.contains("HASALLROLES2"));
-        subjectUnderTest.logout();
-    }
 }
