@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.thymeleaf.context.Context;
 
 import static at.pollux.thymeleaf.shiro.test.user.TestUsers.ALICE;
-import static com.google.common.base.Preconditions.checkArgument;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
@@ -15,38 +14,37 @@ import static org.hamcrest.Matchers.not;
 /**
  * @author tbk
  */
-public class GuestTagTest extends AbstractThymeleafShiroDialectTest {
+public class NotAuthenticatedTagTest extends AbstractThymeleafShiroDialectTest {
 
-    private static final String FILE_UNDER_TEST = "shiro_guest.html";
+    private static final String FILE_UNDER_TEST = "shiro_notAuthenticated.html";
+
+    //TODO: Remembered user
 
     @Test
-    public void itShouldRenderGuestTagContentOnGuestUser() {
+    public void itShouldRenderNotAuthenticatedTagContentOnGuestUser() {
         Subject subjectUnderTest = createSubject();
         setSubject(subjectUnderTest);
-
-        checkArgument(subjectUnderTest.getPrincipal() == null); // sanity
 
         String result = processThymeleafFile(FILE_UNDER_TEST, new Context());
 
         assertThat(result, not(containsString("shiro:")));
-        assertThat(result, containsString("GUEST_ATTRIBUTE"));
-        assertThat(result, containsString("GUEST_ELEMENT"));
+        assertThat(result, containsString("NOT_AUTHENTICATED_ATTRIBUTE"));
+        assertThat(result, containsString("NOT_AUTHENTICATED_ELEMENT"));
     }
 
     @Test
-    public void itShouldNotRenderGuestTagContentOnLoggedInUser() {
+    public void itShouldNotRenderNotAuthenticatedTagContentOnLoggedInUser() {
         Subject subjectUnderTest = createSubject();
         setSubject(subjectUnderTest);
 
+        // Logged in user
         subjectUnderTest.login(new UsernamePasswordToken(ALICE.email(), ALICE.password()));
-
-        checkArgument(ALICE.email().equals(subjectUnderTest.getPrincipal())); // sanity
 
         String result = processThymeleafFile(FILE_UNDER_TEST, new Context());
 
         assertThat(result, not(containsString("shiro:")));
-        assertThat(result, not(containsString("GUEST_ATTRIBUTE")));
-        assertThat(result, not(containsString("GUEST_ELEMENT")));
+        assertThat(result, not(containsString("NOT_AUTHENTICATED_ATTRIBUTE")));
+        assertThat(result, not(containsString("NOT_AUTHENTICATED_ELEMENT")));
 
         subjectUnderTest.logout();
     }

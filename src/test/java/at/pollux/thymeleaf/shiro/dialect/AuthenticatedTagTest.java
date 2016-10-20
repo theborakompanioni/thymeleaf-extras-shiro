@@ -15,38 +15,41 @@ import static org.hamcrest.Matchers.not;
 /**
  * @author tbk
  */
-public class GuestTagTest extends AbstractThymeleafShiroDialectTest {
+public class AuthenticatedTagTest extends AbstractThymeleafShiroDialectTest {
 
-    private static final String FILE_UNDER_TEST = "shiro_guest.html";
+    private static final String FILE_UNDER_TEST = "shiro_authenticated.html";
+
+    //TODO: Remembered user
 
     @Test
-    public void itShouldRenderGuestTagContentOnGuestUser() {
+    public void itShouldNotRenderAuthenticatedTagContentOnGuestUser() {
         Subject subjectUnderTest = createSubject();
         setSubject(subjectUnderTest);
 
-        checkArgument(subjectUnderTest.getPrincipal() == null); // sanity
+        checkArgument(!subjectUnderTest.isAuthenticated()); // sanity
 
         String result = processThymeleafFile(FILE_UNDER_TEST, new Context());
 
         assertThat(result, not(containsString("shiro:")));
-        assertThat(result, containsString("GUEST_ATTRIBUTE"));
-        assertThat(result, containsString("GUEST_ELEMENT"));
+        assertThat(result, not(containsString("AUTHENTICATED_ATTRIBUTE")));
+        assertThat(result, not(containsString("AUTHENTICATED_ELEMENT")));
     }
 
     @Test
-    public void itShouldNotRenderGuestTagContentOnLoggedInUser() {
+    public void itShouldRenderAuthenticatedTagContentOnLoggedInUser() {
         Subject subjectUnderTest = createSubject();
         setSubject(subjectUnderTest);
 
+        // Logged in user
         subjectUnderTest.login(new UsernamePasswordToken(ALICE.email(), ALICE.password()));
 
-        checkArgument(ALICE.email().equals(subjectUnderTest.getPrincipal())); // sanity
+        checkArgument(subjectUnderTest.isAuthenticated()); // sanity
 
         String result = processThymeleafFile(FILE_UNDER_TEST, new Context());
 
         assertThat(result, not(containsString("shiro:")));
-        assertThat(result, not(containsString("GUEST_ATTRIBUTE")));
-        assertThat(result, not(containsString("GUEST_ELEMENT")));
+        assertThat(result, containsString("AUTHENTICATED_ATTRIBUTE"));
+        assertThat(result, containsString("AUTHENTICATED_ELEMENT"));
 
         subjectUnderTest.logout();
     }

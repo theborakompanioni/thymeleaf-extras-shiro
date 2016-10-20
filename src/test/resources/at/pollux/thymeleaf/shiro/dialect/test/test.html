@@ -3,17 +3,6 @@
 <head>
 </head>
 <body>
-<p shiro:guest="">GUEST1</p>
-<shiro:guest>GUEST2</shiro:guest>
-
-<div shiro:user="">USER1</div>
-<shiro:user>USER2</shiro:user>
-
-<div shiro:authenticated="">ISAUTHENTICATED1</div>
-<shiro:authenticated>ISAUTHENTICATED2</shiro:authenticated>
-
-<div shiro:notAuthenticated="">NOTAUTHENTICATED1</div>
-<shiro:notAuthenticated>NOTAUTHENTICATED2</shiro:notAuthenticated>
 
 <div shiro:user="">
     DEFPRINCIPAL1<span shiro:principal="" />DEFPRINCIPAL1
@@ -31,8 +20,6 @@
 
 <div shiro:lacksRole="rolea">LACKSROLE1</div>
 <shiro:lacksRole name="rolea">LACKSROLE2</shiro:lacksRole>
-
-
 
 <div shiro:hasAnyRoles="badrole1,rolea,badrole2">HASANYROLES1</div>
 <shiro:hasAnyRoles name="badrole1,rolea,badrole2">HASANYROLES2</shiro:hasAnyRoles>
