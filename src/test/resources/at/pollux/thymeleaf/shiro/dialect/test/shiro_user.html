@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
 </head>
 <body>
 
 <p shiro:user="">USER_ATTRIBUTE</p>
 <shiro:user>USER_ELEMENT</shiro:user>
+
+<th:block shiro:user>USER_TH</th:block>
 
 </body>
 </html>

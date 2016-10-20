@@ -30,6 +30,7 @@ public class UserTagTest extends AbstractThymeleafShiroDialectTest {
         assertThat(result, not(containsString("shiro:")));
         assertThat(result, containsString("USER_ATTRIBUTE"));
         assertThat(result, containsString("USER_ELEMENT"));
+        assertThat(result, containsString("USER_TH"));
 
         subjectUnderTest.logout();
     }
@@ -44,6 +45,7 @@ public class UserTagTest extends AbstractThymeleafShiroDialectTest {
         assertThat(result, not(containsString("shiro:")));
         assertThat(result, not(containsString("USER_ATTRIBUTE")));
         assertThat(result, not(containsString("USER_ELEMENT")));
+        assertThat(result, not(containsString("USER_TH")));
     }
 
 }
