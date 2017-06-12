@@ -22,7 +22,7 @@ public class ShiroDialect extends AbstractProcessorDialect {
     }
 
     private static Set<IProcessor> createStandardProcessorsSet(String dialectPrefix) {
-        LinkedHashSet processors = new LinkedHashSet();
+        LinkedHashSet<IProcessor> processors = new LinkedHashSet<IProcessor>();
 
         processors.add(new PrincipalAttrProcessor(dialectPrefix));
         processors.add(new PrincipalElementProcessor(dialectPrefix));
