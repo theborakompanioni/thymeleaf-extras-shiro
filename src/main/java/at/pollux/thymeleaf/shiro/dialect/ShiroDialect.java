@@ -5,6 +5,8 @@ import at.pollux.thymeleaf.shiro.processor.element.*;
 import org.thymeleaf.dialect.AbstractProcessorDialect;
 import org.thymeleaf.processor.IProcessor;
 import org.thymeleaf.standard.StandardDialect;
+import org.thymeleaf.standard.processor.StandardXmlNsTagProcessor;
+import org.thymeleaf.templatemode.TemplateMode;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -62,6 +64,9 @@ public class ShiroDialect extends AbstractProcessorDialect {
 
         processors.add(new UserAttrProcessor(dialectPrefix));
         processors.add(new UserElementProcessor(dialectPrefix));
+
+		// Remove the xmlns:prefix attributes we might add for IDE validation but should not be exposed in the web browsers.
+		processors.add(new StandardXmlNsTagProcessor(TemplateMode.HTML, dialectPrefix));
 
         return processors;
     }
