@@ -9,7 +9,7 @@ thymeleaf-extras-shiro
 A [Thymeleaf](http://www.thymeleaf.org/) dialect for [Apache Shiro](https://shiro.apache.org) [tags](https://shiro.apache.org/tags).
 
 
-## Download
+## Download It
 
 ##### Maven
 ```
