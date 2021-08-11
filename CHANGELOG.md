@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased][unreleased]
 
 ### Updated
+- Updated Thymeleaf version from 3.0.2.RELEASE to 3.0.12.RELEASE
 - Updated Shiro version from 1.3.2 to 1.7.1
 
 ## [2.0.0] - 2016-10-11
