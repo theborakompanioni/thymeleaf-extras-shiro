@@ -8,7 +8,6 @@ import org.thymeleaf.processor.element.IElementTagStructureHandler;
 import org.thymeleaf.templatemode.TemplateMode;
 
 public class UserElementProcessor extends AbstractElementTagProcessor {
-
     private static final String ELEMENT_NAME = "user";
     private static final int PRECEDENCE = 300;
 

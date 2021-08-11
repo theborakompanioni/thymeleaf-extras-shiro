@@ -33,8 +33,8 @@ public class LacksRoleElementProcessor extends AbstractElementTagProcessor {
     protected void doProcess(ITemplateContext iTemplateContext,
                              IProcessableElementTag iProcessableElementTag,
                              IElementTagStructureHandler iElementTagStructureHandler) {
-        final String rawValue = getRawValue(iProcessableElementTag, "name");
-        final List<String> values = evaluateAsStringsWithDelimiter(iTemplateContext, rawValue, DELIMITER);
+        String rawValue = getRawValue(iProcessableElementTag, "name");
+        List<String> values = evaluateAsStringsWithDelimiter(iTemplateContext, rawValue, DELIMITER);
 
         if (!ShiroFacade.hasAnyRoles(values)) {
             iElementTagStructureHandler.removeTags();

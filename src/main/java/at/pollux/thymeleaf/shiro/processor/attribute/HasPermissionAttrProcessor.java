@@ -52,8 +52,8 @@ public class HasPermissionAttrProcessor extends AbstractAttributeTagProcessor {
                              AttributeName attributeName,
                              String attributeValue,
                              IElementTagStructureHandler iElementTagStructureHandler) {
-        final String rawValue = getRawValue(iProcessableElementTag, attributeName);
-        final List<String> values = evaluateAsStringsWithDelimiter(iTemplateContext, rawValue, DELIMITER);
+        String rawValue = getRawValue(iProcessableElementTag, attributeName);
+        List<String> values = evaluateAsStringsWithDelimiter(iTemplateContext, rawValue, DELIMITER);
 
         if (ShiroFacade.hasAllPermissions(values)) {
             iElementTagStructureHandler.removeAttribute(attributeName);

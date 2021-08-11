@@ -9,7 +9,6 @@ import org.thymeleaf.processor.element.IElementTagStructureHandler;
 import org.thymeleaf.templatemode.TemplateMode;
 
 public class GuestAttrProcessor extends AbstractAttributeTagProcessor {
-
     private static final String ATTRIBUTE_NAME = "guest";
     private static final int PRECEDENCE = 300;
 

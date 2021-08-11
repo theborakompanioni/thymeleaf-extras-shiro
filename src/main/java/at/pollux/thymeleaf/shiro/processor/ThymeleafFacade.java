@@ -25,21 +25,21 @@ public final class ThymeleafFacade {
         throw new UnsupportedOperationException();
     }
 
-    public static String getRawValue(final IProcessableElementTag element, final AttributeName attributeName) {
+    public static String getRawValue(IProcessableElementTag element, AttributeName attributeName) {
         notNull(element, "element must not be null");
         notNull(attributeName, "attributeName must not be empty");
 
-        final String rawValue = trim(element.getAttributeValue(attributeName));
+        String rawValue = trim(element.getAttributeValue(attributeName));
         notEmpty(rawValue, "value of '" + attributeName + "' must not be empty");
 
         return rawValue;
     }
 
-    public static String getRawValue(final IProcessableElementTag element, final String attributeName) {
+    public static String getRawValue(IProcessableElementTag element, String attributeName) {
         notNull(element, "element must not be null");
         notEmpty(attributeName, "attributeName must not be empty");
 
-        final String rawValue = trim(element.getAttributeValue(attributeName));
+        String rawValue = trim(element.getAttributeValue(attributeName));
         notEmpty(rawValue, "value of '" + attributeName + "' must not be empty");
 
         return rawValue;
@@ -49,9 +49,8 @@ public final class ThymeleafFacade {
         notNull(arguments, "arguments must not be null");
         notEmpty(expression, "expression must not be empty");
 
-        final IStandardExpressionParser parser = new StandardExpressionParser();
-
-        final IStandardExpression evaluableExpression = parser.parseExpression(arguments, expression);
+        IStandardExpressionParser parser = new StandardExpressionParser();
+        IStandardExpression evaluableExpression = parser.parseExpression(arguments, expression);
 
         return evaluableExpression.execute(arguments);
     }
@@ -60,7 +59,7 @@ public final class ThymeleafFacade {
         notNull(arguments, "arguments must not be null");
         notEmpty(rawValue, "rawValue must not be empty");
 
-        final Object evaluatedExpression = evaluateExpression(arguments, rawValue);
+        Object evaluatedExpression = evaluateExpression(arguments, rawValue);
 
         return EvaluationUtils.evaluateAsList(evaluatedExpression);
     }
@@ -69,7 +68,7 @@ public final class ThymeleafFacade {
         notNull(arguments, "arguments must not be null");
         notEmpty(rawValue, "rawValue must not be empty");
 
-        final List<Object> result = new ArrayList<Object>();
+        List<Object> result = new ArrayList<>();
         try {
             result.addAll(evaluateAsIterable(arguments, rawValue));
         } catch (TemplateProcessingException ex) {
@@ -84,8 +83,8 @@ public final class ThymeleafFacade {
         notEmpty(rawValue, "rawValue must not be empty");
         notEmpty(delimiter, "delimiter must not be empty");
 
-        final List<String> result = new ArrayList<String>();
-        final List<Object> iterates = evaluateAsIterableOrRawValue(arguments, rawValue);
+        List<String> result = new ArrayList<>();
+        List<Object> iterates = evaluateAsIterableOrRawValue(arguments, rawValue);
 
         for (Object o : iterates) {
             result.addAll(asList(StringUtils.split(o, delimiter)));

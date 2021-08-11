@@ -34,18 +34,18 @@ public final class ShiroFacade {
         return !ShiroFacade.isUser();
     }
 
-    public static boolean hasPermission(final String permission) {
+    public static boolean hasPermission(String permission) {
         return hasAllPermissions(singleton(permission));
     }
 
-    public static boolean lacksPermission(final String permission) {
+    public static boolean lacksPermission(String permission) {
         return !ShiroFacade.hasPermission(permission);
     }
 
-    public static boolean hasAnyPermissions(final Collection<String> permissions) {
+    public static boolean hasAnyPermissions(Collection<String> permissions) {
         if (SecurityUtils.getSubject() != null) {
-            final Subject subject = SecurityUtils.getSubject();
-            for (final String permission : permissions) {
+            Subject subject = SecurityUtils.getSubject();
+            for (String permission : permissions) {
                 if (subject.isPermitted(permission)) {
                     return true;
                 }
@@ -54,7 +54,7 @@ public final class ShiroFacade {
         return false;
     }
 
-    public static boolean hasAnyPermissions(final String... permissions) {
+    public static boolean hasAnyPermissions(String... permissions) {
         return hasAnyPermissions(Arrays.asList(permissions));
     }
 
@@ -65,7 +65,7 @@ public final class ShiroFacade {
                 return false;
             }
 
-            final Subject subject = SecurityUtils.getSubject();
+            Subject subject = SecurityUtils.getSubject();
             for (final String permission : permissions) {
                 if (!subject.isPermitted(permission)) {
                     return false;
@@ -80,18 +80,18 @@ public final class ShiroFacade {
         return hasAllPermissions(Arrays.asList(permissions));
     }
 
-    public static boolean hasRole(final String roleName) {
+    public static boolean hasRole(String roleName) {
         return hasAllRoles(singleton(roleName));
     }
 
-    public static boolean lacksRole(final String roleName) {
+    public static boolean lacksRole(String roleName) {
         return !hasRole(roleName);
     }
 
-    public static boolean hasAnyRoles(final Collection<String> roles) {
+    public static boolean hasAnyRoles(Collection<String> roles) {
         if (SecurityUtils.getSubject() != null) {
-            final Subject subject = SecurityUtils.getSubject();
-            for (final String role : roles) {
+            Subject subject = SecurityUtils.getSubject();
+            for (String role : roles) {
                 if (subject.hasRole(StringUtils.trim(role))) {
                     return true;
                 }
@@ -100,18 +100,18 @@ public final class ShiroFacade {
         return false;
     }
 
-    public static boolean hasAnyRoles(final String... roles) {
+    public static boolean hasAnyRoles(String... roles) {
         return hasAnyRoles(Arrays.asList(roles));
     }
 
-    public static boolean hasAllRoles(final Collection<String> roles) {
+    public static boolean hasAllRoles(Collection<String> roles) {
         if (SecurityUtils.getSubject() != null) {
             if (roles.isEmpty()) {
                 return false;
             }
 
-            final Subject subject = SecurityUtils.getSubject();
-            for (final String role : roles) {
+            Subject subject = SecurityUtils.getSubject();
+            for (String role : roles) {
                 if (!subject.hasRole(StringUtils.trim(role))) {
                     return false;
                 }
@@ -121,11 +121,11 @@ public final class ShiroFacade {
         return false;
     }
 
-    public static boolean hasAllRoles(final String... roles) {
+    public static boolean hasAllRoles(String... roles) {
         return hasAllRoles(Arrays.asList(roles));
     }
 
-    public static String getPrincipalText(final String type, final String property) {
+    public static String getPrincipalText(String type, String property) {
         if (SecurityUtils.getSubject() == null) {
             return "";
         }
@@ -144,13 +144,13 @@ public final class ShiroFacade {
         return principal != null ? principal.toString() : "";
     }
 
-    public static Object getPrincipalFromClassName(final String type) {
+    public static Object getPrincipalFromClassName(String type) {
         Object principal;
 
         try {
-            final Class<?> cls = Class.forName(type);
+            Class<?> cls = Class.forName(type);
             principal = SecurityUtils.getSubject().getPrincipals().oneByType(cls);
-        } catch (final ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             String message = "Unable to find class for name [" + type + "]";
             throw new IllegalArgumentException(message, e);
         }
@@ -158,16 +158,16 @@ public final class ShiroFacade {
         return principal;
     }
 
-    public static String getPrincipalProperty(final Object principal, final String property) {
+    public static String getPrincipalProperty(Object principal, String property) {
         try {
-            final BeanInfo bi = Introspector.getBeanInfo(principal.getClass());
-            for (final PropertyDescriptor pd : bi.getPropertyDescriptors()) {
+            BeanInfo bi = Introspector.getBeanInfo(principal.getClass());
+            for (PropertyDescriptor pd : bi.getPropertyDescriptors()) {
                 if (pd.getName().equals(property)) {
-                    final Object value = pd.getReadMethod().invoke(principal, (Object[]) null);
+                    Object value = pd.getReadMethod().invoke(principal, (Object[]) null);
                     return String.valueOf(value);
                 }
             }
-        } catch (final Exception e) {
+        } catch (Exception e) {
             String message = "Error reading property [" + property + "] from principal of type [" + principal.getClass().getName() + "]";
             throw new IllegalArgumentException(message, e);
         }

@@ -14,8 +14,6 @@ import static at.pollux.thymeleaf.shiro.processor.ThymeleafFacade.evaluateAsStri
 import static at.pollux.thymeleaf.shiro.processor.ThymeleafFacade.getRawValue;
 
 public class HasAnyRolesAttrProcessor extends AbstractAttributeTagProcessor {
-
-
     private static final String DELIMITER = ",";
 
     private static final String ATTRIBUTE_NAME = "hasAnyRoles";
@@ -39,8 +37,8 @@ public class HasAnyRolesAttrProcessor extends AbstractAttributeTagProcessor {
                              AttributeName attributeName,
                              String attributeValue,
                              IElementTagStructureHandler iElementTagStructureHandler) {
-        final String rawValue = getRawValue(iProcessableElementTag, attributeName);
-        final List<String> values = evaluateAsStringsWithDelimiter(iTemplateContext, rawValue, DELIMITER);
+        String rawValue = getRawValue(iProcessableElementTag, attributeName);
+        List<String> values = evaluateAsStringsWithDelimiter(iTemplateContext, rawValue, DELIMITER);
 
         if (ShiroFacade.hasAnyRoles(values)) {
             iElementTagStructureHandler.removeAttribute(attributeName);

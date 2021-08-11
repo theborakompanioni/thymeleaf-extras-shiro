@@ -35,14 +35,14 @@ public class PrincipalAttrProcessor extends AbstractAttributeTagProcessor {
                              String attributeValue,
                              IElementTagStructureHandler iElementTagStructureHandler) {
 
-        final String type = iProcessableElementTag.getAttributeValue("type");
-        final String property = iProcessableElementTag.getAttributeValue("property");
+        String type = iProcessableElementTag.getAttributeValue("type");
+        String property = iProcessableElementTag.getAttributeValue("property");
 
-        final String text = ShiroFacade.getPrincipalText(type, property);
-        final String elementCompleteName = iProcessableElementTag.getElementCompleteName();
+        String text = ShiroFacade.getPrincipalText(type, property);
+        String elementCompleteName = iProcessableElementTag.getElementCompleteName();
 
-        final IModelFactory modelFactory = iTemplateContext.getModelFactory();
-        final IModel model = modelFactory.createModel();
+        IModelFactory modelFactory = iTemplateContext.getModelFactory();
+        IModel model = modelFactory.createModel();
 
         model.add(modelFactory.createOpenElementTag(elementCompleteName));
         model.add(modelFactory.createText(HtmlEscape.escapeHtml5(text)));
