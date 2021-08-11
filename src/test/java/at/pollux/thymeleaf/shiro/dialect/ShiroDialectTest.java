@@ -15,13 +15,13 @@
  */
 package at.pollux.thymeleaf.shiro.dialect;
 
+import at.pollux.thymeleaf.shiro.test.ShiroTest;
 import at.pollux.thymeleaf.shiro.test.TestIniSecurityManagerFactory;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.subject.Subject;
-import org.apache.shiro.test.AbstractShiroTest;
 import org.apache.shiro.util.Factory;
 import org.junit.After;
 import org.junit.BeforeClass;
@@ -31,14 +31,12 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
-import java.util.Arrays;
-
 import static org.junit.Assert.*;
 
 /**
  * @author artgramlich
  */
-public class ShiroDialectTest extends AbstractShiroTest {
+public class ShiroDialectTest extends ShiroTest {
 
     private static final String PACKAGE_PATH = "at/pollux/thymeleaf/shiro/dialect/test";
     private static final String TEST_TEMPLATE_PATH = PACKAGE_PATH + "/test.html";

@@ -7,7 +7,6 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.subject.Subject;
-import org.apache.shiro.test.AbstractShiroTest;
 import org.apache.shiro.util.Factory;
 import org.junit.After;
 import org.junit.BeforeClass;
@@ -22,7 +21,7 @@ import static at.pollux.thymeleaf.shiro.test.user.TestUsers.*;
 /**
  * @author tbk
  */
-public class AbstractThymeleafShiroDialectTest extends AbstractShiroTest {
+public class AbstractThymeleafShiroDialectTest extends ShiroTest {
 
     private static final String PACKAGE_PATH = "at/pollux/thymeleaf/shiro/dialect/test";
 

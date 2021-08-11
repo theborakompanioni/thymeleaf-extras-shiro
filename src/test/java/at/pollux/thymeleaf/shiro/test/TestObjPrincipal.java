@@ -20,7 +20,7 @@ package at.pollux.thymeleaf.shiro.test;
  */
 public class TestObjPrincipal {
 
-    private String name;
+    private final String name;
 
     public TestObjPrincipal(String name) {
         this.name = name;
