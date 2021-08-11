@@ -6,7 +6,7 @@
 thymeleaf-extras-shiro
 ---
 
-A [Thymeleaf](http://www.thymeleaf.org/) dialect for [Apache Shiro](https://shiro.apache.org) [tags](https://shiro.apache.org/tags).
+A [Thymeleaf](https://www.thymeleaf.org/) dialect for [Apache Shiro](https://shiro.apache.org) [tags](https://shiro.apache.org/tags).
 
 
 ## Download
@@ -49,7 +49,7 @@ git clone https://github.com/theborakompanioni/thymeleaf-extras-shiro.git
 ### Tags
 
 The following examples show how to integrate the tags in your Thymeleaf templates.
-These are all implementations of the examples given in the [JSP / GSP Tag Library Section](http://shiro.apache.org/web.html#Web-JSP%252FGSPTagLibrary) of the Apache Shiro documentation.
+These are all implementations of the examples given in the [JSP / GSP Tag Library Section](https://shiro.apache.org/web.html#Web-JSP%252FGSPTagLibrary) of the Apache Shiro documentation.
 
 Tags can be written in attribute or element notation:
 
