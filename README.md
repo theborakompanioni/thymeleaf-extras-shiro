@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.org/theborakompanioni/thymeleaf-extras-shiro.svg)](https://travis-ci.org/theborakompanioni/thymeleaf-extras-shiro)
 [![GitHub Release](https://img.shields.io/github/release/theborakompanioni/thymeleaf-extras-shiro.svg?maxAge=3600)](https://github.com/theborakompanioni/thymeleaf-extras-shiro/releases/latest)
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.theborakompanioni/thymeleaf-extras-shiro.svg?maxAge=3600)](http://search.maven.org/#search|ga|1|g%3A%22com.github.theborakompanioni%22%20AND%20a%3A%22thymeleaf-extras-shiro%22)
 [![License](https://img.shields.io/github/license/theborakompanioni/thymeleaf-extras-shiro.svg?maxAge=2592000)](https://github.com/theborakompanioni/thymeleaf-extras-shiro/blob/master/LICENSE)
@@ -20,7 +19,7 @@ A [Thymeleaf](https://www.thymeleaf.org/) dialect for [Apache Shiro](https://shi
 </dependency>
 ```
 ##### Jar
-[Download](http://search.maven.org/#search|gav|1|g%3A%22com.github.theborakompanioni%22%20AND%20a%3A%22thymeleaf-extras-shiro%22) from Maven Central.
+[Download](https://search.maven.org/#search|gav|1|g%3A%22com.github.theborakompanioni%22%20AND%20a%3A%22thymeleaf-extras-shiro%22) from Maven Central.
 
 ##### Repository
 ```
