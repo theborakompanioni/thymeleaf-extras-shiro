@@ -158,6 +158,12 @@ Typed principal and principal property are also supported.
 </p>
 ```
 
-License
--------
+
+## Resources
+- Apache Shiro (Website): https://shiro.apache.org
+- Apache Shiro (GitHub): https://github.com/apache/shiro
+- Thymeleaf (Website): https://www.thymeleaf.org/
+- Thymeleaf (GitHub): https://github.com/thymeleaf/thymeleaf
+
+## License
 The project is licensed under the Apache License. See [LICENSE](LICENSE) for details.
