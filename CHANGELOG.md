@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Breaking
 - move from namespace "at.pollux" to "org.tbk"
+- increase minimum java version to v8 (1.8)
 
 ### Updated
 - Updated Thymeleaf version from 3.0.12.RELEASE to 3.1.2.RELEASE
