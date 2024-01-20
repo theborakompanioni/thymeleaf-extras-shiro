@@ -11,19 +11,25 @@ A [Thymeleaf](https://www.thymeleaf.org/) dialect for [Apache Shiro](https://shi
 
 ## Download
 
-##### Maven
+##### Gradle
+```groovy
+implementation "com.github.theborakompanioni:thymeleaf-extras-shiro:${thymeleaf-shiro.version}"
 ```
+
+##### Maven
+```html
 <dependency>
     <groupId>com.github.theborakompanioni</groupId>
     <artifactId>thymeleaf-extras-shiro</artifactId>
     <version>${thymeleaf-shiro.version}</version>
 </dependency>
 ```
+
 ##### Jar
 [Download](https://search.maven.org/#search|gav|1|g%3A%22com.github.theborakompanioni%22%20AND%20a%3A%22thymeleaf-extras-shiro%22) from Maven Central.
 
 ##### Repository
-```
+```shell
 git clone https://github.com/theborakompanioni/thymeleaf-extras-shiro.git
 ```
 
