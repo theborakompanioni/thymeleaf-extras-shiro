@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:shiro="https://www.github.com/theborakompanioni/thymeleaf-extras-shiro">
+<head>
+</head>
+<body>
+
+<div shiro:hasPermission="permtype1:permaction1:perminst1">PERM_A_ATTRIBUTE_STATIC</div>
+<shiro:hasPermission name="permtype1:permaction1:perminst1">PERM_A_ELEMENT_STATIC</shiro:hasPermission>
+
+<div shiro:hasPermission="permtype1:permaction1:xyz">PERM_B_ATTRIBUTE_STATIC</div>
+<shiro:hasPermission name="permtype1:permaction1:xyz">PERM_B_ELEMENT_STATIC</shiro:hasPermission>
+
+<div shiro:hasPermission="permtype1:permaction2">PERM_C_ATTRIBUTE_STATIC</div>
+<shiro:hasPermission name="permtype1:permaction2">PERM_C_ELEMENT_STATIC</shiro:hasPermission>
+
+</body>
+</html>

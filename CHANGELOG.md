@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased][unreleased]
+
+### Breaking
+- move from namespace "at.pollux" to "org.tbk"
+
+### Updated
 - Updated Thymeleaf version from 3.0.12.RELEASE to 3.1.2.RELEASE
 - Updated Shiro version from 1.7.1 to 1.13.0
 

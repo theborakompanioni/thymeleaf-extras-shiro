@@ -30,7 +30,7 @@ git clone https://github.com/theborakompanioni/thymeleaf-extras-shiro.git
 ## Example
 ```html
 <!DOCTYPE html>
-<html xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html xmlns:shiro="https://www.github.com/theborakompanioni/thymeleaf-extras-shiro">
 
   <head>
     <title>thymeleaf-extras-shiro</title>

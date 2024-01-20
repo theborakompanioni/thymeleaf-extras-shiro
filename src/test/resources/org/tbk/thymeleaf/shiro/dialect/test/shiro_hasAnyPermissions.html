@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:shiro="https://www.github.com/theborakompanioni/thymeleaf-extras-shiro">
+<head>
+</head>
+<body>
+
+<div shiro:hasAnyPermissions="${permissions}">HASANYPERMISSIONS_ATTRIBUTE_DYNAMIC</div>
+<shiro:hasAnyPermissions name="${permissions}">HASANYPERMISSIONS_ELEMENT_DYNAMIC</shiro:hasAnyPermissions>
+
+<div shiro:hasAnyPermissions="permtype1:permaction1:perminst1,permtype1:permaction1:xyz">
+    HASANYPERMISSIONS_ATTRIBUTE_STATIC
+</div>
+<shiro:hasAnyPermissions name="permtype1:permaction1:perminst1,permtype1:permaction1:xyz">
+    HASANYPERMISSIONS_ELEMENT_STATIC
+</shiro:hasAnyPermissions>
+
+</body>
+</html>
