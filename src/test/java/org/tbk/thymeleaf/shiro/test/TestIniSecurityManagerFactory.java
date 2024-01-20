@@ -31,7 +31,7 @@ public class TestIniSecurityManagerFactory extends IniSecurityManagerFactory {
 
     @Override
     protected Realm createRealm(Ini ini) {
-        //IniRealm realm = new IniRealm(ini); changed to support SHIRO-322
+        // IniRealm realm = new IniRealm(ini); // changed to support SHIRO-322
         IniRealm realm = new TestIniRealm();
         realm.setName(INI_REALM_NAME);
         realm.setIni(ini); //added for SHIRO-322

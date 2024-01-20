@@ -24,7 +24,7 @@ public enum TestRoles {
     ))),
     ROLE_E(new TestRole("rolee", Sets.<TestPermissions>newHashSet()));
 
-    private static Joiner colonJoiner = Joiner.on(",");
+    private static final Joiner colonJoiner = Joiner.on(",");
 
     private final TestRole delegate;
 

@@ -10,7 +10,7 @@ public enum TestPermissions {
     PERMISSION_TYPE_1_ACTION_2("permtype1:permaction2:*"),
     PERMISSION_TYPE_3("permtype3:*");
 
-    private String label;
+    private final String label;
 
     TestPermissions(String label) {
         this.label = label;
@@ -20,5 +20,5 @@ public enum TestPermissions {
         return label;
     }
 
-    public static String PERMISSION_TYPE_1_ACTION_2_EXAMPLE = "permtype1:permaction1:xyz";
+    public static final String PERMISSION_TYPE_1_ACTION_2_EXAMPLE = "permtype1:permaction1:xyz";
 }

@@ -27,7 +27,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class TestIniRealm extends IniRealm {
 
-    private AtomicInteger counter = new AtomicInteger();
+    private final AtomicInteger counter = new AtomicInteger();
 
     public TestIniRealm() {
     }
@@ -52,9 +52,6 @@ public class TestIniRealm extends IniRealm {
         principalCollection.add(objPrinc, "objRealm");
         account.setPrincipals(principalCollection);
 
-
         super.add(account);
     }
-
-
 }

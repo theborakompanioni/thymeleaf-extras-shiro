@@ -21,7 +21,7 @@ public enum TestUsers {
             TestRoles.ROLE_C, TestRoles.ROLE_E
     )));
 
-    private static Joiner comaJoiner = Joiner.on(",");
+    private static final Joiner comaJoiner = Joiner.on(",");
 
     private final TestUser delegate;
 
